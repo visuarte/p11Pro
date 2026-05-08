@@ -2,6 +2,12 @@
 # dev:check - Health Check Local para entorno de desarrollo KoliCode
 set -e
 
+# Allow skipping checks for fast local dev: DEV_CHECK_SKIP=1 or DEV_CHECK_SKIP=true
+if [[ "$DEV_CHECK_SKIP" == "1" ]] || [[ "${DEV_CHECK_SKIP,,}" == "true" ]]; then
+  echo "[WARN] DEV_CHECK_SKIP is set — omitiendo comprobaciones locales (dev-only).";
+  exit 0;
+fi
+
 # 1. Verifica Node (acepta Node >= 20)
 NODE_VERSION=$(node -v 2>/dev/null || echo "v0.0.0")
 NODE_MAJOR=$(echo "$NODE_VERSION" | sed -E 's/^v([0-9]+).*/\1/' || echo "0")
