@@ -1,0 +1,127 @@
+<!-- Barra lateral estilo Figma para herramientas de diseño gráfico -->
+
+<!-- Incluir el sprite SVG de iconos (icons.svg) -->
+<object type="image/svg+xml" data="icons/icons.svg" style="display:none;"></object>
+
+<!-- Incluir el helper MotorIcon -->
+<script src="js/icons.js"></script>
+<script>
+MotorIcon.setBase('icons/icons.svg');
+</script>
+<div class="sidebar">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <span class="logo-box">M</span>
+  </div>
+  <!-- Herramientas -->
+  <div class="sidebar-tools">
+    <button class="tool active" title="Select">
+      <span class="icon" data-icon="cursor"></span>
+    </button>
+    <button class="tool" title="Pen">
+      <span class="icon" data-icon="pen"></span>
+    </button>
+    <button class="tool" title="Brush">
+      <span class="icon" data-icon="brush"></span>
+    </button>
+    <button class="tool" title="Text">
+      <span class="icon" data-icon="text"></span>
+    </button>
+    <button class="tool" title="Rectangle">
+      <span class="icon" data-icon="rectangle"></span>
+    </button>
+    <button class="tool" title="Circle">
+      <span class="icon" data-icon="circle"></span>
+    </button>
+    <button class="tool" title="Layers">
+      <span class="icon" data-icon="layers"></span>
+    </button>
+    <div class="divider"></div>
+    <button class="tool" title="Move">
+      <span class="icon" data-icon="move"></span>
+    </button>
+    <button class="tool" title="Rotate">
+      <span class="icon" data-icon="rotate"></span>
+    </button>
+    <button class="tool" title="Crop">
+      <span class="icon" data-icon="crop"></span>
+    </button>
+  </div>
+</div>
+
+<style>
+.sidebar {
+  width: 64px;
+  height: 100vh;
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-3) 0;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+.sidebar-logo {
+  margin-bottom: var(--space-4);
+}
+.logo-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.sidebar-tools {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.tool {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-muted);
+}
+.tool:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--color-text);
+}
+.tool.active {
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  box-shadow: var(--shadow-sm);
+}
+.tool svg {
+  width: 20px;
+  height: 20px;
+}
+.divider {
+  width: 60%;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: var(--space-2) 0;
+}
+</style>
+
+<script>
+document.querySelectorAll('.icon').forEach(el => {
+  const name = el.dataset.icon;
+  el.innerHTML = MotorIcon.icon(name, 20);
+});
+document.querySelectorAll('.tool').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tool').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
