@@ -24,9 +24,13 @@
     "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\""
   },
   "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "electron": "41.2.2",
+    "esbuild": "^0.28.0",
     "typescript": "5.6.3",
-    "vite": "^5.4.21"
+    "vite": "^8.0.11"
   },
   "build": {
     "appId": "com.kolicode.app",
@@ -72,6 +76,9 @@
     }
   },
   "dependencies": {
-    "zod": "^4.3.6"
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.13"
   }
 }
