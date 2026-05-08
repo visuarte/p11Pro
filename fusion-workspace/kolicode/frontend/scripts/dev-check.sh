@@ -2,10 +2,11 @@
 # dev:check - Health Check Local para entorno de desarrollo KoliCode
 set -e
 
-# 1. Verifica Node
-NODE_VERSION=$(node -v)
-if [[ $NODE_VERSION != v20* ]]; then
-  echo "[ERROR] Node.js 20.x requerido. Encontrado: $NODE_VERSION"; exit 1;
+# 1. Verifica Node (acepta Node >= 20)
+NODE_VERSION=$(node -v 2>/dev/null || echo "v0.0.0")
+NODE_MAJOR=$(echo "$NODE_VERSION" | sed -E 's/^v([0-9]+).*/\1/' || echo "0")
+if ! [[ $NODE_MAJOR =~ ^[0-9]+$ ]] || [ "$NODE_MAJOR" -lt 20 ]; then
+  echo "[ERROR] Node.js >=20 requerido. Encontrado: $NODE_VERSION"; exit 1;
 fi
 
 # 2. Verifica Python
