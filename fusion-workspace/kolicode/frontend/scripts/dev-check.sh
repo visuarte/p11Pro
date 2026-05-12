@@ -3,7 +3,9 @@
 set -e
 
 # Allow skipping checks for fast local dev: DEV_CHECK_SKIP=1 or DEV_CHECK_SKIP=true
-if [[ "$DEV_CHECK_SKIP" == "1" ]] || [[ "${DEV_CHECK_SKIP,,}" == "true" ]]; then
+# Use a portable lowercase conversion (macOS /bin/bash may be old and not support ${var,,})
+DEV_CHECK_SKIP_LC=$(echo "$DEV_CHECK_SKIP" | tr '[:upper:]' '[:lower:]' 2>/dev/null || true)
+if [[ "$DEV_CHECK_SKIP" == "1" ]] || [[ "$DEV_CHECK_SKIP_LC" == "true" ]]; then
   echo "[WARN] DEV_CHECK_SKIP is set — omitiendo comprobaciones locales (dev-only).";
   exit 0;
 fi
