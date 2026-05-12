@@ -1,0 +1,1606 @@
+path,size,ext,suggested,reason
+.kiro/,1.9M
+768K
+768K
+896K
+896K
+4.5M,kiro,REVIEW,unknown, manual review
+PROJECT_STRUCTURE.md,128K,md,KEEP_DOCS,documentation
+WORKFLOW_COMPLETE.md,128K,md,KEEP_DOCS,documentation
+WORKFLOW_PLAN.md,128K,md,KEEP_DOCS,documentation
+docs/,384K
+768K,,KEEP_DOCS,documentation
+fusion-workspace/.github/,384K
+640K,github,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/BIBLIA_ARQUITECTURA_KOLICODE.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/BIBLIA_QA_CHECKLIST.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/CHECKLIST_BUILD_MULTIPLATAFORMA.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/COMPONENTES-GRID-FLEXBOX.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/INTERFAZ.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/README.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/VERSIONS.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/cleanup-project.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/contracts/,384K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/docs/,384K,,KEEP_DOCS,project docs or reports
+fusion-workspace/fusion-scripts.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/iccprofiles/, 12M
+5.6M
+ 18M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/CHANGELOG.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/DOCUMENTATION_SUMMARY.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/LICENSE.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/PRIVACY_POLICY.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/README.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/TERMS_OF_SERVICE.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/.github/,256K
+384K,github,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/README.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/thunderkoli/Dockerfile,128K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/thunderkoli/data.json,128K,json,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/thunderkoli/data/,256K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/thunderkoli/package.json,128K,json,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/thunderkoli/server.js,128K,js,KEEP,source in fusion-workspace/module
+fusion-workspace/kolicode/backend/thunderkoli/src/,256K
+1.8M
+1.9M
+128K
+128K
+128K
+ 14M
+384K
+ 14M
+128K
+ 31M
+ 31M
+256K
+256K
+1.3M
+1.3M
+640K
+640K
+512K
+128K
+128K
+384K
+512K
+1.3M
+6.1M
+6.3M
+512K
+640K
+128K
+128K
+128K
+128K
+512K
+256K
+1.0M
+256K
+512K
+1.8M
+1.9M
+512K
+256K
+ 15M
+ 18M
+512K
+512K
+256K
+512K
+768K
+384K
+1.0M
+512K
+640K
+256K
+128K
+128K
+128K
+128K
+128K
+512K
+1.3M
+ 89M
+384K
+512K
+640K
+1.3M
+384K
+512K
+640K
+256K
+896K
+1.0M
+1.8M
+1.6M
+256K
+256K
+128K
+384K
+768K
+1.0M
+1.3M
+1.3M
+1.5M
+1.3M
+1.5M
+512K
+768K
+ 17M
+640K
+ 18M
+384K
+1.3M
+384K
+384K
+384K
+384K
+384K
+384K
+1.3M
+384K
+384K
+384K
+1.6M
+384K
+896K
+1.5M
+384K
+1.3M
+1.3M
+2.6M
+1.3M
+1.9M
+1.9M
+1.9M
+1.3M
+640K
+1.5M
+1.8M
+1.3M
+384K
+ 16M
+384K
+1.9M
+384K
+896K
+3.4M
+3.6M
+ 21M
+128K
+384K
+512K
+512K
+384K
+ 80M
+512K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+384K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+128K
+384K
+640K
+128K
+128K
+1.9M
+384K
+128K
+ 94M
+196M
+384K
+384K
+256K
+1.3M
+198M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/thunderkoli/tests/,256K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/.env.example,128K,example,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/README.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/build.gradle.kts,128K,kts,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/config/,256K
+384K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/docs/,256K
+384K
+1.4M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/frontend/,384K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/gradle/,384K
+512K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/gradlew,128K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/gradlew.bat,128K,bat,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/_legacy_import/,256K
+384K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_1/,256K
+512K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_10/,512K
+768K
+256K
+512K
+1.9M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/CHECKLIST_IMPLEMENTACION.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/NOTES.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/PROJECT_CONTEXT.json,128K,json,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/README_CREATIVE.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/RESOURCES.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/backend/,512K
+128K
+1.3M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/cofiguracionproyecto/,256K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/creative/,3.4M
+512K
+384K
+1.0M
+896K
+384K
+1.4M
+1.3M
+256K
+512K
+8.3M
+896K
+896K
+896K
+384K
+896K
+384K
+2.4M
+256K
+1.1M
+896K
+384K
+1.1M
+512K
+256K
+1.1M
+896K
+384K
+384K
+896K
+512K
+896K
+384K
+512K
+512K
+896K
+768K
+896K
+256K
+1.1M
+896K
+512K
+896K
+896K
+384K
+384K
+512K
+640K
+896K
+896K
+896K
+384K
+384K
+384K
+384K
+384K
+2.3M
+384K
+896K
+896K
+256K
+1.1M
+512K
+256K
+1.0M
+256K
+1.1M
+256K
+1.1M
+256K
+1.1M
+512K
+384K
+512K
+896K
+896K
+256K
+1.1M
+896K
+256K
+1.1M
+512K
+384K
+512K
+384K
+512K
+384K
+384K
+384K
+384K
+896K
+384K
+896K
+768K
+896K
+384K
+896K
+256K
+1.1M
+896K
+1.0M
+256K
+512K
+512K
+384K
+512K
+384K
+896K
+896K
+256K
+1.1M
+512K
+384K
+896K
+896K
+896K
+896K
+512K
+896K
+896K
+896K
+896K
+512K
+512K
+1.4M
+896K
+256K
+1.1M
+896K
+384K
+640K
+896K
+256K
+1.1M
+896K
+384K
+512K
+384K
+512K
+256K
+896K
+4.4M
+5.0M
+5.0M
+ 20M
+896K
+1.8M
+4.4M
+2.0M
+2.1M
+640K
+3.8M
+2.0M
+1.5M
+ 12M
+ 44M
+512K
+256K
+1.1M
+896K
+896K
+256K
+1.1M
+256K
+1.1M
+896K
+896K
+640K
+1.1M
+256K
+1.1M
+896K
+512K
+384K
+768K
+2.0M
+896K
+896K
+384K
+896K
+384K
+1.4M
+3.1M
+896K
+896K
+384K
+896K
+384K
+640K
+384K
+256K
+896K
+896K
+512K
+1.0M
+640K
+896K
+896K
+896K
+896K
+512K
+896K
+384K
+1.3M
+256K
+1.1M
+512K
+384K
+896K
+256K
+1.1M
+256K
+1.1M
+5.9M
+2.1M
+256K
+256K
+2.6M
+2.4M
+ 17M
+512K
+1.6M
+384K
+384K
+2.6M
+512K
+512K
+2.3M
+640K
+1.3M
+3.4M
+640K
+3.9M
+4.0M
+512K
+768K
+1.4M
+3.1M
+ 14M
+3.6M
+256K
+384K
+896K
+ 35M
+1.5M
+3.4M
+1.5M
+512K
+896K
+1.4M
+384K
+256K
+6.0M
+4.5M
+7.8M
+ 19M
+ 19M
+256K
+ 20M
+1.3M
+384K
+256K
+384K
+384K
+512K
+384K
+256K
+256K
+512K
+256K
+256K
+256K
+384K
+640K
+384K
+768K
+256K
+384K
+384K
+896K
+1.3M
+896K
+256K
+1.4M
+2.8M
+384K
+384K
+1.1M
+ 16M
+ 20M
+384K
+ 26M
+256K
+640K
+1.8M
+1.0M
+4.4M
+3.9M
+ 17M
+384K
+1.6M
+256K
+1.8M
+3.1M
+384K
+256K
+384K
+512K
+384K
+1.4M
+ 11M
+1.0M
+384K
+2.0M
+1.4M
+3.9M
+157M
+512K
+256K
+1.1M
+896K
+512K
+512K
+512K
+256K
+1.1M
+1.0M
+384K
+3.0M
+896K
+896K
+1.4M
+ 12M
+ 28M
+2.3M
+4.6M
+256K
+1.1M
+512K
+896K
+512K
+512K
+512K
+896K
+512K
+512K
+896K
+896K
+256K
+1.1M
+896K
+384K
+640K
+512K
+896K
+640K
+896K
+384K
+384K
+512K
+384K
+384K
+1.6M
+896K
+256K
+1.1M
+256K
+1.1M
+384K
+1.3M
+512K
+896K
+384K
+512K
+384K
+896K
+256K
+512K
+896K
+256K
+896K
+384K
+512K
+512K
+384K
+512K
+896K
+384K
+896K
+896K
+768K
+384K
+256K
+1.1M
+256K
+1.1M
+512K
+512K
+896K
+512K
+256K
+896K
+512K
+768K
+1.5M
+1.1M
+640K
+384K
+1.0M
+1.9M
+640K
+1.3M
+768K
+1.5M
+512K
+1.4M
+ 12M
+384K
+256K
+1.1M
+512K
+384K
+896K
+256K
+896K
+896K
+384K
+384K
+256K
+1.1M
+512K
+896K
+512K
+512K
+896K
+512K
+384K
+896K
+256K
+1.1M
+512K
+256K
+1.1M
+512K
+896K
+896K
+384K
+896K
+256K
+1.1M
+512K
+256K
+896K
+1.1M
+3.0M
+896K
+256K
+1.1M
+384K
+512K
+512K
+896K
+896K
+1.8M
+3.5M
+1.6M
+384K
+896K
+1.6M
+384K
+896K
+9.4M
+384K
+512K
+384K
+256K
+1.1M
+896K
+512K
+896K
+512K
+384K
+512K
+896K
+512K
+896K
+384K
+896K
+768K
+512K
+1.1M
+640K
+3.0M
+7.5M
+512K
+1.1M
+512K
+512K
+512K
+384K
+896K
+384K
+512K
+5.5M
+896K
+512K
+896K
+512K
+896K
+256K
+384K
+256K
+256K
+384K
+512K
+256K
+384K
+256K
+256K
+256K
+384K
+256K
+384K
+1.8M
+2.4M
+256K
+384K
+256K
+256K
+256K
+256K
+256K
+256K
+1.6M
+1.9M
+5.4M
+5.6M
+6.4M
+384K
+896K
+896K
+512K
+384K
+1.3M
+512K
+512K
+896K
+512K
+896K
+384K
+4.0M
+ 10M
+384K
+512K
+512K
+256K
+1.0M
+512K
+896K
+896K
+512K
+768K
+1.3M
+2.5M
+896K
+896K
+640K
+1.6M
+512K
+896K
+896K
+512K
+512K
+640K
+384K
+896K
+896K
+256K
+1.1M
+896K
+896K
+896K
+896K
+544M
+544M
+544M
+548M
+549M
+549M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/docs.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/.gitignore,128K,gitignore,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/README.md,128K,md,KEEP_DOCS,documentation
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/index.html,128K,html,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/package.json,128K,json,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/public/,384K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/src/,512K
+896K
+1.9M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/frontend/vite.config.js,128K,js,KEEP,source in fusion-workspace/module
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/kill_uvicorn_8000.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/package.json,128K,json,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/public/,256K
+512K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_11/start_all.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_12/,512K
+768K
+256K
+512K
+1.9M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_13/,256K
+384K
+256K
+512K
+2.4M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_14/,256K
+512K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_15/,256K
+512K
+768K
+1.4M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_16/,256K
+384K
+256K
+512K
+256K
+384K
+2.6M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_17/,512K
+768K
+256K
+512K
+256K
+384K
+2.3M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_18/,256K
+256K
+256K
+256K
+1.1M
+384K
+384K
+256K
+384K
+1.5M
+256K
+256K
+256K
+896K
+384K
+128K
+4.3M
+512K
+256K
+256K
+256K
+1.4M
+640K
+768K
+256K
+256K
+512K
+2.5M
+512K
+512K
+640K
+128K
+5.4M
+256K
+3.5M
+3.6M
+3.8M
+4.1M
+4.3M
+4.4M
+384K
+ 23M
+ 23M
+ 23M
+1.0M
+7.1M
+7.3M
+2.9M
+ 11M
+ 12M
+256K
+256K
+ 12M
+ 12M
+ 18M
+256K
+384K
+384K
+256K
+256K
+640K
+ 60M
+384K
+512K
+128K
+256K
+384K
+1.0M
+1.1M
+1.3M
+ 68M
+384K
+512K
+640K
+384K
+512K
+384K
+640K
+ 10M
+1.5M
+1.6M
+384K
+896K
+896K
+1.4M
+256K
+2.0M
+256K
+3.1M
+384K
+768K
+512K
+640K
+640K
+1.0M
+384K
+384K
+3.0M
+1.4M
+1.9M
+384K
+768K
+2.9M
+2.6M
+384K
+384K
+2.1M
+1.1M
+640K
+384K
+1.3M
+640K
+640K
+5.9M
+ 27M
+ 27M
+ 33M
+9.6M
+ 10M
+ 10M
+640K
+640K
+2.1M
+3.9M
+4.0M
+2.1M
+2.3M
+768K
+896K
+768K
+1.3M
+1.4M
+1.0M
+1.6M
+1.4M
+2.0M
+2.8M
+3.3M
+384K
+896K
+1.1M
+1.8M
+1.1M
+1.8M
+1.8M
+2.4M
+1.0M
+1.6M
+640K
+1.3M
+ 17M
+1.8M
+1.6M
+1.6M
+6.0M
+1.6M
+1.6M
+6.0M
+ 12M
+640K
+512K
+1.9M
+ 15M
+9.6M
+384K
+ 11M
+384K
+256K
+768K
+768K
+768K
+2.9M
+1.0M
+1.1M
+1.6M
+1.0M
+256K
+640K
+512K
+3.8M
+1.0M
+6.6M
+7.1M
+256K
+1.6M
+2.3M
+2.0M
+5.8M
+6.3M
+1.8M
+2.5M
+8.8M
+2.4M
+384K
+4.9M
+640K
+256K
+384K
+1.3M
+640K
+768K
+896K
+384K
+1.3M
+1.3M
+1.3M
+640K
+1.0M
+2.0M
+4.5M
+3.1M
+ 13M
+768K
+384K
+1.4M
+512K
+6.6M
+384K
+1.3M
+1.8M
+768K
+2.0M
+512K
+512K
+3.8M
+640K
+6.9M
+256K
+768K
+1.9M
+1.6M
+ 54M
+ 59M
+896K
+2.0M
+768K
+896K
+2.1M
+896K
+1.5M
+3.4M
+2.9M
+1.8M
+256K
+1.9M
+512K
+2.6M
+256K
+2.8M
+5.3M
+640K
+3.6M
+5.0M
+896K
+4.5M
+5.3M
+512K
+1.6M
+512K
+2.9M
+256K
+768K
+2.4M
+512K
+896K
+896K
+384K
+384K
+256K
+384K
+3.4M
+ 29M
+1.8M
+256K
+1.3M
+7.1M
+ 14M
+2.4M
+ 17M
+256K
+1.0M
+1.6M
+3.9M
+768K
+1.0M
+2.3M
+512K
+ 33M
+512K
+1.8M
+ 94M
+163M
+384K
+384K
+384K
+3.0M
+4.0M
+4.9M
+1.1M
+7.4M
+1.1M
+3.8M
+640K
+768K
+7.1M
+311M
+1.8M
+2.6M
+3.0M
+3.8M
+256K
+384K
+384K
+384K
+512K
+640K
+768K
+896K
+1.0M
+256K
+256K
+1.9M
+256K
+320M
+384K
+512K
+256K
+384K
+384K
+512K
+128K
+256K
+512K
+256K
+384K
+2.4M
+384K
+512K
+896K
+2.1M
+2.6M
+3.6M
+4.1M
+768K
+1.0M
+128K
+128K
+128K
+384K
+512K
+256K
+896K
+256K
+512K
+128K
+512K
+2.6M
+3.9M
+128K
+256K
+512K
+256K
+256K
+2.5M
+256K
+384K
+512K
+640K
+1.4M
+256K
+640K
+3.9M
+4.0M
+5.0M
+6.5M
+6.6M
+2.9M
+7.1M
+7.3M
+1.0M
+ 11M
+ 12M
+256K
+256K
+ 12M
+2.9M
+4.5M
+4.6M
+1.0M
+8.6M
+8.9M
+256K
+256K
+9.5M
+ 22M
+256K
+256K
+384K
+768K
+896K
+384K
+640K
+768K
+128K
+128K
+256K
+384K
+512K
+640K
+384K
+512K
+640K
+896K
+2.1M
+2.3M
+2.4M
+3.3M
+ 41M
+256K
+256K
+256K
+896K
+128K
+128K
+384K
+256K
+128K
+128K
+1.0M
+2.4M
+2.5M
+384K
+6.5M
+2.6M
+1.5M
+ 11M
+ 11M
+ 12M
+768K
+ 16M
+ 94M
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+384K
+256K
+256K
+256K
+256K
+2.4M
+256K
+256K
+256K
+256K
+384K
+256K
+256K
+256K
+128K
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+256K
+384K
+256K
+256K
+256K
+256K
+256K
+256K
+ 13M
+256K
+256K
+384K
+512K
+896K
+1.1M
+1.8M
+256K
+128K
+384K
+512K
+1.0M
+ 18M
+128K
+384K
+384K
+512K
+1.1M
+1.3M
+512K
+256K
+384K
+1.1M
+1.3M
+2.6M
+129M
+640K
+256K
+256K
+1.1M
+2.9M
+256K
+512K
+512K
+768K
+256K
+384K
+1.0M
+530M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_19/,512K
+384K
+256K
+512K
+1.8M
+768K
+256K
+512K
+256K
+512K
+2.4M
+512K
+256K
+256K
+1.1M
+512K
+256K
+256K
+1.1M
+512K
+128K
+7.3M
+256K
+4.0M
+1.8M
+1.4M
+7.3M
+7.4M
+7.8M
+7.9M
+8.0M
+1.0M
+7.1M
+7.3M
+2.9M
+ 11M
+ 12M
+256K
+256K
+ 12M
+ 12M
+ 20M
+384K
+512K
+256K
+384K
+256K
+384K
+256K
+512K
+256K
+256K
+384K
+1.0M
+1.1M
+1.3M
+1.4M
+256K
+384K
+512K
+640K
+768K
+2.3M
+640K
+256K
+384K
+ 36M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_2/,256K
+512K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_20/,512K
+256K
+384K
+1.3M
+512K
+256K
+256K
+256K
+1.4M
+384K
+128K
+3.3M
+384K
+512K
+640K
+256K
+384K
+256K
+512K
+384K
+512K
+640K
+768K
+384K
+1.3M
+1.4M
+256K
+384K
+7.9M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_22/,256K
+384K
+256K
+512K
+256K
+384K
+2.5M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_3/,256K
+512K
+768K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_4/,256K
+512K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_5/,256K
+384K
+256K
+512K
+2.5M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_6/,256K
+384K
+256K
+512K
+2.1M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_7/,256K
+384K
+256K
+512K
+2.1M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_8/,256K
+384K
+256K
+512K
+2.1M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_9/,256K
+384K
+256K
+512K
+2.1M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/scripts/,2.3M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/settings.gradle.kts,128K,kts,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/backend/universalengine/src/,768K
+768K
+896K
+1.0M
+256K
+256K
+384K
+256K
+3.0M
+256K
+3.4M
+1.0M
+1.8M
+1.9M
+2.0M
+3.1M
+3.3M
+6.8M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/config/,256K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/creative/,512K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/docker-compose.yml,128K,yml,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/docs/,4.1M
+4.9M
+5.0M
+5.6M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/frontend/.python-version,128K,python-version,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/python-worker/,512K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/thunderkoli/,256K
+256K
+640K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/kolicode/universalengine/,384K
+384K
+896K,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/languages/, 12M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/python-worker/,384K
+640K
+1.1M,,REVIEW,inside fusion-workspace, manual check
+fusion-workspace/reports/ASSET_INVENTORY.json,128K,json,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/AUDITORIA_2026-04-21.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/AUDITORIA_ESTADO_2026-05-05.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/AUDITORIA_SINCRONIZACION_2026-04-21.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/AUDITORIA_SINCRONIZACION_MINI_2026-04-21.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/FUSION_LOG.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/FUSION_REPORT.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/INSTALLATION_COMPLETE.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/PRE_IMPLEMENTACION_QA_2026-04-21.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/artifacts/,128K
+384K
+384K
+128K
+384K
+640K
+512K
+3.5M,,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/capa1.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/capa2.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/reports/capa3.md,128K,md,KEEP_DOCS,project docs or reports
+fusion-workspace/scripts/enforce-arm64.js,128K,js,KEEP,source in fusion-workspace/module
+fusion-workspace/scripts/idempotent-rebuild.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/scripts/validate-build.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/scripts/validate-idempotent-checklist.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/scripts/validate-lockfile.sh,128K,sh,KEEP,source in fusion-workspace/module
+fusion-workspace/scripts/validate-zips.sh,128K,sh,KEEP,source in fusion-workspace/module
+n,128K,,REVIEW,unknown, manual review
+n.pub,128K,pub,REVIEW,unknown, manual review
