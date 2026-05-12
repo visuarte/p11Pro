@@ -21,7 +21,10 @@
     "prebuild:native": "node scripts/enforce-arm64.js",
     "build:native": "npm run prebuild:native && ./scripts/idempotent-rebuild.sh",
     "electron:build:mac": "npm run build:native && electron-builder --mac --arm64",
-    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\""
+    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\"",
+    "serve:dist": "node serve-dist-compress.cjs 5000"
+    ,
+    "serve:dist:live": "node serve-dist-on-the-fly.cjs 5000"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",
@@ -30,7 +33,7 @@
     "electron": "41.2.2",
     "esbuild": "^0.28.0",
     "typescript": "5.6.3",
-    "vite": "5.4.21"
+    "vite": "^8.0.12"
   },
   "build": {
     "appId": "com.kolicode.app",
