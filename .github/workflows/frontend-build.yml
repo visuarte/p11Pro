@@ -1,0 +1,41 @@
+name: Frontend build (kolicode)
+
+on:
+  pull_request:
+    paths:
+      - 'fusion-workspace/kolicode/frontend/**'
+    # Run on PRs against any branch
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: fusion-workspace/kolicode/frontend
+        run: npm ci --prefer-offline --no-audit --progress=false
+
+      - name: Run build
+        working-directory: fusion-workspace/kolicode/frontend
+        run: npm run build
+
+      - name: Upload dist artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: fusion-workspace/kolicode/frontend/dist
+
