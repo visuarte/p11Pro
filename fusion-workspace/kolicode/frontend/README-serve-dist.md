@@ -27,6 +27,12 @@ node serve-dist-compress.cjs 5000
 # node serve-dist-compress.js 5000
 ```
 
+También puedes usar el script npm incorporado (recomendado) desde la misma carpeta:
+
+```bash
+npm run serve:dist
+```
+
 El servidor precomprimirá los archivos en `dist/` (crea `.gz` y `.br` junto a cada fichero) y los servirá cuando el cliente solicite `Accept-Encoding: br` o `gzip`.
 
 Pruebas con curl
