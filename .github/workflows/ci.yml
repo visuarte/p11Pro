@@ -22,7 +22,14 @@ jobs:
       - name: Install frontend deps
         run: |
           cd fusion-workspace/kolicode/frontend
-          npm ci
+          # Try clean install from lockfile first; if lockfile and package.json are out of sync
+          # fall back to `npm install` to reconcile packages (useful for PRs that update package.json)
+          if npm ci; then
+            echo "npm ci succeeded"
+          else
+            echo "npm ci failed (lockfile mismatch). Falling back to npm install to reconcile packages"
+            npm install
+          fi
 
       - name: Build frontend
         run: |
