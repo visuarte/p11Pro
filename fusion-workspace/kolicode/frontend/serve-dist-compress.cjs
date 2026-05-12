@@ -26,6 +26,8 @@ const mime = {
 function walk(dir, filelist = []) {
   const files = fs.readdirSync(dir);
   files.forEach(function(f) {
+    // ignore macOS resource-fork files that start with '._'
+    if (f && f.startsWith('._')) return;
     const fp = path.join(dir, f);
     const stat = fs.statSync(fp);
     if (stat.isDirectory()) walk(fp, filelist);
@@ -76,8 +78,17 @@ function precompressAll() {
 
 function createServer() {
   return http.createServer(function(req, res) {
-    const parsed = url.parse(req.url || '/');
-    var requested = decodeURIComponent(parsed.pathname);
+    // Use WHATWG URL API to avoid deprecated url.parse()
+    // req.url may be relative, so provide a base using the Host header if present
+    let base = 'http://localhost';
+    if (req.headers && req.headers.host) base = 'http://' + req.headers.host;
+    try {
+      const parsed = new URL(req.url || '/', base);
+      var requested = decodeURIComponent(parsed.pathname);
+    } catch (e) {
+      // fallback
+      var requested = req.url || '/';
+    }
     if (requested === '/' || requested === '') requested = '/index.html';
     const filePath = path.join(DIST, requested);
     if (!filePath.startsWith(DIST)) {
