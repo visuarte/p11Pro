@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "p11Pro",
+    "slug": "p11pro",
+    "owner": "visuarte",
+    "summary": "Proyecto p11Pro - contexto mínimo para build",
+    "status": "development",
+    "updatedAt": "2026-05-08T00:00:00Z",
+    "governance": {
+      "sourceOfTruth": "local",
+      "humanSummary": "Contexto mínimo generado para compilación",
+      "derivedViews": [],
+      "rule": "none"
+    }
+  },
+  "currentState": {
+    "implemented": [],
+    "notImplemented": [],
+    "templateOnly": []
+  },
+  "executionTargets": [],
+  "implementedStack": {},
+  "plannedStack": {
+    "candidates": [],
+    "explicitlyNotCurrent": []
+  },
+  "templateOnlyArtifacts": [],
+  "roadmap": []
+}
+

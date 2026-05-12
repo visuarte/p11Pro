@@ -1,0 +1,30 @@
+# Idempotent ARM64 Build Pipeline (Apple Silicon)
+# Ejecuta siempre desde la raíz del proyecto
+
+jobs:
+  build-macos-arm64:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json dist build ~/.electron-gyp
+          npm cache clean --force
+          npm install
+      - name: Idempotent native rebuild
+        run: npm run build:native
+      - name: Build Electron ARM64
+        run: npm run electron:build:mac
+      - name: Idempotence test
+        run: npm run electron:build:mac
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-arm64-build
+          path: dist/*.dmg
+

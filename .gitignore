@@ -1,0 +1,23 @@
+# Top-level ignores for p11pro workspace
+# macOS
+.DS_Store
+._*
+# Thumbs and OS junk
+Thumbs.db
+# Node
+node_modules/
+package-lock.json
+npm-debug.log*
+# Editor
+.idea/
+.vscode/
+*.swo
+*.swp
+*~
+# Temp
+tmp/
+temp/
+# Logs
+*.log
+# Archives
+*.zip
