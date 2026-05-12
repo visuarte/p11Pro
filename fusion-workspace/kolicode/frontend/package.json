@@ -21,7 +21,8 @@
     "prebuild:native": "node scripts/enforce-arm64.js",
     "build:native": "npm run prebuild:native && ./scripts/idempotent-rebuild.sh",
     "electron:build:mac": "npm run build:native && electron-builder --mac --arm64",
-    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\""
+    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\"",
+    "serve:dist": "node serve-dist-compress.cjs 5000"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",
