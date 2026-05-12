@@ -33,6 +33,28 @@ También puedes usar el script npm incorporado (recomendado) desde la misma carp
 npm run serve:dist
 ```
 
+Servidor con compresión "en caliente" (on-the-fly)
+-----------------------------------------------
+Para pruebas rápidas puedes usar la variante que aplica compresión on-the-fly (sin generar archivos `.br`/`.gz`):
+
+```bash
+npm run serve:dist:live
+# o
+node serve-dist-on-the-fly.cjs 5000
+```
+
+Trade-offs
+---------
+- Precompresión (`npm run serve:dist`)
+  - Pros: refleja mejor el comportamiento de producción (CDN), bajo uso de CPU en tiempo de petición y latencia consistente.
+  - Contras: requiere espacio adicional para los archivos `.br`/`.gz` y regenerarlos cuando actualizas `dist/`.
+
+- Compresión on-the-fly (`npm run serve:dist:live`)
+  - Pros: no requiere precomprimir, útil para pruebas rápidas y evitar pasos adicionales al iterar localmente.
+  - Contras: mayor uso de CPU por petición y variabilidad en latencia; no refleja exactamente cómo un CDN servirá contenidos en producción.
+
+Recomendación: conservar ambas utilidades. Usa `serve:dist` para QA que necesite reproducir producción y `serve:dist:live` para pruebas locales rápidas.
+
 El servidor precomprimirá los archivos en `dist/` (crea `.gz` y `.br` junto a cada fichero) y los servirá cuando el cliente solicite `Accept-Encoding: br` o `gzip`.
 
 Pruebas con curl
