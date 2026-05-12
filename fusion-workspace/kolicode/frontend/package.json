@@ -23,6 +23,8 @@
     "electron:build:mac": "npm run build:native && electron-builder --mac --arm64",
     "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\"",
     "serve:dist": "node serve-dist-compress.cjs 5000"
+    ,
+    "serve:dist:live": "node serve-dist-on-the-fly.cjs 5000"
   },
   "devDependencies": {
     "@types/node": "^25.6.2",
