@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Enforce Debugging Methodology",
+  "description": "Cuando se editen archivos de código (backend/frontend), recordar al agente seguir la metodología de debugging de tres capas: reproducción consistente, bisección, logging estratégico, tests de regresión y análisis de causa raíz",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "backend/**/*.js",
+      "backend/**/*.ts",
+      "frontend/**/*.js",
+      "frontend/**/*.ts",
+      "frontend/**/*.vue"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Se ha editado código en el workspace. Antes de proceder, asegúrate de seguir la metodología de debugging de tres capas de KoliCode:\n\n**Checklist de Debugging:**\n1. ¿Es un bug fix? → Primero reproduce el error consistentemente\n2. ¿Identificaste la capa afectada? (Frontend/Bridge/Engine)\n3. ¿Aplicaste bisección para aislar el problema?\n4. ¿Agregaste logging estratégico con niveles apropiados? (ERROR/WARN/INFO/DEBUG)\n5. ¿Escribiste un test de regresión que falle antes del fix?\n6. ¿Documentaste el análisis de causa raíz?\n7. ¿Verificaste que no capturas datos sensibles?\n8. ¿El impacto de performance es < 5ms?\n\n**Captura de Estado (si aplica):**\n- Timestamp, User Context, Input Data, Internal State\n- Layer y Component específico\n- Error Context con stack trace\n- Environment (dev/staging/prod)\n\n**Referencia:** Ver `.kiro/steering/debugging-methodology.md` para detalles completos.\n\nSi no es un bug fix, continúa normalmente pero mantén las mejores prácticas de logging y testing."
+  }
+}

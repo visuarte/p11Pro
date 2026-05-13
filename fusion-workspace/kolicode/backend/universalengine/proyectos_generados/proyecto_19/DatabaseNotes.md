@@ -1,0 +1,1 @@
+Postgres/Exposed habilitados en la plantilla de proyecto.

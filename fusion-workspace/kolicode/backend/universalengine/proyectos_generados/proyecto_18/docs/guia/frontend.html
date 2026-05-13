@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend — Vite · Kotlin/JS · Fritz2 · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Frontend — Vite · Kotlin/JS · Fritz2</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="frontend">
+      <div class="section-header open">
+        <span class="badge badge-green">FRONTEND</span>
+        <h2 class="section-title">Frontend — Vite · Kotlin/JS · Fritz2</h2>
+      </div>
+      <div class="section-body">
+        <h3>Design tokens — ui/styles/design-tokens.css</h3>
+        <pre><code>:root {
+  --color-bg:      #0d0d1a;
+  --color-surface: #13131f;
+  --color-accent:  #7f77dd;
+  --color-green:   #1d9e75;
+  --color-warn:    #ef9f27;
+  --color-text:    #c2c0d8;
+  --font-mono:     'JetBrains Mono', monospace;
+  --radius-sm:     4px;
+  --radius-md:     8px;
+}</code></pre>
+        <h3>Conexión frontend → backend</h3>
+        <pre><code>// src/main/kotlin/api/ApiClient.kt
+suspend fun fetchChecklist(): List&lt;ChecklistEstado&gt; {
+    val response = window.fetch("/api/v1/checklist").await()
+    return response.json().await()
+        .unsafeCast&lt;Array&lt;dynamic&gt;&gt;()
+        .map { ChecklistEstado(it.id, it.titulo, it.completado, it.fase) }
+}
+
+suspend fun toggleItem(id: String) {
+    window.fetch("/api/v1/checklist/$id/toggle",
+        RequestInit(method = "PATCH")
+    ).await()
+}</code></pre>
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="fe-1" data-key="fe-1"><label for="fe-1">Dependencias revisadas en <code>package.json</code></label></li>
+          <li><input type="checkbox" id="fe-2" data-key="fe-2"><label for="fe-2">Vistas principales en <code>src/main.js</code> y <code>Main.kt</code></label></li>
+          <li><input type="checkbox" id="fe-3" data-key="fe-3"><label for="fe-3">Estilos integrados (<code>app.css</code> + <code>design-tokens.css</code>)</label></li>
+          <li><input type="checkbox" id="fe-4" data-key="fe-4"><label for="fe-4">Frontend conectado al backend vía API REST</label></li>
+          <li><input type="checkbox" id="fe-5" data-key="fe-5"><label for="fe-5">Pruebas de interfaz y usabilidad completadas</label></li>
+          <li><input type="checkbox" id="fe-6" data-key="fe-6"><label for="fe-6">Componentes documentados</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_frontend_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

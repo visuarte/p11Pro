@@ -1,0 +1,53 @@
+[
+  {
+    "key": "postgres",
+    "label": "PostgreSQL",
+    "version": "42.7.4",
+    "kind": "database",
+    "status": "allowed",
+    "license": "PostgreSQL",
+    "risk": "low",
+    "reason": "Motor relacional soportado oficialmente por la plataforma"
+  },
+  {
+    "key": "exposed",
+    "label": "Exposed ORM",
+    "version": "0.50.1",
+    "kind": "orm",
+    "status": "allowed",
+    "license": "Apache-2.0",
+    "risk": "medium",
+    "reason": "ORM alineado con Kotlin y Exposed JDBC ya presente en el stack"
+  },
+  {
+    "key": "jwt",
+    "label": "JWT Auth",
+    "version": "0.12.6",
+    "kind": "security",
+    "status": "allowed",
+    "license": "Apache-2.0",
+    "risk": "medium",
+    "reason": "Autenticacion estandar revisable por Renovate, Dependabot o Snyk"
+  },
+  {
+    "key": "log4j-1.x",
+    "label": "Log4j 1.x",
+    "version": "1.2.17",
+    "kind": "logging",
+    "status": "blocked",
+    "license": "Apache-2.0",
+    "risk": "critical",
+    "reason": "EOL y con vulnerabilidades conocidas"
+  },
+  {
+    "key": "legacy-gpl-lib",
+    "label": "Legacy GPL Library",
+    "version": "0.9.1",
+    "kind": "misc",
+    "status": "blocked",
+    "license": "GPL-3.0",
+    "risk": "high",
+    "reason": "Licencia no apta para el catalogo corporativo"
+  }
+]
+

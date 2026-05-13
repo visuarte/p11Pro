@@ -1,4 +1,4 @@
-import rawProjectContext from "../../config/project-context.json";
+import rawProjectContext from '../../config/project-context.json';
 
 export interface ContextListItem {
   id: string;

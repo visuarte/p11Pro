@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: imprenta_user
+      POSTGRES_USER: imprenta_user
+      POSTGRES_PASSWORD: imprenta_pass
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh:ro
+    healthcheck:
+      # Check the specific database too (-d) because pg_isready defaults to connecting to the username as DB
+      # Use explicit user to avoid warnings about undefined variables
+      test: ["CMD-SHELL", "pg_isready -U imprenta_user -d ${POSTGRES_DB:-imprenta_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+    image: proyecto_19-app:latest
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db-data:
+

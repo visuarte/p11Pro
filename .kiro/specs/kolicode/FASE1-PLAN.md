@@ -14,17 +14,17 @@
 | Métrica | Valor | Notas |
 |---------|-------|-------|
 | **Subtasks Totales** | 20 | Divididas en 4 grupos principales |
-| **Completadas** | 4 (20%) | ✅ 1.1, 1.2, 1.5, (parcial) |
+| **Completadas** | 6 (30%) | ✅ 1.1, 1.2, 1.3, 1.4, 1.5 |
 | **En Progreso** | 0 | Pendiente retomar |
 | **Bloqueadas** | 0 | Ninguna bloqueada actualmente |
-| **Tiempo Usado** | ~8h | Setup CI/CD, TypeScript, estructura base |
-| **Tiempo Restante** | ~72h | ESLint/Prettier, Arquitectura, DB, Protocolos |
+| **Tiempo Usado** | ~12h | Setup CI/CD, TypeScript, ESLint/Prettier, Docker, estructura base |
+| **Tiempo Restante** | ~68h | Arquitectura, DB, Protocolos |
 
 ---
 
 ## ✅ Tasks Completadas
 
-### Task 1: Setup del Proyecto Base (60% completado)
+### Task 1: Setup del Proyecto Base (80% completado)
 
 - [x] **1.1 Inicializar monorepo** ✅
   - Estructura creada en `fusion-workspace/`
@@ -36,6 +36,20 @@
   - TypeScript 5.6.3 configurado
   - **Tiempo usado:** ~1h
 
+- [x] **1.3 Setup ESLint + Prettier + Husky** ✅
+  - `eslint.config.js` (ESLint 10 flat config)
+  - `.prettierrc` con formatting rules
+  - `.husky/pre-commit` hook con lint-staged
+  - Scripts: `lint`, `lint:fix`, `format`, `format:check`
+  - **Tiempo usado:** 1.5h (estimado: 8h)
+
+- [x] **1.4 Configurar Docker Compose** ✅
+  - `docker-compose.yml` con PostgreSQL 16 + Redis 7
+  - `.env.example` con variables configurables
+  - Scripts: `docker:up`, `docker:down`, `docker:restart`, `docker:logs`
+  - Health checks automáticos
+  - **Tiempo usado:** 2h (estimado: 12h)
+
 - [x] **1.5 Setup CI/CD pipeline** ✅
   - `.github/workflows/ci.yml`: build validation + npm ci fallback
   - `.github/workflows/qa-matrix.yml`: automated QA matrix
@@ -46,61 +60,31 @@
 
 ## ⏳ Tasks Pendientes - CRÍTICAS
 
-### Task 1: Setup del Proyecto Base (40% pendiente)
+### Task 1: Setup del Proyecto Base (20% pendiente)
 
-- [ ] **1.3 Setup ESLint + Prettier + Husky** 🔴 CRÍTICO
-  - **Estimado:** 8h
-  - **Prioridad:** ALTA (garantiza code quality)
-  - **Bloqueante para:** Task 2 (Arquitectura)
-  - **Acción:**
-    ```bash
-    # ESLint config
-    npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
-    npx eslint --init
-    
-    # Prettier
-    npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
-    
-    # Husky (pre-commit hooks)
-    npm install --save-dev husky lint-staged
-    npx husky install
-    ```
-  - **Entregables:**
-    - `.eslintrc.json` con reglas TypeScript/React
-    - `.prettierrc` con formatting rules
-    - `.husky/pre-commit` hook
-    - `package.json` scripts: `lint`, `format`, `lint:fix`
-
-- [ ] **1.4 Configurar Docker Compose** 🟡 MEDIA PRIORIDAD
-  - **Estimado:** 12h
+- [x] **1.4 Configurar Docker Compose** ✅ COMPLETADO
+  - **Tiempo Usado:** 2h (estimado: 12h)
   - **Prioridad:** MEDIA (necesario para Task 3)
-  - **Acción:**
-    ```yaml
-    # docker-compose.yml
-    services:
-      postgres:
-        image: postgres:16-alpine
-        environment:
-          POSTGRES_DB: kolicode
-          POSTGRES_USER: kolicode
-          POSTGRES_PASSWORD: ${DB_PASSWORD}
-        ports:
-          - "5432:5432"
-        volumes:
-          - postgres_data:/var/lib/postgresql/data
-      
-      redis:
-        image: redis:7-alpine
-        ports:
-          - "6379:6379"
-        volumes:
-          - redis_data:/data
+  - **Status:**
     ```
-  - **Entregables:**
-    - `docker-compose.yml` en raíz
-    - `.env.example` con variables requeridas
-    - Scripts: `npm run docker:up`, `docker:down`
-    - README con instrucciones de setup
+    ✅ docker-compose.yml (PostgreSQL 16 + Redis 7)
+    ✅ .env.example con configuración completa
+    ✅ Health checks automáticos (10s interval)
+    ✅ Scripts: docker:up, docker:down, docker:restart, docker:logs
+    ✅ README_DOCKER.md con instrucciones completas
+    ```
+  - **Entregables Completados:**
+    - ✅ `docker-compose.yml` en raíz
+    - ✅ `.env.example` con todas las variables
+    - ✅ Scripts shell: `docker-up.sh`, `docker-down.sh`, `docker-restart.sh`, `docker-logs.sh`
+    - ✅ `scripts/init-db.sql` (extensiones uuid-ossp, pg_trgm)
+    - ✅ `package.json` con npm scripts
+    - ✅ `README_DOCKER.md` con troubleshooting
+    - ✅ `TASK_1.4_VERIFICATION.md` con detalles completos
+  - **Servicios Funcionando:**
+    - ✅ PostgreSQL 16: `postgresql://kolicode:kolicode_dev_pass@localhost:5432/kolicode`
+    - ✅ Redis 7: `redis://localhost:6379`
+  - **Bloqueante para:** Task 3 (Base de Datos) ✅ DESBLOQUEADO
 
 ---
 

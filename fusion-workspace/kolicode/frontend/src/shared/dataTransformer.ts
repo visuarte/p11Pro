@@ -19,13 +19,14 @@ export function dataTransformerMiddleware(input: any): NodoVectorial | AjusteCol
       ...input,
       color: truncateColor(input.color),
     });
-    if (!parsed.success) throw new Error('NodoVectorial inválido: ' + JSON.stringify(parsed.error.issues));
+    if (!parsed.success)
+      throw new Error('NodoVectorial inválido: ' + JSON.stringify(parsed.error.issues));
     return parsed.data;
   } else {
     // Ajuste de Color
     const parsed = AjusteColorSchema.safeParse(input);
-    if (!parsed.success) throw new Error('AjusteColor inválido: ' + JSON.stringify(parsed.error.issues));
+    if (!parsed.success)
+      throw new Error('AjusteColor inválido: ' + JSON.stringify(parsed.error.issues));
     return parsed.data;
   }
 }
-

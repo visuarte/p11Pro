@@ -8,7 +8,7 @@ export const DebugPingPongButton: React.FC = () => {
       // Usamos el puente seguro inyectado en window
       const result = await window.api.invoke('debug:ping-pong', {
         message: '¡Ping!',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
       setResponse(JSON.stringify(result, null, 2));
     } catch (error) {
@@ -20,13 +20,9 @@ export const DebugPingPongButton: React.FC = () => {
   return (
     <div style={{ padding: '20px', border: '1px solid #444', borderRadius: '8px' }}>
       <h3>Bala Trazadora (IPC Ping-Pong)</h3>
-      <button onClick={handleFireBullet}>
-        🏓 Disparar al Core
-      </button>
+      <button onClick={handleFireBullet}>🏓 Disparar al Core</button>
       {response && (
-        <pre style={{ marginTop: '10px', background: '#1e1e1e', padding: '10px' }}>
-          {response}
-        </pre>
+        <pre style={{ marginTop: '10px', background: '#1e1e1e', padding: '10px' }}>{response}</pre>
       )}
     </div>
   );

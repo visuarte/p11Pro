@@ -1,0 +1,1 @@
+Ejecuta `uv sync --locked && uv run python main.py` en local.

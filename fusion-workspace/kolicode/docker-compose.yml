@@ -1,0 +1,134 @@
+
+services:
+  # PostgreSQL Database - Primary datastore
+  postgres:
+    image: postgres:16-alpine
+    container_name: kolicode-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-kolicode}
+      POSTGRES_USER: ${POSTGRES_USER:-kolicode}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-kolicode_dev_pass}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    networks:
+      - kolicode-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-kolicode} -d ${POSTGRES_DB:-kolicode}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=256MB"
+
+  # Redis Cache - Session storage, rate limiting, WebSocket presence
+  redis:
+    image: redis:7-alpine
+    container_name: kolicode-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - kolicode-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+
+
+  # ThunderKoli Backend (Node.js) - Security Service
+  # Uncomment when Task 2.5 is completed
+  # thunderkoli:
+  #   build:
+  #     context: ./thunderkoli
+  #     dockerfile: Dockerfile
+  #   container_name: kolicode-thunderkoli
+  #   restart: unless-stopped
+  #   environment:
+  #     NODE_ENV: ${NODE_ENV:-development}
+  #     PORT: 3001
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-kolicode}:${POSTGRES_PASSWORD:-kolicode_dev_pass}@postgres:5432/${POSTGRES_DB:-kolicode}
+  #     REDIS_URL: redis://redis:6379
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   networks:
+  #     - kolicode-network
+  #   volumes:
+  #     - ./thunderkoli/data:/app/data
+  #     - ./thunderkoli/logs:/app/logs
+
+  # UniversalEngine Backend (Kotlin) - AI Service
+  # Uncomment when Task 2.5 is completed
+  # universalengine:
+  #   build:
+  #     context: ./universalengine
+  #     dockerfile: Dockerfile
+  #   container_name: kolicode-universalengine
+  #   restart: unless-stopped
+  #   environment:
+  #     KTOR_ENV: ${NODE_ENV:-development}
+  #     PORT: 8080
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-kolicode}:${POSTGRES_PASSWORD:-kolicode_dev_pass}@postgres:5432/${POSTGRES_DB:-kolicode}
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #   networks:
+  #     - kolicode-network
+  #   volumes:
+  #     - ./universalengine/proyectos_generados:/app/proyectos_generados
+
+  # API Gateway (Bridge) - Node.js
+  # Uncomment when Task 2.4 is completed
+  # bridge:
+  #   build:
+  #     context: ./backend/bridge
+  #     dockerfile: Dockerfile
+  #   container_name: kolicode-bridge
+  #   restart: unless-stopped
+  #   environment:
+  #     NODE_ENV: ${NODE_ENV:-development}
+  #     PORT: 4000
+  #     THUNDERKOLI_URL: http://thunderkoli:3001
+  #     UNIVERSALENGINE_URL: http://universalengine:8080
+  #     DATABASE_URL: postgresql://${POSTGRES_USER:-kolicode}:${POSTGRES_PASSWORD:-kolicode_dev_pass}@postgres:5432/${POSTGRES_DB:-kolicode}
+  #     REDIS_URL: redis://redis:6379
+  #   ports:
+  #     - "4000:4000"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #   networks:
+  #     - kolicode-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  kolicode-network:
+    driver: bridge
+    name: kolicode-network
+

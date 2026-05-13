@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>P10pro · Estado Actual y Roadmap</title>
+    <link rel="stylesheet" href="../../src/assets/styles/design-tokens.css">
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Avenir Next", sans-serif;
+        color: var(--color-text);
+        background:
+          radial-gradient(circle at top left, rgba(15, 110, 86, 0.14), transparent 24%),
+          radial-gradient(circle at right center, rgba(27, 66, 88, 0.16), transparent 20%),
+          var(--color-bg);
+      }
+      main {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px 20px 64px;
+      }
+      .hero,
+      .note,
+      .card {
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 250, 241, 0.92);
+        box-shadow: var(--shadow-md);
+      }
+      .hero,
+      .note,
+      .card {
+        padding: clamp(1.25rem, 2vw, 1.7rem);
+      }
+      .hero h1,
+      .card h2 {
+        margin: 0;
+        font-family: "Iowan Old Style", "Palatino Linotype", serif;
+        letter-spacing: -0.03em;
+      }
+      .hero h1 {
+        font-size: clamp(2.6rem, 4vw, 4.2rem);
+        line-height: 0.94;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--color-muted);
+      }
+      p,
+      li {
+        color: var(--color-muted);
+        line-height: 1.72;
+      }
+      .hero p {
+        margin: 0.95rem 0 0;
+        max-width: 64rem;
+      }
+      .badges,
+      .paths {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-top: 1rem;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.38rem 0.72rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      .badge--ok { background: rgba(15, 110, 86, 0.14); color: var(--color-primary); }
+      .badge--warn { background: rgba(191, 92, 44, 0.14); color: var(--color-accent); }
+      .badge--info { background: rgba(27, 66, 88, 0.12); color: var(--color-highlight); }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .stack,
+      .roadmap,
+      .targets,
+      .lists {
+        display: grid;
+        gap: 1rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+      .card h2 {
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+      .card p { margin-top: 0.7rem; }
+      .card ul {
+        margin: 0.8rem 0 0;
+        padding-left: 1rem;
+      }
+      code {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        background: var(--color-surface-soft);
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-sm);
+        padding: 0.18rem 0.4rem;
+      }
+      .list-plain {
+        list-style: none;
+        margin: 0.9rem 0 0;
+        padding: 0;
+      }
+      .list-plain li + li {
+        margin-top: 0.9rem;
+        padding-top: 0.9rem;
+        border-top: 1px solid var(--color-line);
+      }
+      a { color: inherit; }
+      @media (max-width: 900px) {
+        .layout { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">P10pro · vista tecnica derivada</div>
+        <h1>Estado actual y roadmap del proyecto.</h1>
+        <p>
+          Este archivo conserva el nombre legado <code>codedesign_technical_docs_v2.html</code> solo por compatibilidad con
+          rutas existentes. Ya no es un documento canonico independiente: resume lo mismo que define
+          <code>config/project-context.json</code>.
+        </p>
+        <div class="badges">
+          <span class="badge badge--ok">alineado</span>
+          <span class="badge badge--info">vista derivada</span>
+          <span class="badge badge--warn">roadmap incluido</span>
+        </div>
+        <div class="paths">
+          <code>config/project-context.json</code>
+          <code>README.md</code>
+          <code>docs/index.html</code>
+        </div>
+      </section>
+
+      <section class="layout">
+        <div class="stack">
+          <article class="card">
+            <div class="eyebrow">Identidad</div>
+            <h2>P10pro hoy</h2>
+            <p>Base ejecutable minima para un editor creativo local con app web, documentacion alineada y prototipo independiente en Processing.</p>
+            <ul>
+              <li>Nombre oficial: <code>P10pro</code></li>
+              <li>Runtime web actual: <code>Vite + TypeScript + npm + CSS</code></li>
+              <li>Superficie creativa separada: <code>creative/processing/Sketch.pde</code></li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="eyebrow">Implementado hoy</div>
+            <h2>Capas vigentes</h2>
+            <div class="grid">
+              <div>
+                <p><strong>App web minima</strong></p>
+                <p>Shell local ejecutable con assets compartidos.</p>
+              </div>
+              <div>
+                <p><strong>Documentacion local</strong></p>
+                <p>Vistas y notas alineadas con el contrato.</p>
+              </div>
+              <div>
+                <p><strong>Processing</strong></p>
+                <p>Sketch local independiente del runtime web.</p>
+              </div>
+              <div>
+                <p><strong>Assets compartidos</strong></p>
+                <p>Sprite SVG, helper MotorIcon y design tokens.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="eyebrow">Roadmap</div>
+            <h2>Siguientes fases</h2>
+            <ul class="list-plain">
+              <li>
+                <strong>F1 y F2 completadas</strong>
+                <p>Contrato alineado y base ejecutable minima creada.</p>
+              </li>
+              <li>
+                <strong>F3 planned</strong>
+                <p>Herramientas reales del editor, canvas operativo y paneles con estado vivo.</p>
+              </li>
+              <li>
+                <strong>F4 planned</strong>
+                <p>Persistencia, exportacion e integraciones futuras sin romper la base minima.</p>
+              </li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="lists">
+          <article class="card">
+            <div class="eyebrow">Targets de ejecucion</div>
+            <h2>Como se abre</h2>
+            <ul class="list-plain">
+              <li>
+                <strong>App web</strong>
+                <p><code>npm install</code> · <code>npm run dev</code> · <code>npm run build</code></p>
+              </li>
+              <li>
+                <strong>Docs</strong>
+                <p><code>docs/index.html</code></p>
+              </li>
+              <li>
+                <strong>Processing</strong>
+                <p><code>creative/processing/Sketch.pde</code></p>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="eyebrow">No implementado</div>
+            <h2>Fuera del estado actual</h2>
+            <ul>
+              <li>Backend, auth, CRUD y API REST</li>
+              <li>IA local, Ollama y agentes</li>
+              <li>Vue, Three.js, Gradle multimodulo y NFC</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="eyebrow">Template only</div>
+            <h2>Herencia controlada</h2>
+            <p>
+              La narrativa full-stack heredada del generador universal solo puede mantenerse como referencia de plantilla o
+              roadmap. Nunca como descripcion vigente de lo que el repositorio ejecuta hoy.
+            </p>
+          </article>
+
+          <article class="note">
+            <div class="eyebrow">Gobernanza</div>
+            <p>
+              Ningun archivo puede llamarse canonico ni describir capacidades vigentes si no refleja directamente el contrato
+              en <code>config/project-context.json</code>.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

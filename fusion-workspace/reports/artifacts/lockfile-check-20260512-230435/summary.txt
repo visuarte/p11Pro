@@ -1,0 +1,1 @@
+  [INFO] package-lock.json presente en fusion-workspace/kolicode/frontend (dry-run). Para check completo: /Volumes/PROYECTOSAP/p11pro/fusion-workspace/scripts/validate-lockfiles-safe.sh --full

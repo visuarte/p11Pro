@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Test Runner on Change",
+  "description": "Automatically run related tests when test files are modified",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "**/*.test.js",
+      "**/*.spec.js"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm test -- --findRelatedTests",
+    "timeout": 120
+  }
+}

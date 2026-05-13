@@ -1,0 +1,1 @@
+{"nombre":"Legacy QA","cliente":"QA Team","tarea":"Legacy QA","descripcion":"Proyecto migrado desde contrato legacy ProjectApi.kt","dependencias":[],"timeline":[{"title":"Inicio legacy","type":"legacy-start","deadline":"2026-04-06","status":"planned","notes":"Equipo: Backend, Frontend"}]}

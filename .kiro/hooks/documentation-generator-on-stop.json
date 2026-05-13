@@ -1,0 +1,12 @@
+{
+  "name": "Documentation Generator on Stop",
+  "version": "1.0.0",
+  "description": "Automatically generate or update documentation when agent execution completes",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the changes made in this session and update documentation if needed:\n1. Update README.md if new features were added\n2. Update API documentation if endpoints changed\n3. Update architecture docs if structure changed\n4. Add inline code comments for complex logic\n5. Update CHANGELOG.md with changes\n\nOnly update documentation if significant changes were made. Be concise and clear."
+  }
+}

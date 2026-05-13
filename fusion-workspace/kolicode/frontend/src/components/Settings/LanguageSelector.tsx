@@ -11,23 +11,21 @@ export const LanguageSelector: React.FC<{
 }> = ({ current, onChange }) => {
   // Listar idiomas leyendo los archivos de la carpeta languages
   const [languages] = useState(() =>
-    fs.readdirSync(LANG_DIR)
-      .filter(f => !f.startsWith('.') && !f.endsWith('README') && !f.endsWith('LICENSE'))
+    fs
+      .readdirSync(LANG_DIR)
+      .filter((f) => !f.startsWith('.') && !f.endsWith('README') && !f.endsWith('LICENSE'))
   );
 
   return (
     <div>
       <label htmlFor="language-select">Idioma:</label>
-      <select
-        id="language-select"
-        value={current}
-        onChange={e => onChange(e.target.value)}
-      >
-        {languages.map(lang => (
-          <option key={lang} value={lang}>{lang}</option>
+      <select id="language-select" value={current} onChange={(e) => onChange(e.target.value)}>
+        {languages.map((lang) => (
+          <option key={lang} value={lang}>
+            {lang}
+          </option>
         ))}
       </select>
     </div>
   );
 };
-

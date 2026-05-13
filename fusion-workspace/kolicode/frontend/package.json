@@ -7,6 +7,10 @@
     "dev": "bash ./scripts/dev-check.sh && vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,css,md}\"",
     "build:mac": "electron-builder --mac --x64 --arm64",
     "build:mac:intel": "electron-builder --mac --x64",
     "build:mac:silicon": "electron-builder --mac --arm64",
@@ -21,15 +25,27 @@
     "prebuild:native": "node scripts/enforce-arm64.js",
     "build:native": "npm run prebuild:native && ./scripts/idempotent-rebuild.sh",
     "electron:build:mac": "npm run build:native && electron-builder --mac --arm64",
-    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\""
+    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\"",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.6.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.59.3",
+    "@typescript-eslint/parser": "^8.59.3",
     "electron": "41.2.2",
     "esbuild": "^0.28.0",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4",
+    "prettier": "^3.8.3",
     "typescript": "5.6.3",
+    "typescript-eslint": "^8.59.3",
     "vite": "5.4.21"
   },
   "build": {
@@ -80,5 +96,9 @@
     "react-dom": "^19.2.6",
     "zod": "^4.3.6",
     "zustand": "^5.0.13"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "eslint --cache --fix",
+    "*.{ts,tsx,js,jsx,css,md}": "prettier --write"
   }
 }

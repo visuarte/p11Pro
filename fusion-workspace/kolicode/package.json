@@ -1,0 +1,34 @@
+{
+  "name": "kolicode-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "KoliCode - Three-layer architecture with PostgreSQL and Redis",
+  "scripts": {
+    "docker:up": "bash scripts/docker-up.sh",
+    "docker:down": "bash scripts/docker-down.sh",
+    "docker:restart": "bash scripts/docker-restart.sh",
+    "docker:logs": "bash scripts/docker-logs.sh",
+    "docker:ps": "docker-compose ps",
+    "docker:clean": "docker-compose down -v && echo '✅ All volumes removed'",
+    "db:psql": "docker-compose exec postgres psql -U kolicode -d kolicode",
+    "db:backup": "docker-compose exec postgres pg_dump -U kolicode kolicode > backups/kolicode_$(date +%Y%m%d_%H%M%S).sql",
+    "redis:cli": "docker-compose exec redis redis-cli",
+    "setup": "cp .env.example .env && echo '✅ .env created. Please review and update values.'",
+    "dev:all": "npm run docker:up && cd frontend && npm run dev"
+  },
+  "workspaces": [
+    "frontend",
+    "backend/*"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/kolicode"
+  },
+  "author": "KoliCode Team",
+  "license": "PROPRIETARY"
+}
+

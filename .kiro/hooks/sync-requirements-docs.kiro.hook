@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Sync Requirements to Documentation",
+  "description": "When requirements.md is updated, review and update ARCHITECTURE.md, CHANGELOG.md, and DOCUMENTATION_SUMMARY.md to reflect new acceptance criteria, FR/NFR changes, and performance metrics",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      ".kiro/specs/kolicode/requirements.md"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "The requirements.md file has been updated. Please:\n1. Review the changes in .kiro/specs/kolicode/requirements.md\n2. Update fusion-workspace/kolicode/docs/ARCHITECTURE.md if architecture requirements (FR-ARC-*, NFR-ARC-*) or pipeline requirements (FR-ASSET-*, NFR-ASSET-*) changed\n3. Update fusion-workspace/kolicode/CHANGELOG.md if new features or performance metrics were added\n4. Update fusion-workspace/kolicode/DOCUMENTATION_SUMMARY.md to reflect the changes\n5. Ensure all FR/NFR IDs, acceptance criteria, and validation metrics are synchronized across documentation\n\nFocus on:\n- New or modified FR/NFR requirements\n- Changed performance metrics (p95, cache hit rates, response times)\n- New acceptance criteria in Given-When-Then format\n- Updated validation methods\n\nBe concise and only update sections that changed."
+  }
+}

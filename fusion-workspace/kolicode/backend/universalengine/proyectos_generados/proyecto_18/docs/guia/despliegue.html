@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Despliegue · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Despliegue</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="despliegue">
+      <div class="section-header open">
+        <span class="badge badge-warn">DESPLIEGUE</span>
+        <h2 class="section-title">Despliegue</h2>
+      </div>
+      <div class="section-body">
+        <h3>Scripts de build</h3>
+        <pre><code># Build frontend (genera dist/)
+cd frontend && npm run build
+
+# Build backend (genera JAR ejecutable)
+cd backend && ./gradlew shadowJar
+
+# Ejecutar en producción
+java -jar backend/build/libs/app-all.jar</code></pre>
+        <h3>Variables de entorno recomendadas</h3>
+        <pre><code>PORT=8080
+CORS_ORIGIN=https://tu-dominio.com
+ENV=production</code></pre>
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="dep-1" data-key="dep-1"><label for="dep-1">Scripts de despliegue automatizado configurados</label></li>
+          <li><input type="checkbox" id="dep-2" data-key="dep-2"><label for="dep-2">Artefactos de producción generados y verificados</label></li>
+          <li><input type="checkbox" id="dep-3" data-key="dep-3"><label for="dep-3">Pasos de despliegue documentados</label></li>
+          <li><input type="checkbox" id="dep-4" data-key="dep-4"><label for="dep-4">Checklist post-despliegue completado</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_despliegue_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

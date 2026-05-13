@@ -7,9 +7,7 @@ export const IccProfileSelector: React.FC<{
   onChange: (profile: string) => void;
   type: 'input' | 'output';
 }> = ({ selected, onChange, type }) => {
-  const [profiles] = useState<IccProfile[]>(() =>
-    listIccProfiles().filter(p => p.type === type)
-  );
+  const [profiles] = useState<IccProfile[]>(() => listIccProfiles().filter((p) => p.type === type));
 
   return (
     <div>
@@ -17,13 +15,14 @@ export const IccProfileSelector: React.FC<{
       <select
         id={`icc-profile-select-${type}`}
         value={selected}
-        onChange={e => onChange(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
       >
-        {profiles.map(profile => (
-          <option key={profile.name} value={profile.name}>{profile.name}</option>
+        {profiles.map((profile) => (
+          <option key={profile.name} value={profile.name}>
+            {profile.name}
+          </option>
         ))}
       </select>
     </div>
   );
 };
-

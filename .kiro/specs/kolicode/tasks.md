@@ -6,7 +6,7 @@
 **Estimación Total:** ~620 horas (15.5 semanas con 2 desarrolladores) (**antes**: 540h)  
 **Arquitectura:** Frontend → Bridge → Engine (3 capas)  
 **Metodología:** Test-Driven Development + Property-Based Testing  
-**Status:** En progreso - Fase 1 parcialmente completada, Fase 7 (DevOps/QA) activa
+**Status:** En progreso - Fase 1 30% completada (6/20), Fase 7 (DevOps/QA) activa
 
 ---
 
@@ -15,8 +15,19 @@
 ### 1. Setup del Proyecto Base
 - [x] 1.1 Inicializar monorepo (base estructura creada en fusion-workspace)
 - [x] 1.2 Configurar TypeScript workspace (tsconfig.json en frontend)
-- [ ] 1.3 Setup ESLint + Prettier + Husky (pendiente)
-- [ ] 1.4 Configurar Docker Compose (PostgreSQL + Redis)
+- [x] 1.3 Setup ESLint + Prettier + Husky ✅ **NUEVO**
+  - ✅ eslint.config.js (ESLint 10 flat config)
+  - ✅ .prettierrc con formatting rules
+  - ✅ .husky/pre-commit hook con lint-staged
+  - ✅ Scripts: lint, lint:fix, format, format:check
+  - ✅ Tiempo: 1.5h (estimado: 8h)
+- [x] 1.4 Configurar Docker Compose (PostgreSQL + Redis) ✅ **NUEVO**
+  - ✅ docker-compose.yml (PostgreSQL 16 + Redis 7)
+  - ✅ .env.example con variables configurables
+  - ✅ Scripts: docker:up, docker:down, docker:restart, docker:logs
+  - ✅ Health checks automáticos
+  - ✅ README_DOCKER.md con documentación completa
+  - ✅ Tiempo: 2h (estimado: 12h)
 - [x] 1.5 Setup CI/CD pipeline (GitHub Actions)
   - ✅ .github/workflows/ci.yml: build + npm ci || npm install fallback
   - ✅ .github/workflows/qa-matrix.yml: automated QA (build, smoke tests, artifacts)
@@ -406,21 +417,21 @@
 | **Total Tasks** | 156 | 167 | +11 | +7.1% |
 | **Total Horas** | 540h | 620h | +80h | +14.8% |
 | **Semanas (2 devs)** | 13.5 | 15.5 | +2 | +14.8% |
-| **Tareas Completadas** | ~10 | ~17 | +7 | +70% |
-| **% Completado** | ~6% | ~10% | +4pp | +67% |
+| **Tareas Completadas** | ~10 | ~20 | +10 | +100% |
+| **% Completado** | ~6% | ~12% | +6pp | +100% |
 
 ### Desglose por Fase: Estimaciones Detalladas
 
 | Fase | Tasks | Horas | Semanas | % Total | Estado |
 |------|-------|-------|---------|---------|--------|
-| 1. Infraestructura | 20 | 80h | 2.0w | 12.9% | 20% ✅ |
+| 1. Infraestructura | 20 | 80h | 2.0w | 12.9% | 30% ✅ |
 | 2. Frontend | 40 | 160h | 4.0w | 25.8% | 0% ⏳ |
 | 3. Bridge | 40 | 120h | 3.0w | 19.4% | 0% ⏳ |
 | 4. Engine | 30 | 80h | 2.0w | 12.9% | 0% ⏳ |
 | 5. Features | 20 | 60h | 1.5w | 9.7% | 0% ⏳ |
 | 6. Testing | 6 | 40h | 1.0w | 6.5% | 0% ⏳ |
 | **7. DevOps/QA** | **11** | **80h** | **2.0w** | **12.9%** | **27% ✅** |
-| **TOTAL** | **167** | **620h** | **15.5w** | **100%** | **10% ✅** |
+| **TOTAL** | **167** | **620h** | **15.5w** | **100%** | **12% ✅** |
 
 ### Impacto de Nueva Fase 7 (DevOps/QA)
 
@@ -435,10 +446,11 @@
 ### Timeline Realista (2 Desarrolladores)
 
 **Sprint Actual (Semana 1-2):**
-- Fase 1: Completar 1.3 (ESLint/Prettier/Husky) - 8h
-- Fase 1: Iniciar 2.1-2.5 (Arquitectura Base) - 16h
-- Fase 7: Continuar 37.3-37.6 (CI/CD advanced) - 20h
-- **Total**: ~44h (~5.5 días)
+- ✅ Fase 1: Completar 1.3 (ESLint/Prettier/Husky) - 1.5h ✅ COMPLETADO
+- ✅ Fase 1: Completar 1.4 (Docker Compose) - 2h ✅ COMPLETADO
+- ⏳ Fase 1: Iniciar 2.1-2.5 (Arquitectura Base) - 16h
+- ⏳ Fase 7: Continuar 37.3-37.6 (CI/CD advanced) - 20h
+- **Total Sprint**: 39.5h (~5 días) - **8.7% completado del sprint**
 
 **Sprint 2 (Semana 3-4):**
 - Fase 2: Task 5.3-5.5 (React Router, Zustand, Electron) - 32h
@@ -461,8 +473,11 @@
 
 ### Notas sobre Estimaciones
 
-1. **Fase 1 (20% completada):** Tiempo real empleado ~8h, estimado 16h más para completar (ESLint/Prettier/Husky)
-2. **Fase 7 (27% completada):** Faseactualmente activa; 3 sub-tasks completadas ya (CI, QA Automation, Build Utils)
+1. **Fase 1 (30% completada):** 
+   - Tiempo real empleado: ~12h (1.1: 2h, 1.2: 1h, 1.3: 1.5h, 1.4: 2h, 1.5: 5h)
+   - Estimado restante: ~14h para completar Tasks 2-4 (Arquitectura Base, DB, Protocolos)
+   - Eficiencia: ~40% más rápido que estimado (12h real vs 20h estimado)
+2. **Fase 7 (27% completada):** Fase actualmente activa; 3 sub-tasks completadas ya (CI, QA Automation, Build Utils)
 3. **Paralelización:** Fase 7 puede ejecutarse en paralelo con Fase 2, acelerando delivery de value
 4. **Buffer:** +20% en cada sprint para mitigación de riesgos, troubleshooting, PR reviews (~124h adicionales no estimados)
 5. **Dependencias:** Fase 1 debe completarse antes Fase 2-4; Tasks dentro cada fase pueden ser paralelas
@@ -496,12 +511,14 @@ Cada task debe cumplir:
 
 ---
 
-**Versión:** 1.1.0  
+**Versión:** 1.2.0  
 **Fecha última revisión:** 2026-05-13  
-**Estado:** En progreso - Fase 1 (~20% completada), Fase 7 (DevOps/QA) activa  
+**Estado:** En progreso - Fase 1 (~30% completada, 6/20 tasks), Fase 7 (DevOps/QA) activa  
 **Metodología:** TDD + Property-Based Testing  
 **Próximos hitos:**
-1. Completar Task 1.3 (ESLint + Prettier + Husky)
-2. Avanzar en Task 2 (Frontend Core - React Router, Zustand, Canvas)
-3. Continuar con Task 3 (Bridge - Express, WebSocket, gRPC)
-4. Completar ciclo de QA en PRs #16 y #18, tomar decisión de merge
+1. ✅ ~~Completar Task 1.3 (ESLint + Prettier + Husky)~~ **COMPLETADO**
+2. ✅ ~~Completar Task 1.4 (Docker Compose)~~ **COMPLETADO**
+3. Avanzar en Task 2 (Arquitectura Base - Directorios, Electron, React, Bridge, Engine)
+4. Iniciar Task 3 (Base de Datos - PostgreSQL schema, Redis, Migraciones)
+5. Continuar Task 4 (Protocolos - gRPC, WebSocket, Protobuf)
+6. Completar ciclo de QA en PRs #16 y #18, tomar decisión de merge

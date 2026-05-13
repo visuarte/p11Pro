@@ -34,7 +34,10 @@ export const useSettingsStore = create<SettingsState>()(
       set({ config: { ...prevConfig, ...updates }, isUpdating: true });
       try {
         // Simula envo al backend/IPC (reemplaza por tu lgica real)
-        const response: any = await window.ipcRenderer?.invoke?.('update-settings', { ...prevConfig, ...updates });
+        const response: any = await window.ipcRenderer?.invoke?.('update-settings', {
+          ...prevConfig,
+          ...updates,
+        });
         if (response && response.success) {
           set({ isUpdating: false });
         } else {

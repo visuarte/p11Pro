@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integración y pruebas E2E · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Integración y pruebas E2E</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="integracion">
+      <div class="section-header open">
+        <span class="badge badge-warn">INTEGRACIÓN</span>
+        <h2 class="section-title">Integración y pruebas E2E</h2>
+      </div>
+      <div class="section-body">
+        <h3>Flujo completo a validar</h3>
+        <pre><code>Usuario → index.html → Fritz2 UI
+  → GET /api/v1/checklist      → ChecklistRepo
+  → GET /api/v1/webgl/config   → WebGlConfig
+  → PATCH /api/v1/checklist/id → toggle estado
+  → UI actualiza sin recarga</code></pre>
+        <h3>Manejo de errores</h3>
+        <pre><code>// Patrón recomendado en frontend
+suspend fun safeToggle(id: String) {
+    try {
+        toggleItem(id)
+    } catch (e: Exception) {
+        console.error("Error al actualizar item $id: ${e.message}")
+        // Mostrar feedback visual al usuario
+        showError("No se pudo actualizar. Reintenta.")
+    }
+}</code></pre>
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="int-1" data-key="int-1"><label for="int-1">Pruebas E2E del flujo completo superadas</label></li>
+          <li><input type="checkbox" id="int-2" data-key="int-2"><label for="int-2">Comunicación frontend ↔ backend validada</label></li>
+          <li><input type="checkbox" id="int-3" data-key="int-3"><label for="int-3">Errores manejados con feedback visual</label></li>
+          <li><input type="checkbox" id="int-4" data-key="int-4"><label for="int-4">Validaciones cruzadas sin inconsistencias</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_integracion_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Architecture Compliance Check",
+  "description": "Validates that file changes follow the Unified Design Studio architecture: microservices boundaries, naming conventions, port assignments, security practices, and communication patterns",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "fusion-workspace/unified-design-studio/backend/**/*.ts",
+      "fusion-workspace/unified-design-studio/backend/**/*.js",
+      "fusion-workspace/unified-design-studio/frontend/**/*.ts",
+      "fusion-workspace/unified-design-studio/frontend/**/*.tsx",
+      "fusion-workspace/unified-design-studio/backend/**/*.kt"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review this file change against Unified Design Studio architecture guidelines:\n\n1. **Microservices Boundaries**: Ensure no direct service-to-service calls (must go through API Gateway)\n2. **Naming Conventions**: Verify kebab-case for files, PascalCase for classes, camelCase for functions\n3. **Port Assignments**: Check correct ports (Frontend:5173, Gateway:4000, ThunderKoli:3001, UniversalEngine:8080)\n4. **Security**: Validate no secrets in code, input validation, audit logging for sensitive operations\n5. **Communication Patterns**: Frontend must use API Gateway, not direct backend calls\n6. **Error Handling**: Ensure standard error response format with code, message, details, timestamp\n7. **File Organization**: Verify files are in correct directories (controllers, services, models, etc.)\n\nIf violations found, suggest corrections. If compliant, acknowledge briefly."
+  }
+}

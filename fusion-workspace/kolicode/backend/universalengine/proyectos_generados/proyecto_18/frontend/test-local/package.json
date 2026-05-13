@@ -1,0 +1,14 @@
+{
+  "name": "kotguai-test-local",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local websocket & test server for KotguaiScene",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}
+

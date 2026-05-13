@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>P10pro · Error Codes</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef3f8;
+      --text: #122033;
+      --muted: #526274;
+      --muted-soft: #6d7c8d;
+      --border: #d8e0ea;
+      --accent: #0f6e56;
+      --accent-soft: #e3f4ee;
+      --blue-soft: #e6f1fb;
+      --blue-text: #0c447c;
+      --purple-soft: #eeedfe;
+      --purple-text: #3c3489;
+      --amber-soft: #faeeda;
+      --amber-text: #633806;
+      --coral-soft: #faece7;
+      --coral-text: #712b13;
+      --red-soft: #fcebeb;
+      --red-text: #791f1f;
+      --radius: 18px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f1724;
+        --surface: #162130;
+        --surface-soft: #1c293a;
+        --text: #ebf1f8;
+        --muted: #aab6c4;
+        --muted-soft: #91a0b0;
+        --border: #253447;
+        --accent: #7bd5b4;
+        --accent-soft: #12372e;
+        --blue-soft: #0c447c;
+        --blue-text: #b5d4f4;
+        --purple-soft: #3c3489;
+        --purple-text: #cecbf6;
+        --amber-soft: #633806;
+        --amber-text: #fac775;
+        --coral-soft: #712b13;
+        --coral-text: #f5c4b3;
+        --red-soft: #791f1f;
+        --red-text: #f7c1c1;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(15, 110, 86, 0.10), transparent 26%),
+        radial-gradient(circle at right center, rgba(55, 138, 221, 0.08), transparent 22%),
+        var(--bg);
+      color: var(--text);
+    }
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .hero, .card, .summary {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.03);
+    }
+    .hero {
+      padding: 26px;
+      margin-bottom: 18px;
+      background:
+        radial-gradient(circle at top right, rgba(83, 74, 183, 0.12), transparent 34%),
+        radial-gradient(circle at left center, rgba(29, 158, 117, 0.08), transparent 24%),
+        var(--surface);
+    }
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted-soft);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.05;
+    }
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .meta-row, .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .badge-teal { background: var(--accent-soft); color: var(--accent); }
+    .badge-blue { background: var(--blue-soft); color: var(--blue-text); }
+    .badge-purple { background: var(--purple-soft); color: var(--purple-text); }
+    .badge-amber { background: var(--amber-soft); color: var(--amber-text); }
+    .badge-coral { background: var(--coral-soft); color: var(--coral-text); }
+    .badge-red { background: var(--red-soft); color: var(--red-text); }
+    .summary {
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .summary-item {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .summary-item strong {
+      display: block;
+      font-size: 24px;
+      line-height: 1;
+      margin-top: 4px;
+    }
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted-soft);
+      font-weight: 600;
+      margin: 20px 0 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      padding: 18px;
+    }
+    .code-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .code {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.03em;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+      background: var(--accent-soft);
+      padding: 9px 12px;
+      border-radius: 999px;
+    }
+    code {
+      background: var(--surface-soft);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">P10pro · error handling</div>
+      <h1>Error Codes</h1>
+      <p>Diseño base para comunicar errores del sistema con el mismo lenguaje visual del proyecto. Esta vista sirve tanto para documentación como para inspiración de futuras pantallas de error en la aplicación.</p>
+      <div class="meta-row">
+        <span class="badge badge-teal">Alineado con el proyecto</span>
+        <span class="badge badge-blue">Listo para docs</span>
+        <span class="badge badge-purple">Escalable</span>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="eyebrow">Resumen</div>
+      <p>La propuesta distingue errores de acceso, validación, conflicto y disponibilidad. Cada bloque mantiene tono operativo, causa resumida y siguiente acción sugerida para que el usuario no se quede sin salida.</p>
+      <div class="summary-grid">
+        <div class="summary-item"><span class="eyebrow" style="margin:0">Errores cliente</span><strong>4xx</strong><p>Entrada, permisos o rutas.</p></div>
+        <div class="summary-item"><span class="eyebrow" style="margin:0">Errores servidor</span><strong>5xx</strong><p>Fallo interno o servicio no disponible.</p></div>
+        <div class="summary-item"><span class="eyebrow" style="margin:0">Tono</span><strong>Claro</strong><p>Mensaje breve, sin dramatismo.</p></div>
+        <div class="summary-item"><span class="eyebrow" style="margin:0">Acción</span><strong>Guiada</strong><p>Siempre hay siguiente paso.</p></div>
+      </div>
+    </section>
+
+    <div class="section-label">Catálogo principal</div>
+    <section class="grid">
+      <article class="card">
+        <div class="code-row">
+          <div class="code">400</div>
+          <span class="badge badge-amber">Solicitud inválida</span>
+        </div>
+        <div class="title">Bad Request</div>
+        <div class="desc">La petición llegó, pero faltan campos, formato o parámetros esperados por el sistema.</div>
+        <ul class="list">
+          <li>Validar payload o query params.</li>
+          <li>Mostrar el campo conflictivo cuando exista contexto.</li>
+          <li>Registrar detalle técnico con <code>requestId</code>.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">401</div>
+          <span class="badge badge-blue">Autenticación</span>
+        </div>
+        <div class="title">Unauthorized</div>
+        <div class="desc">La operación requiere sesión válida o un token vigente antes de continuar.</div>
+        <ul class="list">
+          <li>Invitar a iniciar sesión de nuevo.</li>
+          <li>Explicar si el token expiró o falta.</li>
+          <li>Preservar la intención del usuario para reintento.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">403</div>
+          <span class="badge badge-coral">Permisos</span>
+        </div>
+        <div class="title">Forbidden</div>
+        <div class="desc">La identidad es conocida, pero no tiene permisos para completar la acción solicitada.</div>
+        <ul class="list">
+          <li>Mostrar el rol requerido cuando sea posible.</li>
+          <li>Evitar lenguaje ambiguo con 401.</li>
+          <li>Ofrecer volver al recurso permitido.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">404</div>
+          <span class="badge badge-purple">Ruta o recurso</span>
+        </div>
+        <div class="title">Not Found</div>
+        <div class="desc">El recurso no existe, fue movido o la URL solicitada ya no está disponible.</div>
+        <ul class="list">
+          <li>Ofrecer acceso a inicio o navegación principal.</li>
+          <li>Permitir volver al reporte oficial o índice.</li>
+          <li>Registrar la ruta fallida para análisis.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">409</div>
+          <span class="badge badge-amber">Conflicto</span>
+        </div>
+        <div class="title">Conflict</div>
+        <div class="desc">La operación no puede completarse porque el estado actual del recurso entra en conflicto con la solicitud.</div>
+        <ul class="list">
+          <li>Útil para edición concurrente o versión antigua.</li>
+          <li>Sugerir refrescar antes de reintentar.</li>
+          <li>Adjuntar versión esperada y versión actual.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">422</div>
+          <span class="badge badge-blue">Validación</span>
+        </div>
+        <div class="title">Unprocessable Entity</div>
+        <div class="desc">La estructura de la solicitud es correcta, pero los datos no superan validaciones de negocio o integridad.</div>
+        <ul class="list">
+          <li>Resaltar reglas incumplidas.</li>
+          <li>Asociar cada error a un campo concreto.</li>
+          <li>Evitar mensajes genéricos tipo “ha fallado”.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">500</div>
+          <span class="badge badge-red">Fallo interno</span>
+        </div>
+        <div class="title">Internal Server Error</div>
+        <div class="desc">El sistema encontró una condición no controlada mientras intentaba completar la operación.</div>
+        <ul class="list">
+          <li>No exponer stacktrace al usuario final.</li>
+          <li>Mostrar un mensaje sobrio y accionable.</li>
+          <li>Registrar contexto para soporte y rollback.</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <div class="code-row">
+          <div class="code">503</div>
+          <span class="badge badge-red">Disponibilidad</span>
+        </div>
+        <div class="title">Service Unavailable</div>
+        <div class="desc">El servicio está temporalmente fuera de línea, degradado o en mantenimiento.</div>
+        <ul class="list">
+          <li>Indicar si conviene reintentar más tarde.</li>
+          <li>Mostrar estado parcial si existe degradación.</li>
+          <li>Reservar esta vista para incidentes temporales.</li>
+        </ul>
+      </article>
+    </section>
+
+    <div class="section-label">Uso recomendado</div>
+    <section class="summary">
+      <p>Si más adelante lo llevas a la aplicación, la convención visual ya está decidida: código grande, estado en badge, explicación en una frase y una lista corta de acciones. Para 404 y 500, conviene además incluir CTA primario a <code>Inicio</code> y secundario a <code>Volver</code> o <code>Reintentar</code>.</p>
+      <div class="actions">
+        <a class="link" href="./index.html">Volver a docs</a>
+        <a class="link" href="./inicio/codedesign_technical_docs_v2.html">Abrir reporte oficial</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

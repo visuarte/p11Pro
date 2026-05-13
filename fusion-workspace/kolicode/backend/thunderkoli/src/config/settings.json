@@ -1,0 +1,10 @@
+{
+    "provider": "deepseek",
+    "deepseek_key": "sk-995a85ccf5674e7eaf30d5038e94a059",
+    "ollama_model": "deepseek-coder:1.3b",
+    "deepseek_model": "deepseek-chat",
+    "google_client_id": "admin",
+    "google_client_secret": "admin12345",
+    "whatsapp_busy_mode": true,
+    "sync_interval": 3600
+}

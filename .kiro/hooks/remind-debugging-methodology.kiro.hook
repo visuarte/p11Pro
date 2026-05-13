@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Remind Debugging Methodology on Start",
+  "description": "Al iniciar una nueva conversación, recordar al agente que debe seguir la metodología de debugging de tres capas de KoliCode y usar el template de Pedido de Ejecución Técnica para implementaciones de diagnóstico",
+  "version": "1",
+  "when": {
+    "type": "promptSubmit"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Recordatorio: Estás trabajando en KoliCode, que usa Arquitectura de Tres Capas (Frontend → Bridge → Engine).\n\n**Metodología de Debugging Activa:**\n- Reproducción consistente antes de tocar código\n- Bisección para aislar problemas por capa\n- Logging estratégico (ERROR/WARN/INFO/DEBUG)\n- Tests de regresión obligatorios para bug fixes\n- Análisis de causa raíz documentado\n\n**Para implementar diagnósticos:**\nUsa el template de Pedido de Ejecución Técnica con:\n1. Punto de Control (capa y ubicación exacta)\n2. Contrato de Datos (variables a capturar)\n3. Criterio de Activación (cuándo capturar)\n4. Estrategia de Persistencia (@seald-io/nedb)\n5. Formato de Salida (bloque quirúrgico)\n6. Plan de Rollback (flag en .env)\n\n**Referencia:** `.kiro/steering/debugging-methodology.md`\n\nContinúa con la solicitud del usuario aplicando estas prácticas cuando sea relevante."
+  }
+}

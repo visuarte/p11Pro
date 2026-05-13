@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>P10pro · Docs</title>
+    <link rel="stylesheet" href="../src/assets/styles/design-tokens.css">
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Avenir Next", sans-serif;
+        color: var(--color-text);
+        background:
+          radial-gradient(circle at top left, rgba(15, 110, 86, 0.14), transparent 26%),
+          radial-gradient(circle at 90% 10%, rgba(191, 92, 44, 0.16), transparent 18%),
+          var(--color-bg);
+      }
+      .shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 88px minmax(0, 1fr);
+      }
+      .rail {
+        border-right: 1px solid var(--color-line);
+        background: rgba(255, 250, 241, 0.72);
+        backdrop-filter: blur(16px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-5) 0;
+      }
+      .brand,
+      .tool {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+      }
+      .brand {
+        background: var(--color-text);
+        color: var(--color-primary-contrast);
+        font-weight: 700;
+      }
+      .tool {
+        color: var(--color-muted);
+        border: 1px solid transparent;
+      }
+      main {
+        padding: var(--space-6);
+        max-width: 1180px;
+        width: 100%;
+      }
+      .hero,
+      .card,
+      .note {
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 250, 241, 0.92);
+        box-shadow: var(--shadow-md);
+      }
+      .hero,
+      .card,
+      .note {
+        padding: clamp(1.2rem, 2vw, 1.7rem);
+      }
+      .hero h1,
+      .section-title {
+        margin: 0;
+        font-family: "Iowan Old Style", "Palatino Linotype", serif;
+        letter-spacing: -0.03em;
+      }
+      .hero h1 {
+        font-size: clamp(2.4rem, 4vw, 4rem);
+        line-height: 0.95;
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--color-muted);
+      }
+      .hero p,
+      .card p,
+      .note p,
+      li {
+        color: var(--color-muted);
+        line-height: 1.7;
+      }
+      .hero p {
+        max-width: 62rem;
+        margin-top: 0.9rem;
+      }
+      .hero-actions,
+      .chip-row,
+      .path-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1rem;
+      }
+      .button,
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border-radius: 999px;
+      }
+      .button {
+        padding: 0.8rem 1rem;
+        border: 1px solid var(--color-line);
+        text-decoration: none;
+        color: var(--color-text);
+        background: var(--color-surface);
+        box-shadow: var(--shadow-sm);
+        font-weight: 600;
+      }
+      .button--ghost { background: transparent; }
+      .chip {
+        padding: 0.35rem 0.7rem;
+        font-size: 0.76rem;
+        font-weight: 700;
+      }
+      .chip--ok { background: rgba(15, 110, 86, 0.14); color: var(--color-primary); }
+      .chip--warn { background: rgba(191, 92, 44, 0.14); color: var(--color-accent); }
+      .chip--info { background: rgba(27, 66, 88, 0.12); color: var(--color-highlight); }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .sections {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .section-title {
+        font-size: 1.7rem;
+        line-height: 1;
+      }
+      .card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+      .icon-slot { display: inline-flex; line-height: 0; }
+      ul {
+        margin: 0.8rem 0 0;
+        padding-left: 1rem;
+      }
+      code {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 0.8rem;
+        background: var(--color-surface-soft);
+        border: 1px solid var(--color-line);
+        border-radius: var(--radius-sm);
+        padding: 0.18rem 0.4rem;
+      }
+      @media (max-width: 760px) {
+        .shell { grid-template-columns: 1fr; }
+        .rail {
+          flex-direction: row;
+          justify-content: center;
+          border-right: none;
+          border-bottom: 1px solid var(--color-line);
+        }
+        main { padding: var(--space-4); }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="rail" aria-label="Navegacion visual">
+        <div class="brand">P10</div>
+        <div class="tool"><span class="icon-slot" data-icon="home"></span></div>
+        <div class="tool"><span class="icon-slot" data-icon="notes"></span></div>
+        <div class="tool"><span class="icon-slot" data-icon="layers"></span></div>
+      </aside>
+
+      <main>
+        <section class="hero">
+          <div class="eyebrow">P10pro · portal documental</div>
+          <h1>Documentacion alineada con el estado real del proyecto.</h1>
+          <p>
+            Este portal resume lo que existe hoy en disco: una app web minima, documentacion derivada del contrato y un
+            sketch local en Processing. Todo lo no implementado se marca como `planned` o `template_only`.
+          </p>
+          <div class="chip-row">
+            <span class="chip chip--ok">implementado</span>
+            <span class="chip chip--warn">planned</span>
+            <span class="chip chip--info">template_only</span>
+          </div>
+          <div class="path-row">
+            <code>config/project-context.json</code>
+            <code>README.md</code>
+            <code>docs/inicio/codedesign_technical_docs_v2.html</code>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="../index.html">Abrir app web</a>
+            <a class="button button--ghost" href="./inicio/codedesign_technical_docs_v2.html">Abrir vista tecnica</a>
+            <a class="button button--ghost" href="../creative/processing/Sketch.pde">Ver Sketch.pde</a>
+          </div>
+        </section>
+
+        <section class="sections">
+          <div class="grid">
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Implementado hoy</div>
+                  <h2 class="section-title">App web minima</h2>
+                </div>
+                <span class="chip chip--ok">vite</span>
+              </div>
+              <p>Runtime local con TypeScript, shell visual del editor, tema y assets compartidos.</p>
+              <ul>
+                <li><code>npm install</code></li>
+                <li><code>npm run dev</code></li>
+                <li><code>npm run build</code></li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Implementado hoy</div>
+                  <h2 class="section-title">Documentacion local</h2>
+                </div>
+                <span class="chip chip--ok">aligned</span>
+              </div>
+              <p>Vistas HTML y notas markdown derivadas del contrato central del proyecto.</p>
+              <ul>
+                <li><a href="./README_CREATIVE.md">README creativo</a></li>
+                <li><a href="./NOTES.md">Notas</a></li>
+                <li><a href="./RESOURCES.md">Recursos</a></li>
+              </ul>
+            </article>
+
+            <article class="card">
+              <div class="card-top">
+                <div>
+                  <div class="eyebrow">Implementado hoy</div>
+                  <h2 class="section-title">Processing</h2>
+                </div>
+                <span class="chip chip--ok">local</span>
+              </div>
+              <p>Sketch independiente para exploracion visual. No comparte runtime con la app web.</p>
+              <ul>
+                <li><code>creative/processing/Sketch.pde</code></li>
+                <li><code>creative/processing/run-local.sh</code></li>
+              </ul>
+            </article>
+          </div>
+
+          <article class="note">
+            <div class="card-top">
+              <div>
+                <div class="eyebrow">Planned y template_only</div>
+                <h2 class="section-title">Lo que queda fuera del estado actual</h2>
+              </div>
+            </div>
+            <p>
+              Backend, auth, API REST, IA local, Ollama, Vue, Three.js, NFC y cualquier narrativa full-stack heredada del
+              generador universal no son capacidades vigentes del proyecto hoy.
+            </p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../src/assets/js/icons.js"></script>
+    <script>
+      MotorIcon.setBase("../src/assets/icons/icons.svg");
+      document.querySelectorAll("[data-icon]").forEach((node) => {
+        node.innerHTML = MotorIcon.icon(node.dataset.icon, 18);
+      });
+    </script>
+  </body>
+</html>

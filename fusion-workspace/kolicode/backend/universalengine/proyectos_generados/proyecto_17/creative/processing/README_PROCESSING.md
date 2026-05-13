@@ -1,0 +1,1 @@
+Abre `Sketch.pde` en Processing IDE y ejecuta localmente.

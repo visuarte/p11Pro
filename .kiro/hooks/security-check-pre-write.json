@@ -1,0 +1,13 @@
+{
+  "name": "Security Check Before Write",
+  "version": "1.0.0",
+  "description": "Validate security implications before executing write operations",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": ["write"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before executing this write operation, verify:\n1. No sensitive data (passwords, API keys, tokens) is being written\n2. File permissions are appropriate\n3. No SQL injection or XSS vulnerabilities are introduced\n4. Encryption is used for sensitive data\n5. Input validation is present\n\nIf everything is secure, proceed with the operation. If issues are found, explain them clearly and suggest fixes."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Architecture Validation After Write",
+  "description": "Validate that code changes follow the project architecture after write operations",
+  "version": "1",
+  "when": {
+    "type": "postToolUse",
+    "toolTypes": [
+      "write"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Validate that the changes just made follow the Unified Design Studio architecture:\n1. Files are in the correct directories (backend/thunderkoli, backend/universalengine, frontend, etc.)\n2. Microservices boundaries are respected\n3. API Gateway patterns are followed\n4. No circular dependencies are introduced\n5. Naming conventions are consistent\n\nIf architecture is correct, acknowledge briefly. If issues exist, explain and suggest corrections."
+  }
+}

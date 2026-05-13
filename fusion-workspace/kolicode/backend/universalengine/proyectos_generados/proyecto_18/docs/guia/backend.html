@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend — Ktor · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Backend — Ktor</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="backend">
+      <div class="section-header open">
+        <span class="badge badge-green">BACKEND</span>
+        <h2 class="section-title">Backend — Ktor</h2>
+      </div>
+      <div class="section-body">
+        <h3>Archivos clave</h3>
+        <p><code>backend/build.gradle.kts</code> — <code>ChecklistApi.kt</code> — <code>ChecklistEstado.kt</code></p>
+        <h3>Lógica de ChecklistEstado.kt</h3>
+        <pre><code>@Serializable
+data class ChecklistEstado(
+    val id:          String,
+    val titulo:      String,
+    val completado:  Boolean = false,
+    val fase:        String,
+    val actualizadoEn: Long = System.currentTimeMillis()
+)
+
+// Repositorio en memoria (reemplazar con DB en producción)
+object ChecklistRepo {
+    private val items = mutableListOf&lt;ChecklistEstado&gt;()
+    fun getAll()  = items.toList()
+    fun toggle(id: String) {
+        val idx = items.indexOfFirst { it.id == id }
+        if (idx >= 0) items[idx] = items[idx].copy(
+            completado    = !items[idx].completado,
+            actualizadoEn = System.currentTimeMillis()
+        )
+    }
+}</code></pre>
+        <h3>Endpoints REST — ChecklistApi.kt</h3>
+        <pre><code>fun Application.checklistRoutes() {
+    routing {
+        route("/api/v1") {
+            get("/checklist") {
+                call.respond(ChecklistRepo.getAll())
+            }
+            patch("/checklist/{id}/toggle") {
+                val id = call.parameters["id"]
+                    ?: return@patch call.respond(HttpStatusCode.BadRequest)
+                ChecklistRepo.toggle(id)
+                call.respond(HttpStatusCode.OK)
+            }
+            get("/webgl/config") {
+                call.respond(WebGlConfig(
+                    fov = 75.0, background = "#0d0d1a",
+                    mesh = "torus", wireframe = true
+                ))
+            }
+        }
+    }
+}</code></pre>
+        <h3>Checklist</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="b-1" data-key="b-1"><label for="b-1">Revisión y limpieza de <code>build.gradle.kts</code></label></li>
+          <li><input type="checkbox" id="b-2" data-key="b-2"><label for="b-2">Endpoints REST implementados en <code>ChecklistApi.kt</code></label></li>
+          <li><input type="checkbox" id="b-3" data-key="b-3"><label for="b-3">Modelos validados en <code>ChecklistEstado.kt</code></label></li>
+          <li><input type="checkbox" id="b-4" data-key="b-4"><label for="b-4">Pruebas unitarias y de integración pasando</label></li>
+          <li><input type="checkbox" id="b-5" data-key="b-5"><label for="b-5">Endpoints documentados en esta guía</label></li>
+          <li><input type="checkbox" id="b-6" data-key="b-6"><label for="b-6">Scripts de build y despliegue configurados</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_backend_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

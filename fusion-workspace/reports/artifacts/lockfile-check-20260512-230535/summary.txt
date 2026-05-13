@@ -1,0 +1,2 @@
+  ❌ Lockfile DESINCRONIZADO
+  Diff guardado en: /Volumes/PROYECTOSAP/p11pro/fusion-workspace/reports/artifacts/lockfile-check-20260512-230535/fusion-workspace_kolicode_frontend-diff.txt

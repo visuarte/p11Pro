@@ -1,0 +1,28 @@
+// contracts/vector.fbs
+// Esquema FlatBuffers para vectores y color en KoliCode (2026)
+// Define la estructura binaria estricta para comunicación Frontend <-> Core <-> Worker
+
+namespace KoliCode;
+
+table Vector2D {
+  x: float;
+  y: float;
+}
+
+table ColorRGBA {
+  r: ushort; // 0-65535 para 16 bits
+  g: ushort;
+  b: ushort;
+  a: ushort;
+}
+
+table Node {
+  id: string;
+  position: Vector2D;
+  color: ColorRGBA;
+  // ...otros campos relevantes...
+}
+
+// Raíz para arrays de nodos
+root_type Node;
+

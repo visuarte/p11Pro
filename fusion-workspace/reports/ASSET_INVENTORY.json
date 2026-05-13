@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "generated": "2026-04-20",
+    "protocol": "AGENTS.md - Paso 2 (Mapping de Activos)",
+    "projects_analyzed": 3,
+    "total_files_mapped": 45,
+    "conflicts_detected": 5
+  },
+  "thunderkoli": {
+    "source_zip": "thunderkoli-v2.1.zip",
+    "source_root": "backend/",
+    "files": [
+      {
+        "source": "backend/server.js",
+        "destination": "backend/thunderkoli/src/server.js",
+        "type": "backend-core",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "backend/package.json",
+        "destination": "backend/thunderkoli/package.json",
+        "type": "config",
+        "action": "copy",
+        "priority": "critical"
+      },
+      {
+        "source": "backend/Dockerfile",
+        "destination": "backend/thunderkoli/Dockerfile",
+        "type": "infrastructure",
+        "action": "copy",
+        "priority": "medium"
+      },
+      {
+        "source": "backend/data.json",
+        "destination": "backend/thunderkoli/data/legacy-data.json",
+        "type": "data",
+        "action": "copy",
+        "priority": "high",
+        "note": "Migrar a PostgreSQL posteriormente"
+      },
+      {
+        "source": "backend/server.log",
+        "destination": "backend/thunderkoli/logs/server.log",
+        "type": "logs",
+        "action": "copy",
+        "priority": "low"
+      },
+      {
+        "source": "backend/agents/",
+        "destination": "backend/thunderkoli/src/agents/",
+        "type": "backend-logic",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "backend/lib/",
+        "destination": "backend/thunderkoli/src/lib/",
+        "type": "backend-logic",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "backend/config/",
+        "destination": "backend/thunderkoli/src/config/",
+        "type": "config",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "backend/data/",
+        "destination": "backend/thunderkoli/data/",
+        "type": "data",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "backend/vault/",
+        "destination": "backend/thunderkoli/src/services/vault/",
+        "type": "security",
+        "action": "copy-recursive",
+        "priority": "critical"
+      },
+      {
+        "source": "backend/tests/",
+        "destination": "backend/thunderkoli/tests/",
+        "type": "testing",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "backend/.wwebjs_auth/",
+        "destination": "backend/thunderkoli/.wwebjs_auth/",
+        "type": "auth-data",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "backend/.google_auth/",
+        "destination": "backend/thunderkoli/.google_auth/",
+        "type": "auth-data",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "backend/node_modules/",
+        "destination": "SKIP",
+        "type": "dependencies",
+        "action": "skip",
+        "priority": "none",
+        "note": "Regenerar con npm install"
+      }
+    ]
+  },
+  "universalengine": {
+    "source_zip": "universalengine-hub.zip",
+    "source_root": "vegabajaimprentaa/",
+    "files": [
+      {
+        "source": "vegabajaimprentaa/build.gradle.kts",
+        "destination": "backend/universalengine/build.gradle.kts",
+        "type": "config",
+        "action": "copy",
+        "priority": "critical"
+      },
+      {
+        "source": "vegabajaimprentaa/settings.gradle.kts",
+        "destination": "backend/universalengine/settings.gradle.kts",
+        "type": "config",
+        "action": "copy",
+        "priority": "critical"
+      },
+      {
+        "source": "vegabajaimprentaa/gradlew",
+        "destination": "backend/universalengine/gradlew",
+        "type": "build-tool",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "vegabajaimprentaa/gradlew.bat",
+        "destination": "backend/universalengine/gradlew.bat",
+        "type": "build-tool",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "vegabajaimprentaa/docker-compose.yml",
+        "destination": "docker-compose.yml",
+        "type": "infrastructure",
+        "action": "merge",
+        "priority": "critical",
+        "note": "Fusionar con docker-compose final"
+      },
+      {
+        "source": "vegabajaimprentaa/.env",
+        "destination": "backend/universalengine/.env",
+        "type": "config",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "vegabajaimprentaa/.env.clone.example",
+        "destination": "backend/universalengine/.env.example",
+        "type": "config",
+        "action": "copy",
+        "priority": "medium"
+      },
+      {
+        "source": "vegabajaimprentaa/README.md",
+        "destination": "backend/universalengine/README.md",
+        "type": "docs",
+        "action": "copy",
+        "priority": "low"
+      },
+      {
+        "source": "vegabajaimprentaa/src/",
+        "destination": "backend/universalengine/src/",
+        "type": "backend-core",
+        "action": "copy-recursive",
+        "priority": "critical"
+      },
+      {
+        "source": "vegabajaimprentaa/frontend/",
+        "destination": "backend/universalengine/frontend-legacy/",
+        "type": "frontend-legacy",
+        "action": "copy-recursive",
+        "priority": "low",
+        "note": "Migrar a frontend unificado posteriormente"
+      },
+      {
+        "source": "vegabajaimprentaa/config/",
+        "destination": "backend/universalengine/config/",
+        "type": "config",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "vegabajaimprentaa/docs/",
+        "destination": "docs/universalengine/",
+        "type": "docs",
+        "action": "copy-recursive",
+        "priority": "low"
+      },
+      {
+        "source": "vegabajaimprentaa/scripts/",
+        "destination": "backend/universalengine/scripts/",
+        "type": "automation",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "vegabajaimprentaa/proyectos_generados/",
+        "destination": "backend/universalengine/proyectos_generados/",
+        "type": "generated-data",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "vegabajaimprentaa/datos_db/",
+        "destination": "SKIP",
+        "type": "database-data",
+        "action": "skip",
+        "priority": "none",
+        "note": "PostgreSQL data - regenerar con docker-compose"
+      },
+      {
+        "source": "vegabajaimprentaa/build/",
+        "destination": "SKIP",
+        "type": "build-artifacts",
+        "action": "skip",
+        "priority": "none",
+        "note": "Regenerar con gradle build"
+      },
+      {
+        "source": "vegabajaimprentaa/.gradle/",
+        "destination": "SKIP",
+        "type": "build-cache",
+        "action": "skip",
+        "priority": "none"
+      },
+      {
+        "source": "vegabajaimprentaa/.idea/",
+        "destination": "SKIP",
+        "type": "ide-config",
+        "action": "skip",
+        "priority": "none"
+      },
+      {
+        "source": "vegabajaimprentaa/.git/",
+        "destination": "SKIP",
+        "type": "version-control",
+        "action": "skip",
+        "priority": "none",
+        "note": "Nuevo repo unificado"
+      },
+      {
+        "source": "vegabajaimprentaa/.gitignore",
+        "destination": ".gitignore",
+        "type": "config",
+        "action": "merge",
+        "priority": "medium"
+      },
+      {
+        "source": "vegabajaimprentaa/gradle/",
+        "destination": "backend/universalengine/gradle/",
+        "type": "build-tool",
+        "action": "copy-recursive",
+        "priority": "high"
+      }
+    ]
+  },
+  "p10pro": {
+    "source_zip": "p10pro-editor.zip",
+    "source_root": "P10pro/",
+    "files": [
+      {
+        "source": "P10pro/package.json",
+        "destination": "frontend/package.json",
+        "type": "config",
+        "action": "merge",
+        "priority": "critical",
+        "note": "Fusionar con dependencias frontend unificado"
+      },
+      {
+        "source": "P10pro/tsconfig.json",
+        "destination": "frontend/tsconfig.json",
+        "type": "config",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "P10pro/vite.config.ts",
+        "destination": "frontend/vite.config.ts",
+        "type": "config",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "P10pro/index.html",
+        "destination": "frontend/index.html",
+        "type": "frontend-core",
+        "action": "copy",
+        "priority": "high"
+      },
+      {
+        "source": "P10pro/README.md",
+        "destination": "frontend/README.md",
+        "type": "docs",
+        "action": "copy",
+        "priority": "low"
+      },
+      {
+        "source": "P10pro/.gitignore",
+        "destination": ".gitignore",
+        "type": "config",
+        "action": "merge",
+        "priority": "medium"
+      },
+      {
+        "source": "P10pro/src/",
+        "destination": "frontend/src/",
+        "type": "frontend-core",
+        "action": "copy-recursive",
+        "priority": "critical"
+      },
+      {
+        "source": "P10pro/config/",
+        "destination": "config/",
+        "type": "config",
+        "action": "copy-recursive",
+        "priority": "high"
+      },
+      {
+        "source": "P10pro/creative/",
+        "destination": "creative/",
+        "type": "creative-code",
+        "action": "copy-recursive",
+        "priority": "medium"
+      },
+      {
+        "source": "P10pro/docs/",
+        "destination": "docs/p10pro/",
+        "type": "docs",
+        "action": "copy-recursive",
+        "priority": "low"
+      },
+      {
+        "source": "P10pro/dist/",
+        "destination": "SKIP",
+        "type": "build-artifacts",
+        "action": "skip",
+        "priority": "none",
+        "note": "Regenerar con npm run build"
+      },
+      {
+        "source": "P10pro/node_modules/",
+        "destination": "SKIP",
+        "type": "dependencies",
+        "action": "skip",
+        "priority": "none",
+        "note": "Regenerar con npm install"
+      }
+    ]
+  },
+  "conflicts": [
+    {
+      "file": "package.json",
+      "projects": ["thunderkoli", "p10pro"],
+      "conflict_type": "merge-required",
+      "resolution": "merge-dependencies",
+      "strategy": "Crear package.json unificado con todas las dependencias",
+      "priority": "critical"
+    },
+    {
+      "file": ".gitignore",
+      "projects": ["universalengine", "p10pro"],
+      "conflict_type": "merge-required",
+      "resolution": "merge-rules",
+      "strategy": "Combinar reglas de ambos proyectos sin duplicados",
+      "priority": "medium"
+    },
+    {
+      "file": "docker-compose.yml",
+      "projects": ["universalengine"],
+      "conflict_type": "expand-required",
+      "resolution": "expand-services",
+      "strategy": "Añadir servicios de ThunderKoli y frontend al docker-compose existente",
+      "priority": "critical"
+    },
+    {
+      "file": "README.md",
+      "projects": ["thunderkoli", "universalengine", "p10pro"],
+      "conflict_type": "merge-required",
+      "resolution": "create-unified",
+      "strategy": "Crear README.md unificado con secciones de cada proyecto",
+      "priority": "low"
+    },
+    {
+      "file": "docs/",
+      "projects": ["universalengine", "p10pro"],
+      "conflict_type": "organize-required",
+      "resolution": "separate-folders",
+      "strategy": "Crear docs/universalengine/ y docs/p10pro/ separados",
+      "priority": "low"
+    }
+  ],
+  "new_files": [
+    {
+      "destination": "backend/gateway/package.json",
+      "type": "config",
+      "action": "create",
+      "priority": "critical",
+      "note": "API Gateway Node.js - nuevo componente"
+    },
+    {
+      "destination": "backend/gateway/src/server.js",
+      "type": "backend-core",
+      "action": "create",
+      "priority": "critical",
+      "note": "API Gateway principal"
+    },
+    {
+      "destination": "python-worker/requirements.txt",
+      "type": "config",
+      "action": "create",
+      "priority": "high",
+      "note": "Dependencias Python para GPU workers"
+    },
+    {
+      "destination": "python-worker/ai_engine.py",
+      "type": "worker",
+      "action": "create",
+      "priority": "high",
+      "note": "Worker de IA"
+    },
+    {
+      "destination": "docker-compose.yml",
+      "type": "infrastructure",
+      "action": "create",
+      "priority": "critical",
+      "note": "Orquestación completa de servicios"
+    },
+    {
+      "destination": "README.md",
+      "type": "docs",
+      "action": "create",
+      "priority": "high",
+      "note": "Documentación unificada"
+    },
+    {
+      "destination": ".gitignore",
+      "type": "config",
+      "action": "create",
+      "priority": "medium",
+      "note": "Reglas unificadas"
+    },
+    {
+      "destination": "docs/ARCHITECTURE.md",
+      "type": "docs",
+      "action": "create",
+      "priority": "medium",
+      "note": "Documentación de arquitectura"
+    }
+  ],
+  "statistics": {
+    "thunderkoli_files": 14,
+    "universalengine_files": 21,
+    "p10pro_files": 12,
+    "new_files": 8,
+    "total_files": 55,
+    "files_to_copy": 45,
+    "files_to_skip": 10,
+    "files_to_merge": 5,
+    "conflicts": 5
+  }
+}

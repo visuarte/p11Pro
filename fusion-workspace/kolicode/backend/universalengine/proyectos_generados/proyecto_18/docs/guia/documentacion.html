@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentación y mantenimiento · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Documentación y mantenimiento</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="mantenimiento">
+      <div class="section-header open">
+        <span class="badge badge-gray">DOCS</span>
+        <h2 class="section-title">Documentación y mantenimiento</h2>
+      </div>
+      <div class="section-body">
+        <h3>Archivos a mantener</h3>
+        <ul class="checklist">
+          <li><input type="checkbox" id="doc-1" data-key="doc-1"><label for="doc-1"><code>README_NEXT_LEVEL.md</code> con instrucciones claras de setup</label></li>
+          <li><input type="checkbox" id="doc-2" data-key="doc-2"><label for="doc-2"><code>RESOURCES.md</code> actualizado con enlaces vigentes</label></li>
+          <li><input type="checkbox" id="doc-3" data-key="doc-3"><label for="doc-3"><code>NOTES.md</code> con decisiones técnicas y contexto</label></li>
+          <li><input type="checkbox" id="doc-4" data-key="doc-4"><label for="doc-4"><code>WEBGL_MIGRATION_GUIDE.md</code> refleja el estado final</label></li>
+          <li><input type="checkbox" id="doc-5" data-key="doc-5"><label for="doc-5">Limpieza periódica de dependencias obsoletas</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_documentacion_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

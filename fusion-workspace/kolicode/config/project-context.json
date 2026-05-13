@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "P10pro",
+    "slug": "p10pro",
+    "owner": "Jamon",
+    "summary": "Base ejecutable minima para un editor creativo local con app web, documentacion alineada y prototipo independiente en Processing.",
+    "status": "active_alignment",
+    "updatedAt": "2026-04-12",
+    "governance": {
+      "sourceOfTruth": "config/project-context.json",
+      "humanSummary": "README.md",
+      "derivedViews": [
+        "docs/index.html",
+        "docs/inicio/codedesign_technical_docs_v2.html"
+      ],
+      "rule": "Ningun archivo describe capacidades vigentes si no existen en disco o no se derivan de este contexto."
+    }
+  },
+  "currentState": {
+    "implemented": [
+      {
+        "id": "web-app",
+        "label": "App web minima",
+        "status": "implemented",
+        "path": "index.html",
+        "notes": "Shell local ejecutable con Vite + TypeScript y assets compartidos."
+      },
+      {
+        "id": "docs",
+        "label": "Portal documental alineado",
+        "status": "implemented",
+        "path": "docs/index.html",
+        "notes": "Vistas HTML y notas de soporte alineadas con este contrato."
+      },
+      {
+        "id": "processing-prototype",
+        "label": "Prototipo en Processing",
+        "status": "implemented",
+        "path": "creative/processing/Sketch.pde",
+        "notes": "Sketch local independiente de la app web."
+      },
+      {
+        "id": "shared-assets",
+        "label": "Assets compartidos",
+        "status": "implemented",
+        "path": "src/assets",
+        "notes": "Sprite SVG, helper MotorIcon y design tokens para app y documentacion."
+      }
+    ],
+    "notImplemented": [
+      {
+        "id": "backend",
+        "label": "Backend, auth y API REST",
+        "reason": "Fuera de alcance de la base minima actual."
+      },
+      {
+        "id": "ai-local",
+        "label": "IA local y agentes",
+        "reason": "No hay runtime, modelos ni integraciones locales implementadas."
+      },
+      {
+        "id": "advanced-rendering",
+        "label": "Three.js, Vue y render 3D",
+        "reason": "No existen en el arbol ni forman parte del runtime actual."
+      },
+      {
+        "id": "external-sync",
+        "label": "NFC, sincronizacion externa y persistencia",
+        "reason": "No forman parte de la primera base ejecutable."
+      }
+    ],
+    "templateOnly": [
+      {
+        "id": "legacy-domain-template",
+        "label": "Spec CRUD/Auth heredado",
+        "source": "Plantilla universal previa",
+        "note": "No es contrato vigente del proyecto."
+      },
+      {
+        "id": "legacy-fullstack-vision",
+        "label": "Narrativa full-stack y build empresarial",
+        "source": "Documentacion heredada previa",
+        "note": "Solo puede aparecer como roadmap o referencia de plantilla."
+      }
+    ]
+  },
+  "executionTargets": [
+    {
+      "id": "web-app",
+      "label": "Aplicacion web minima",
+      "entry": "index.html",
+      "mode": "npm-vite",
+      "status": "implemented",
+      "commands": [
+        "npm install",
+        "npm run dev",
+        "npm run build",
+        "npm run preview"
+      ]
+    },
+    {
+      "id": "docs",
+      "label": "Portal documental",
+      "entry": "docs/index.html",
+      "mode": "static-local",
+      "status": "implemented",
+      "commands": [
+        "Abrir docs/index.html en navegador"
+      ]
+    },
+    {
+      "id": "processing",
+      "label": "Sketch de Processing",
+      "entry": "creative/processing/Sketch.pde",
+      "mode": "manual-local",
+      "status": "implemented",
+      "commands": [
+        "Abrir Sketch.pde en Processing IDE"
+      ]
+    }
+  ],
+  "implementedStack": {
+    "runtime": ["Vite", "TypeScript", "npm", "CSS"],
+    "ui": ["Editor shell local", "MotorIcon", "Design tokens"],
+    "creative": ["Processing", "Java 17 local"],
+    "docs": ["HTML estatico", "Markdown"]
+  },
+  "plannedStack": {
+    "candidates": [
+      "Persistencia local del editor",
+      "Canvas de edicion real",
+      "Exportacion de escenas",
+      "Exploracion py5",
+      "Backend opcional",
+      "IA local opcional"
+    ],
+    "explicitlyNotCurrent": [
+      "Vue",
+      "Three.js",
+      "Ollama",
+      "Gradle multimodulo",
+      "API REST",
+      "NFC",
+      "Auth",
+      "CRUD"
+    ]
+  },
+  "templateOnlyArtifacts": [
+    {
+      "name": "Narrativa full-stack generica",
+      "paths": [
+        "docs/README_CREATIVE.md",
+        "docs/NOTES.md",
+        "docs/RESOURCES.md"
+      ],
+      "policy": "Solo se conserva si se etiqueta como template_only o roadmap."
+    }
+  ],
+  "roadmap": [
+    {
+      "phase": "F1",
+      "title": "Alineacion de contrato y documentacion",
+      "status": "done",
+      "outcome": "Todas las vistas locales describen el mismo estado real del proyecto."
+    },
+    {
+      "phase": "F2",
+      "title": "Base ejecutable minima",
+      "status": "done",
+      "outcome": "La app web local arranca con Vite + TypeScript y reutiliza los assets existentes."
+    },
+    {
+      "phase": "F3",
+      "title": "Interaccion real del editor",
+      "status": "planned",
+      "outcome": "Herramientas, canvas editable y paneles con estado operativo."
+    },
+    {
+      "phase": "F4",
+      "title": "Persistencia e integraciones optativas",
+      "status": "planned",
+      "outcome": "Guardar proyectos, exportar y evaluar integraciones futuras sin romper la base minima."
+    }
+  ]
+}

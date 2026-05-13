@@ -1,0 +1,13 @@
+{
+  "name": "Code Review on Save",
+  "version": "1.0.0",
+  "description": "Automatically review code quality, patterns, and best practices when files are saved",
+  "when": {
+    "type": "fileEdited",
+    "patterns": ["**/*.ts", "**/*.js", "**/*.tsx", "**/*.jsx", "**/*.py", "**/*.kt"]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Review the code changes in this file for:\n1. Code quality and readability\n2. Adherence to project patterns and conventions\n3. Potential bugs or issues\n4. Performance considerations\n5. Security vulnerabilities\n\nProvide specific, actionable feedback. If the code is good, acknowledge it briefly."
+  }
+}

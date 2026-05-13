@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist de validación final · Guía de Implementación</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>▸ Checklist de validación final</h1>
+    <a href="index.html" style="color:#7f77dd; margin-left:2em;">Volver al índice</a>
+  </header>
+  <main>
+    <div class="section" id="validacion">
+      <div class="section-header open">
+        <span class="badge badge-danger">FINAL</span>
+        <h2 class="section-title">Checklist de validación final</h2>
+      </div>
+      <div class="section-body">
+        <ul class="checklist">
+          <li><input type="checkbox" id="v-1" data-key="v-1"><label for="v-1">El proyecto compila y corre sin errores en producción</label></li>
+          <li><input type="checkbox" id="v-2" data-key="v-2"><label for="v-2">Todas las funcionalidades principales implementadas</label></li>
+          <li><input type="checkbox" id="v-3" data-key="v-3"><label for="v-3">Pruebas unitarias, integración y E2E superadas</label></li>
+          <li><input type="checkbox" id="v-4" data-key="v-4"><label for="v-4">Documentación completa y actualizada</label></li>
+          <li><input type="checkbox" id="v-5" data-key="v-5"><label for="v-5">Código limpio, sin dependencias obsoletas</label></li>
+          <li><input type="checkbox" id="v-6" data-key="v-6"><label for="v-6">Revisión por pares completada (si aplica)</label></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Persistencia de checkboxes en localStorage
+    document.querySelectorAll('input[type=checkbox][data-key]').forEach(cb => {
+      const key = 'guia_validacion_' + cb.dataset.key;
+      cb.checked = localStorage.getItem(key) === '1';
+      cb.addEventListener('change', () => {
+        localStorage.setItem(key, cb.checked ? '1' : '0');
+      });
+    });
+  </script>
+</body>
+</html>

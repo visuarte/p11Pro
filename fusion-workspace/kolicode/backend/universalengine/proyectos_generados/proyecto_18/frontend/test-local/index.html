@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>KotguaiScene - Local Test</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    html,body { margin:0; height:100%; background:#01020a; color:#eee; font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial; }
+    #ctrl { position:fixed; right:12px; top:12px; width:260px; background:rgba(0,0,0,0.45); padding:12px; border-radius:8px; box-shadow:0 6px 20px rgba(0,0,0,0.6); z-index:100; }
+    label { display:block; font-size:13px; margin-top:8px; color:#cfefff; }
+    input[type=range]{ width:100%; }
+    button{ margin-top:8px; width:100%; padding:8px; border-radius:6px; border:0; background:#2b2b7a; color:white; cursor:pointer; }
+    #fps { font-weight:700; font-size:18px; text-align:right; margin-top:6px; }
+    canvas { width:100%; height:100%; display:block; }
+  </style>
+  <!-- Import map to resolve bare module specifiers like 'vue' when serving static files -->
+  <script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="ctrl">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <strong>KotguaiScene test</strong>
+      <div>
+        <input id="username" placeholder="nick" style="width:110px; padding:4px; border-radius:6px; border:0; background:rgba(255,255,255,0.03); color:#fff; margin-right:6px" />
+        <span id="fps">FPS: --</span>
+      </div>
+    </div>
+
+    <label>Particles: <span id="lblParticles">3000</span>
+      <input id="particles" type="range" min="500" max="8000" step="100" value="3000" />
+    </label>
+
+    <label>Bloom strength: <span id="lblBloom">1.0</span>
+      <input id="bloom" type="range" min="0" max="2" step="0.05" value="1.0" />
+    </label>
+
+    <label>Bloom iterations: <span id="lblIter">2</span>
+      <input id="iter" type="range" min="1" max="5" step="1" value="2" />
+    </label>
+
+    <label>Grid: <input id="grid" type="checkbox" checked /></label>
+
+    <label>Debug logs: <input id="debug" type="checkbox" /></label>
+
+    <button id="btnStart">Start</button>
+    <button id="btnStop">Stop</button>
+    <button id="btnConnect">Connect Microphone</button>
+    <button id="btnRestart">Restart Scene</button>
+    <button id="btnDispose">Dispose Scene</button>
+
+    <!-- Chat box -->
+    <div style="margin-top:12px;">
+      <div style="font-size:13px; color:#aee; margin-bottom:6px;">Chat</div>
+      <div id="chatMessages" style="height:120px; overflow:auto; background:rgba(255,255,255,0.02); padding:6px; border-radius:6px; font-size:13px; color:#dff;"> </div>
+      <div style="display:flex; gap:6px; margin-top:6px;">
+        <input id="chatInput" type="text" placeholder="Escribe un mensaje..." style="flex:1; padding:6px; border-radius:6px; border:0; background:rgba(255,255,255,0.03); color:#fff;" />
+        <button id="chatSend" style="width:70px;">Enviar</button>
+      </div>
+    </div>
+
+    <!-- Command console -->
+    <div style="margin-top:12px;">
+      <div style="font-size:13px; color:#aee; margin-bottom:6px;">Console (comandos)</div>
+      <div id="cmdOutput" style="height:80px; overflow:auto; background:rgba(255,255,255,0.02); padding:6px; border-radius:6px; font-size:12px; color:#cff;">> listo\n</div>
+      <div style="display:flex; gap:6px; margin-top:6px;">
+        <input id="cmdInput" type="text" placeholder="Comando: help" style="flex:1; padding:6px; border-radius:6px; border:0; background:rgba(255,255,255,0.03); color:#fff;" />
+        <button id="cmdRun" style="width:70px;">Run</button>
+      </div>
+      <div style="font-size:11px; color:#9bd; margin-top:6px;">Ejemplos: <code>set bloomStrength 0.8</code>, <code>set particles 2000</code>, <code>restart</code>, <code>connectMic</code></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import KotguaiScene from '../src/webgl/KotguaiScene.js';
+
+    const canvas = document.getElementById('c');
+    const fpsDisplay = document.getElementById('fps');
+
+    let scene = new KotguaiScene(canvas, { particles: 3000, spherePoints: 1800, bloomIterations: 2, bloomStrength: 1.0, grid: true, debug: false });
+    let rafMonitor = null;
+    let last = performance.now(), frames = 0;
+
+    function updateFPS() {
+      const now = performance.now();
+      frames++;
+      if (now - last >= 500) {
+        const fps = Math.round((frames * 1000) / (now - last));
+        fpsDisplay.textContent = 'FPS: ' + fps;
+        frames = 0; last = now;
+      }
+      rafMonitor = requestAnimationFrame(updateFPS);
+    }
+
+    // Wire UI
+    const elParticles = document.getElementById('particles');
+    const elBloom = document.getElementById('bloom');
+    const elIter = document.getElementById('iter');
+    const elGrid = document.getElementById('grid');
+    const elDebug = document.getElementById('debug');
+
+    document.getElementById('lblParticles').textContent = elParticles.value;
+    document.getElementById('lblBloom').textContent = elBloom.value;
+    document.getElementById('lblIter').textContent = elIter.value;
+
+    elParticles.addEventListener('input', (e) => { document.getElementById('lblParticles').textContent = e.target.value; });
+    elParticles.addEventListener('change', (e) => { const val = parseInt(e.target.value, 10); scene.opts.particles = val; scene.restart(); });
+
+    elBloom.addEventListener('input', (e) => { document.getElementById('lblBloom').textContent = e.target.value; scene.opts.bloomStrength = parseFloat(e.target.value); });
+
+    elIter.addEventListener('change', (e) => { document.getElementById('lblIter').textContent = e.target.value; scene.opts.bloomIterations = parseInt(e.target.value, 10); });
+
+    elGrid.addEventListener('change', (e) => { scene.opts.grid = e.target.checked; });
+    elDebug.addEventListener('change', (e) => { scene.opts.debug = e.target.checked; });
+
+    document.getElementById('btnStart').addEventListener('click', () => { scene.start(); if (!rafMonitor) updateFPS(); });
+    document.getElementById('btnStop').addEventListener('click', () => { scene.stop(); if (rafMonitor) { cancelAnimationFrame(rafMonitor); rafMonitor = null; } });
+    document.getElementById('btnRestart').addEventListener('click', () => { scene.restart(); });
+    document.getElementById('btnDispose').addEventListener('click', () => { scene.dispose(); if (rafMonitor) { cancelAnimationFrame(rafMonitor); rafMonitor = null; } });
+
+    document.getElementById('btnConnect').addEventListener('click', async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const src = ctx.createMediaStreamSource(stream);
+        const analyser = ctx.createAnalyser(); analyser.fftSize = 2048; src.connect(analyser);
+        scene.connectAnalyser(analyser);
+        console.log('Microphone connected and analyser attached');
+      } catch (err) {
+        console.error('Microphone access failed', err);
+        alert('Microphone access denied or unavailable: ' + err.message);
+      }
+    });
+
+    // auto start
+    scene.start();
+    updateFPS();
+
+    // ----- Chat handlers -----
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const usernameInput = document.getElementById('username');
+
+    // WebSocket connection to test server (if available)
+    let ws = null; let wsOpen = false;
+    function connectWS(){
+      try{
+        ws = new WebSocket('ws://localhost:5175');
+        ws.addEventListener('open', ()=>{ wsOpen = true; appendChat('System','WebSocket connected'); });
+        ws.addEventListener('close', ()=>{ wsOpen = false; appendChat('System','WebSocket disconnected'); });
+        ws.addEventListener('error', (e)=>{ console.warn('ws error', e); });
+        ws.addEventListener('message', (ev)=>{
+          try{ const data = JSON.parse(ev.data);
+            if(data.type === 'chat') appendChat(data.user || 'anon', data.text || '', data.ts);
+            else if(data.type === 'cmd') writeCmd(`[${new Date(data.ts).toLocaleTimeString()}] ${data.user}: ${data.cmd}`);
+            else if(data.type === 'log') writeCmd(`[LOG ${new Date(data.ts).toLocaleTimeString()}] ${data.user}: ${data.text}`);
+          }catch(err){ console.warn('ws parse', err); }
+        });
+      }catch(e){ console.warn('ws connect failed', e); }
+    }
+    // try connect once
+    connectWS();
+
+    function getUserName(){ const n = (usernameInput.value || '').trim(); return n || ('User' + Math.floor(Math.random()*900+100)); }
+    chatSend.addEventListener('click', () => { const v = chatInput.value.trim(); if(!v) return; const user = getUserName(); if(wsOpen && ws){ ws.send(JSON.stringify({ type:'chat', user, text: v })); } appendChat(user, v); chatInput.value = ''; });
+    chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') chatSend.click(); });
+
+    // ----- Command console -----
+    const cmdInput = document.getElementById('cmdInput');
+    const cmdRun = document.getElementById('cmdRun');
+    const cmdOutput = document.getElementById('cmdOutput');
+    function writeCmd(s){ cmdOutput.textContent += s + '\n'; cmdOutput.scrollTop = cmdOutput.scrollHeight; }
+    async function runCommandLine(line){ line = (line||'').trim(); if(!line) return; writeCmd('> ' + line);
+      const parts = line.split(/\s+/);
+      const cmd = parts[0].toLowerCase();
+      const user = getUserName();
+      // send to server if possible
+      if(wsOpen && ws){ try{ ws.send(JSON.stringify({ type:'cmd', user, cmd: line })); }catch(e){ console.warn('ws send cmd failed', e); } }
+      try{
+        if(cmd === 'help'){ writeCmd('Commands: help, start, stop, restart, dispose, set <key> <value>, connectmic'); }
+        else if(cmd === 'start'){ scene.start(); writeCmd('started'); }
+        else if(cmd === 'stop'){ scene.stop(); writeCmd('stopped'); }
+        else if(cmd === 'restart'){ scene.restart(); writeCmd('restarted'); }
+        else if(cmd === 'dispose'){ scene.dispose(); writeCmd('disposed'); }
+        else if(cmd === 'set'){ const key = parts[1]; const val = parts.slice(2).join(' '); if(!key){ writeCmd('set requires key and value'); } else { // try parse number
+            const num = Number(val); scene.opts[key] = isNaN(num) ? val : num; writeCmd(`set ${key} = ${scene.opts[key]}`); if(key === 'particles' || key === 'spherePoints'){ scene.restart(); writeCmd('recreated geometry'); } }
+        }
+        else if(cmd === 'connectmic' || cmd === 'connectmic()'){ // try connect mic
+          try{ const stream = await navigator.mediaDevices.getUserMedia({ audio:true }); const ctx = new (window.AudioContext || window.webkitAudioContext)(); const src = ctx.createMediaStreamSource(stream); const analyser = ctx.createAnalyser(); analyser.fftSize=2048; src.connect(analyser); scene.connectAnalyser(analyser); writeCmd('microphone connected'); }catch(e){ writeCmd('microphone failed: ' + e.message); }
+        }
+        else { writeCmd('Unknown command: ' + cmd); }
+      } catch(e){ writeCmd('Error: ' + e.message); }
+    }
+    cmdRun.addEventListener('click', ()=>{ runCommandLine(cmdInput.value); cmdInput.value=''; });
+    cmdInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') cmdRun.click(); });
+
+    // When chat messages appended include timestamp
+    function fmtTime(ts){ return ts ? new Date(ts).toLocaleTimeString() : new Date().toLocaleTimeString(); }
+    // override appendChat to include timestamp
+    function appendChat(author, text, ts){ const el = document.createElement('div'); el.style.marginBottom='6px'; el.innerHTML = `<strong style="color:#9ff">${author}</strong> <span style="color:#6cf; font-size:11px">${fmtTime(ts)}</span>: ${text}`; chatMessages.appendChild(el); chatMessages.scrollTop = chatMessages.scrollHeight; }
+  </script>
+</body>
+</html>
+

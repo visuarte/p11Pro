@@ -1,0 +1,87 @@
+{
+  "name": "p10pro",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "bash ./scripts/dev-check.sh && vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "build:mac": "electron-builder --mac --x64 --arm64",
+    "build:mac:intel": "electron-builder --mac --x64",
+    "build:mac:silicon": "electron-builder --mac --arm64",
+    "build:win": "electron-builder --win --x64",
+    "build:win:portable": "electron-builder --win portable",
+    "build:linux": "electron-builder --linux",
+    "build:linux:deb": "electron-builder --linux deb",
+    "build:linux:appimage": "electron-builder --linux AppImage",
+    "validate:lockfile": "bash ../scripts/validate-lockfile.sh",
+    "validate:build": "bash ../scripts/validate-build.sh",
+    "pretest": "npm run validate:lockfile",
+    "prebuild:native": "node scripts/enforce-arm64.js",
+    "build:native": "npm run prebuild:native && ./scripts/idempotent-rebuild.sh",
+    "electron:build:mac": "npm run build:native && electron-builder --mac --arm64",
+    "clean:idempotent": "rm -rf dist build && rm -rf ~/.electron-gyp && node -e \"console.log('[INFO] Caché nativa limpiada. Estado cero garantizado.')\"",
+    "serve:dist": "node serve-dist-compress.cjs 5000"
+    ,
+    "serve:dist:live": "node serve-dist-on-the-fly.cjs 5000"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "electron": "41.2.2",
+    "esbuild": "^0.28.0",
+    "typescript": "5.6.3",
+    "vite": "^8.0.12"
+  },
+  "build": {
+    "appId": "com.kolicode.app",
+    "productName": "KoliCode",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.graphics-design",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "build/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ],
+      "icon": "build/icon.png",
+      "category": "Graphics"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "zod": "^4.3.6",
+    "zustand": "^5.0.13"
+  }
+}

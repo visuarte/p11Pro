@@ -1,0 +1,16 @@
+<configuration>
+    <property name="APP_NAME" value="universal-engine"/>
+    <property name="ROOT_LEVEL" value="INFO"/>
+
+    <!-- JSON-like structured logs without extra dependencies -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>{"ts":"%date{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}","level":"%level","logger":"%logger{36}","thread":"%thread","app":"${APP_NAME}","requestId":"%X{requestId:-unknown}","tenantId":"%X{tenantId:-unknown}","msg":"%replace(%msg){'"','\\"'}"}%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${ROOT_LEVEL}">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
+

@@ -1,0 +1,85 @@
+{
+    "name": "illusion-reveal-backend",
+    "version": "1.0.0",
+    "description": "API RESTful para el proyecto Illusion Reveal",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js",
+        "test": "jest --forceExit --detectOpenHandles",
+        "build:mac": "electron-builder --mac --x64 --arm64",
+        "build:mac:intel": "electron-builder --mac --x64",
+        "build:mac:silicon": "electron-builder --mac --arm64",
+        "build:win": "electron-builder --win --x64",
+        "build:win:portable": "electron-builder --win portable",
+        "build:linux": "electron-builder --linux",
+        "build:linux:deb": "electron-builder --linux deb",
+        "build:linux:appimage": "electron-builder --linux AppImage",
+        "validate:lockfile": "bash ../scripts/validate-lockfile.sh",
+        "validate:build": "bash ../scripts/validate-build.sh",
+        "pretest": "npm run validate:lockfile"
+    },
+    "dependencies": {
+        "@huggingface/transformers": "^4.1.0",
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "google-auth-library": "^10.6.2",
+        "googleapis": "^171.4.0",
+        "natural": "^8.1.1",
+        "qrcode": "^1.5.4",
+        "qrcode-terminal": "^0.12.0",
+        "socket.io": "^4.8.3",
+        "whatsapp-web.js": "^1.34.6"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "supertest": "^6.3.4",
+        "uuid": "^14.0.0"
+    },
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "build": {
+        "appId": "com.kolicode.app",
+        "productName": "KoliCode",
+        "files": [
+            "dist/**/*",
+            "node_modules/**/*",
+            "package.json"
+        ],
+        "directories": {
+            "buildResources": "build",
+            "output": "dist"
+        },
+        "mac": {
+            "category": "public.app-category.graphics-design",
+            "target": [
+                "dmg",
+                "zip"
+            ],
+            "icon": "build/icon.icns",
+            "hardenedRuntime": true,
+            "gatekeeperAssess": false,
+            "entitlements": "build/entitlements.mac.plist"
+        },
+        "win": {
+            "target": [
+                "nsis",
+                "portable"
+            ],
+            "icon": "build/icon.ico"
+        },
+        "linux": {
+            "target": [
+                "deb",
+                "AppImage"
+            ],
+            "icon": "build/icon.png",
+            "category": "Graphics"
+        },
+        "nsis": {
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true
+        }
+    }
+}

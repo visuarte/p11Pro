@@ -1,0 +1,89 @@
+name: Build All Platforms
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build macOS
+        run: npm run build:mac
+      - name: Validate build size
+        run: |
+          SIZE=$(ls -l dist/*.dmg | awk '{print $5}')
+          MAX_SIZE=524288000  # 500MB en bytes
+          if [ $SIZE -gt $MAX_SIZE ]; then
+            echo "Build too large: $SIZE bytes"
+            exit 1
+          fi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-build
+          path: dist/*.dmg
+          retention-days: 7
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Windows
+        run: npm run build:win
+      - name: Validate build
+        shell: bash
+        run: |
+          if [ ! -f dist/*.exe ]; then
+            echo "No .exe found"
+            exit 1
+          fi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: dist/*.exe
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build Linux
+        run: npm run build:linux
+      - name: Validate builds
+        run: |
+          ls -lh dist/*.deb dist/*.AppImage
+          # Test AppImage executable bit
+          test -x dist/*.AppImage || exit 1
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-builds
+          path: |
+            dist/*.deb
+            dist/*.AppImage
+

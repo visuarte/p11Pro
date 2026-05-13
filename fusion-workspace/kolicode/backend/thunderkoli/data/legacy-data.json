@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "name": "Alex Johnson",
+        "email": "alex.johnson@example.com",
+        "role": "Frontend Developer",
+        "avatar": "https://i.pravatar.cc/150?u=alex",
+        "bio": "Passionate about building beautiful UIs and accessible web applications. Love hiking and coffee."
+    },
+    {
+        "id": 2,
+        "name": "Sarah Smith",
+        "email": "sarah.smith@example.com",
+        "role": "Backend Engineer",
+        "avatar": "https://i.pravatar.cc/150?u=sarah",
+        "bio": "Node.js specialist and database architect. Coffee lover and marathon runner."
+    },
+    {
+        "id": 3,
+        "name": "David Chen",
+        "email": "david.chen@example.com",
+        "role": "UI/UX Designer",
+        "avatar": "https://i.pravatar.cc/150?u=david",
+        "bio": "Creating intuitive user experiences and minimal designs. Photography enthusiast."
+    },
+    {
+        "id": 4,
+        "name": "Emily Rodriguez",
+        "email": "emily.rod@example.com",
+        "role": "Project Manager",
+        "avatar": "https://i.pravatar.cc/150?u=emily",
+        "bio": "Scaling teams and delivering high-quality products. Amateur chef."
+    },
+    {
+        "id": 5,
+        "name": "Michael Brown",
+        "email": "m.brown@example.com",
+        "role": "DevOps Architect",
+        "avatar": "https://i.pravatar.cc/150?u=michael",
+        "bio": "Automating everything and keeping systems stable. Surfer and tech blogger."
+    },
+    {
+        "id": 6,
+        "name": "Sofia Garcia",
+        "email": "sofia.garcia@example.com",
+        "role": "QA Lead",
+        "avatar": "https://i.pravatar.cc/150?u=sofia",
+        "bio": "Ensuring quality and performance in every release. Bookworm and traveler."
+    }
+]

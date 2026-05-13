@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: proyecto_18 - API (minimal)
+  version: 0.1.0
+  description: Minimal OpenAPI spec for the Ktor backend (health, webgl config, checklist, kotguaicli)
+
+servers:
+  - url: http://localhost:8040
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        '200':
+          description: OK - plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Health Check successful
+
+  /api/health:
+    get:
+      summary: API health (alias)
+      responses:
+        '200':
+          description: OK - plain text
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Health Check successful
+
+  /api/v1/webgl/config:
+    get:
+      summary: WebGL configuration for frontend
+      responses:
+        '200':
+          description: JSON configuration used by the SPA to decide three.js initialization
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  profile:
+                    type: string
+                  useThreeJsInterop:
+                    type: boolean
+                  enableTailwindDirectives:
+                    type: boolean
+                required: [name, profile, useThreeJsInterop, enableTailwindDirectives]
+              examples:
+                default:
+                  value:
+                    name: ciberpunk
+                    profile: next_level
+                    useThreeJsInterop: true
+                    enableTailwindDirectives: false
+
+  /api/v1/checklist:
+    post:
+      summary: Create a checklist record
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: '{"foo":"bar"}'
+          application/json:
+            schema:
+              type: object
+            example:
+              foo: bar
+      responses:
+        '201':
+          description: Checklist creado — devuelve id y status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  status:
+                    type: string
+                    enum: [created]
+                required: [id, status]
+              examples:
+                created:
+                  value:
+                    id: 1
+                    status: created
+        '400':
+          description: Invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/checklist/{id}:
+    get:
+      summary: Get checklist by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Found — returns stored content (JSON or raw text)
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid id (not numeric)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/kotguaicli/generate-docs:
+    post:
+      summary: Run kotguaicli generateDocs (may be protected by X-KOTGUAICLI-AUTH)
+      security:
+        - kotguaicliAuth: []
+      responses:
+        '200':
+          description: command executed, returns exitCode and output
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  exitCode:
+                    type: integer
+                  output:
+                    type: string
+
+  /api/v1/kotguaicli/serve-docs:
+    post:
+      summary: Start kotguaicli serveDocs (may return 202 Accepted or 500 on failure)
+      security:
+        - kotguaicliAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                port:
+                  type: integer
+      responses:
+        '202':
+          description: Accepted — process started
+        '500':
+          description: Internal server error while starting process
+
+  /api/v1/kotguaicli/stop:
+    post:
+      summary: Stop a previously started serve-docs process
+      security:
+        - kotguaicliAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Stopped
+        '404':
+          description: No such process
+
+  /api/v1/kotguaicli/list:
+    get:
+      summary: List active serve-docs processes
+      security:
+        - kotguaicliAuth: []
+      responses:
+        '200':
+          description: List of processes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    port:
+                      type: integer
+                    log:
+                      type: string
+
+components:
+  securitySchemes:
+    kotguaicliAuth:
+      type: apiKey
+      in: header
+      name: X-KOTGUAICLI-AUTH
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+

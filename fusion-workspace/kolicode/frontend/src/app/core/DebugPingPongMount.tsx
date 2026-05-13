@@ -8,4 +8,3 @@ export function mountDebugPingPong() {
     createRoot(mountPoint).render(<DebugPingPongButton />);
   });
 }
-

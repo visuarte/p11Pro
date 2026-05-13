@@ -32,4 +32,3 @@ export const AjusteColorSchema = z.object({
 
 export type NodoVectorial = z.infer<typeof NodoVectorialSchema>;
 export type AjusteColor = z.infer<typeof AjusteColorSchema>;
-

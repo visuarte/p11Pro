@@ -12,13 +12,12 @@ body,
 
 body {
   margin: 0;
-  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  font-family: 'IBM Plex Sans', 'Avenir Next', 'Segoe UI', sans-serif;
   color: var(--color-text);
   background:
     radial-gradient(circle at top left, rgba(15, 110, 86, 0.14), transparent 24%),
     radial-gradient(circle at 85% 12%, rgba(191, 92, 44, 0.16), transparent 20%),
-    linear-gradient(180deg, rgba(255, 250, 241, 0.72), rgba(237, 231, 219, 0.98)),
-    var(--color-bg);
+    linear-gradient(180deg, rgba(255, 250, 241, 0.72), rgba(237, 231, 219, 0.98)), var(--color-bg);
 }
 
 a {
@@ -26,7 +25,7 @@ a {
 }
 
 code {
-  font-family: "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", monospace;
+  font-family: 'IBM Plex Mono', 'SFMono-Regular', 'Cascadia Code', monospace;
   font-size: 0.8rem;
   background: var(--color-surface-soft);
   border: 1px solid var(--color-line);
@@ -77,7 +76,11 @@ code {
   background: transparent;
   color: var(--color-muted);
   cursor: pointer;
-  transition: transform 140ms ease, background 140ms ease, color 140ms ease, border-color 140ms ease;
+  transition:
+    transform 140ms ease,
+    background 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease;
 }
 
 .rail__button:hover,
@@ -106,7 +109,7 @@ code {
 .canvas-card h2,
 .section-card h2 {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-family: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
   letter-spacing: -0.03em;
 }
 
@@ -286,9 +289,12 @@ code {
   background:
     linear-gradient(var(--color-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-line) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(15, 110, 86, 0.08), transparent 80%),
-    var(--color-surface-soft);
-  background-size: 24px 24px, 24px 24px, 100% 100%, auto;
+    linear-gradient(180deg, rgba(15, 110, 86, 0.08), transparent 80%), var(--color-surface-soft);
+  background-size:
+    24px 24px,
+    24px 24px,
+    100% 100%,
+    auto;
 }
 
 .canvas-stage__frame {
@@ -297,8 +303,7 @@ code {
   border: 1px solid var(--color-line);
   background:
     radial-gradient(circle at 20% 10%, rgba(191, 92, 44, 0.18), transparent 26%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 55%),
-    rgba(255, 250, 241, 0.86);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 55%), rgba(255, 250, 241, 0.86);
   padding: 1rem;
 }
 

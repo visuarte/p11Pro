@@ -1,10 +1,18 @@
-import type { ContextListItem, ExecutionTarget, ProjectContext, RoadmapItem } from "../shared/project-context";
+import type {
+  ContextListItem,
+  ExecutionTarget,
+  ProjectContext,
+  RoadmapItem,
+} from '../shared/project-context';
 
-function renderList(items: ContextListItem[], tone: "implemented" | "planned" | "template"): string {
+function renderList(
+  items: ContextListItem[],
+  tone: 'implemented' | 'planned' | 'template'
+): string {
   return items
     .map((item) => {
-      const detail = item.notes ?? item.reason ?? item.note ?? "";
-      const meta = item.path ?? item.source ?? "";
+      const detail = item.notes ?? item.reason ?? item.note ?? '';
+      const meta = item.path ?? item.source ?? '';
 
       return `
         <li class="status-list__item">
@@ -12,12 +20,12 @@ function renderList(items: ContextListItem[], tone: "implemented" | "planned" | 
             <span class="status-dot status-dot--${tone}"></span>
             <strong>${item.label}</strong>
           </div>
-          ${detail ? `<p>${detail}</p>` : ""}
-          ${meta ? `<code>${meta}</code>` : ""}
+          ${detail ? `<p>${detail}</p>` : ''}
+          ${meta ? `<code>${meta}</code>` : ''}
         </li>
       `;
     })
-    .join("");
+    .join('');
 }
 
 function renderStack(stack: Record<string, string[]>): string {
@@ -27,12 +35,12 @@ function renderStack(stack: Record<string, string[]>): string {
         <div class="stack-block">
           <div class="stack-block__title">${group}</div>
           <div class="chip-row">
-            ${values.map((value) => `<span class="chip chip--muted">${value}</span>`).join("")}
+            ${values.map((value) => `<span class="chip chip--muted">${value}</span>`).join('')}
           </div>
         </div>
       `
     )
-    .join("");
+    .join('');
 }
 
 function renderTargets(targets: ExecutionTarget[]): string {
@@ -46,12 +54,12 @@ function renderTargets(targets: ExecutionTarget[]): string {
           </div>
           <code>${target.entry}</code>
           <ul class="command-list">
-            ${target.commands.map((command) => `<li><code>${command}</code></li>`).join("")}
+            ${target.commands.map((command) => `<li><code>${command}</code></li>`).join('')}
           </ul>
         </article>
       `
     )
-    .join("");
+    .join('');
 }
 
 function renderRoadmap(items: RoadmapItem[]): string {
@@ -62,13 +70,13 @@ function renderRoadmap(items: RoadmapItem[]): string {
           <div class="roadmap-item__top">
             <span class="phase-pill">${item.phase}</span>
             <strong>${item.title}</strong>
-            <span class="chip chip--${item.status === "done" ? "done" : "muted"}">${item.status}</span>
+            <span class="chip chip--${item.status === 'done' ? 'done' : 'muted'}">${item.status}</span>
           </div>
           <p>${item.outcome}</p>
         </li>
       `
     )
-    .join("");
+    .join('');
 }
 
 export function renderEditorShell(context: ProjectContext): string {
@@ -135,7 +143,7 @@ export function renderEditorShell(context: ProjectContext): string {
                   <div class="path-list">
                     <code>${context.project.governance.sourceOfTruth}</code>
                     <code>${context.project.governance.humanSummary}</code>
-                    ${context.project.governance.derivedViews.map((view) => `<code>${view}</code>`).join("")}
+                    ${context.project.governance.derivedViews.map((view) => `<code>${view}</code>`).join('')}
                   </div>
                 </article>
               </div>
@@ -206,7 +214,7 @@ export function renderEditorShell(context: ProjectContext): string {
                   <h2>Capas activas</h2>
                 </div>
               </div>
-              <ul class="status-list">${renderList(context.currentState.implemented, "implemented")}</ul>
+              <ul class="status-list">${renderList(context.currentState.implemented, 'implemented')}</ul>
             </section>
 
             <section class="section-card">
@@ -226,9 +234,9 @@ export function renderEditorShell(context: ProjectContext): string {
                   <h2>Fuera del estado actual</h2>
                 </div>
               </div>
-              <ul class="status-list">${renderList(context.currentState.notImplemented, "planned")}</ul>
+              <ul class="status-list">${renderList(context.currentState.notImplemented, 'planned')}</ul>
               <div class="chip-row">
-                ${context.plannedStack.explicitlyNotCurrent.map((value) => `<span class="chip chip--muted">${value}</span>`).join("")}
+                ${context.plannedStack.explicitlyNotCurrent.map((value) => `<span class="chip chip--muted">${value}</span>`).join('')}
               </div>
             </section>
 
@@ -239,7 +247,7 @@ export function renderEditorShell(context: ProjectContext): string {
                   <h2>Herencia controlada</h2>
                 </div>
               </div>
-              <ul class="status-list">${renderList(context.currentState.templateOnly, "template")}</ul>
+              <ul class="status-list">${renderList(context.currentState.templateOnly, 'template')}</ul>
               <div class="template-artifacts">
                 ${context.templateOnlyArtifacts
                   .map(
@@ -248,12 +256,12 @@ export function renderEditorShell(context: ProjectContext): string {
                         <strong>${artifact.name}</strong>
                         <p>${artifact.policy}</p>
                         <div class="path-list">
-                          ${artifact.paths.map((path) => `<code>${path}</code>`).join("")}
+                          ${artifact.paths.map((path) => `<code>${path}</code>`).join('')}
                         </div>
                       </article>
                     `
                   )
-                  .join("")}
+                  .join('')}
               </div>
             </section>
 

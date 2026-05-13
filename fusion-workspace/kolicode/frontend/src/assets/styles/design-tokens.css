@@ -27,7 +27,7 @@
   --shadow-lg: 0 28px 60px rgba(23, 36, 45, 0.16);
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   color-scheme: dark;
   --color-bg: #14202a;
   --color-surface: #1b2a35;

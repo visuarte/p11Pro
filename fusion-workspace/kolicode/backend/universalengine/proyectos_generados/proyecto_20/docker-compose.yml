@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: webmenu-db
+    environment:
+      POSTGRES_DB: webmenu
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - webmenu-network
+
+  adminer:
+    image: adminer
+    container_name: webmenu-adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - webmenu-network
+
+  web:
+    build: .
+    container_name: webmenu-app
+    ports:
+      - "8080:8080"
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://db:5432/webmenu
+      - JDBC_DATABASE_USERNAME=user
+      - JDBC_DATABASE_PASSWORD=password
+      - KTOR_ENV=docker
+    depends_on:
+      - db
+    networks:
+      - webmenu-network
+
+networks:
+  webmenu-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
