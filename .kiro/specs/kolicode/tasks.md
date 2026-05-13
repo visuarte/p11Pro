@@ -6,7 +6,7 @@
 **Estimación Total:** ~620 horas (15.5 semanas con 2 desarrolladores) (**antes**: 540h)  
 **Arquitectura:** Frontend → Bridge → Engine (3 capas)  
 **Metodología:** Test-Driven Development + Property-Based Testing  
-**Status:** En progreso - Fase 1 30% completada (6/20), Fase 7 (DevOps/QA) activa
+**Status:** En progreso - Fase 1 35% completada (7/20), Fase 7 (DevOps/QA) activa
 
 ---
 
@@ -33,7 +33,14 @@
   - ✅ .github/workflows/qa-matrix.yml: automated QA (build, smoke tests, artifacts)
 
 ### 2. Arquitectura de Tres Capas - Base
-- [ ] 2.1 Crear estructura de directorios según design.md
+- [x] 2.1 Crear estructura de directorios según design.md ✅ **NUEVO**
+  - ✅ frontend/src/main/, renderer/, preload/, shared/
+  - ✅ backend/bridge/ con routes, middleware, websocket, grpc
+  - ✅ shared/types/ y shared/proto/
+  - ✅ creative/gpu_workers/ y color_mgmt/
+  - ✅ 7 README.md files documentando arquitectura
+  - ✅ ARCHITECTURE.md con diagrama de 3 capas
+  - ✅ Tiempo: 1h (estimado: 2h) - 50% más rápido
 - [ ] 2.2 Setup Electron main process (NFR-ARC-001)
 - [ ] 2.3 Setup React renderer process (NFR-ARC-002)
 - [ ] 2.4 Setup Node.js Bridge (API Gateway)
@@ -412,13 +419,13 @@
 
 ### Comparativa: Antes vs Después (v1.0 → v1.1)
 
-| Métrica | v1.0 (Original) | v1.1 (Actualizado) | Diferencia | % Cambio |
+| Métrica | v1.0 (Original) | v1.2 (Actualizado) | Diferencia | % Cambio |
 |---------|-----------------|-------------------|-----------|----------|
 | **Total Tasks** | 156 | 167 | +11 | +7.1% |
 | **Total Horas** | 540h | 620h | +80h | +14.8% |
 | **Semanas (2 devs)** | 13.5 | 15.5 | +2 | +14.8% |
-| **Tareas Completadas** | ~10 | ~20 | +10 | +100% |
-| **% Completado** | ~6% | ~12% | +6pp | +100% |
+| **Tareas Completadas** | ~10 | ~21 | +11 | +110% |
+| **% Completado** | ~6% | ~12.6% | +6.6pp | +110% |
 
 ### Desglose por Fase: Estimaciones Detalladas
 

@@ -14,11 +14,11 @@
 | Métrica | Valor | Notas |
 |---------|-------|-------|
 | **Subtasks Totales** | 20 | Divididas en 4 grupos principales |
-| **Completadas** | 6 (30%) | ✅ 1.1, 1.2, 1.3, 1.4, 1.5 |
+| **Completadas** | 7 (35%) | ✅ 1.1, 1.2, 1.3, 1.4, 1.5, 2.1 |
 | **En Progreso** | 0 | Pendiente retomar |
 | **Bloqueadas** | 0 | Ninguna bloqueada actualmente |
-| **Tiempo Usado** | ~12h | Setup CI/CD, TypeScript, ESLint/Prettier, Docker, estructura base |
-| **Tiempo Restante** | ~68h | Arquitectura, DB, Protocolos |
+| **Tiempo Usado** | ~13h | Setup CI/CD, TypeScript, ESLint/Prettier, Docker, estructura base, arquitectura |
+| **Tiempo Restante** | ~67h | Arquitectura (Electron/Bridge), DB, Protocolos |
 
 ---
 
@@ -88,13 +88,27 @@
 
 ---
 
-### Task 2: Arquitectura de Tres Capas - Base (0% completado)
+### Task 2: Arquitectura de Tres Capas - Base (5% completado)
 
 **Estimado Total:** 24h  
 **Prioridad:** CRÍTICA (fundación del proyecto)
 
-- [ ] **2.1 Crear estructura de directorios según design.md** 🔴
+- [x] **2.1 Crear estructura de directorios según design.md** ✅
   - **Estimado:** 2h
+  - **Tiempo usado:** 1h (50% más rápido)
+  - **Completado:** 2026-05-13
+  - **Entregables completados:**
+    - ✅ `frontend/src/main/` - Electron main process
+    - ✅ `frontend/src/renderer/` - React app
+    - ✅ `frontend/src/preload/` - Preload scripts
+    - ✅ `backend/bridge/` - API Gateway con subdirectorios (routes, middleware, websocket, grpc)
+    - ✅ `shared/types/` - TypeScript types compartidos
+    - ✅ `shared/proto/` - Protocol Buffers definitions
+    - ✅ `creative/gpu_workers/` - GPU worker pool
+    - ✅ `creative/color_mgmt/` - Color management
+    - ✅ 7 README.md files (~1,240 líneas de documentación)
+    - ✅ ARCHITECTURE.md - Documentación de arquitectura de 3 capas
+    - ✅ TASK_2.1_VERIFICATION.md - Verificación completa
   - **Estructura propuesta:**
     ```
     fusion-workspace/kolicode/
