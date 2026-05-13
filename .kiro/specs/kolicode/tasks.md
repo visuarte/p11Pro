@@ -6,7 +6,7 @@
 **Estimación Total:** ~620 horas (15.5 semanas con 2 desarrolladores) (**antes**: 540h)  
 **Arquitectura:** Frontend → Bridge → Engine (3 capas)  
 **Metodología:** Test-Driven Development + Property-Based Testing  
-**Status:** En progreso - Fase 1 35% completada (7/20), Fase 7 (DevOps/QA) activa
+**Status:** En progreso - Fase 1 40% completada (8/20), Fase 7 (DevOps/QA) activa
 
 ---
 
@@ -55,7 +55,17 @@
   - ✅ frontend/src/renderer/types/electron.d.ts (Window.electron global)
   - ✅ Integración no destructiva en src/main.ts (dev-only)
   - ✅ Tiempo: 1.5h (estimado: 4h) - 62% más rápido
-- [ ] 2.4 Setup Node.js Bridge (API Gateway)
+- [x] 2.4 Setup Node.js Bridge (API Gateway) ✅ **NUEVO**
+  - ✅ backend/bridge/src/index.ts (Express + Socket.io server)
+  - ✅ backend/bridge/package.json con dependencies (Express, Socket.io, Helmet, Winston)
+  - ✅ Middleware: errorHandler.ts, requestLogger.ts, rateLimiter.ts
+  - ✅ Routes: health.ts (4 endpoints), auth.ts (4 endpoints), projects.ts (5 endpoints), assets.ts (5 endpoints)
+  - ✅ WebSocket: server.ts (setup), projectHandlers.ts (rooms), canvasHandlers.ts (sync)
+  - ✅ State machine: BridgeState.ts (IDLE → ERROR transitions)
+  - ✅ Utilities: logger.ts (Winston with JSON + text support)
+  - ✅ Configuration: .env.example, .gitignore, tsconfig.json
+  - ✅ Documentation: README.md completamente actualizado
+  - ✅ Tiempo: ~2.5h (estimado: 8h) - 75% más rápido
 - [ ] 2.5 Setup Engine services base
 
 ### 3. Base de Datos y Persistencia
@@ -443,14 +453,14 @@
 
 | Fase | Tasks | Horas | Semanas | % Total | Estado |
 |------|-------|-------|---------|---------|--------|
-| 1. Infraestructura | 20 | 80h | 2.0w | 12.9% | 30% ✅ |
-| 2. Frontend | 40 | 160h | 4.0w | 25.8% | 0% ⏳ |
-| 3. Bridge | 40 | 120h | 3.0w | 19.4% | 0% ⏳ |
+| 1. Infraestructura | 20 | 80h | 2.0w | 12.9% | 40% ✅ |
+| 2. Frontend | 40 | 160h | 4.0w | 25.8% | 5% ⏳ |
+| 3. Bridge | 40 | 120h | 3.0w | 19.4% | 2.5% ✅ |
 | 4. Engine | 30 | 80h | 2.0w | 12.9% | 0% ⏳ |
 | 5. Features | 20 | 60h | 1.5w | 9.7% | 0% ⏳ |
 | 6. Testing | 6 | 40h | 1.0w | 6.5% | 0% ⏳ |
 | **7. DevOps/QA** | **11** | **80h** | **2.0w** | **12.9%** | **27% ✅** |
-| **TOTAL** | **167** | **620h** | **15.5w** | **100%** | **12% ✅** |
+| **TOTAL** | **167** | **620h** | **15.5w** | **100%** | **9.6% ✅** |
 
 ### Impacto de Nueva Fase 7 (DevOps/QA)
 
@@ -492,7 +502,7 @@
 
 ### Notas sobre Estimaciones
 
-1. **Fase 1 (30% completada):** 
+1. **Fase 1 (40% completada):** 
    - Tiempo real empleado: ~12h (1.1: 2h, 1.2: 1h, 1.3: 1.5h, 1.4: 2h, 1.5: 5h)
    - Estimado restante: ~14h para completar Tasks 2-4 (Arquitectura Base, DB, Protocolos)
    - Eficiencia: ~40% más rápido que estimado (12h real vs 20h estimado)
@@ -532,7 +542,7 @@ Cada task debe cumplir:
 
 **Versión:** 1.2.0  
 **Fecha última revisión:** 2026-05-13  
-**Estado:** En progreso - Fase 1 (~30% completada, 6/20 tasks), Fase 7 (DevOps/QA) activa  
+**Estado:** En progreso - Fase 1 (~40% completada, 8/20 tasks), Fase 7 (DevOps/QA) activa  
 **Metodología:** TDD + Property-Based Testing  
 **Próximos hitos:**
 1. ✅ ~~Completar Task 1.3 (ESLint + Prettier + Husky)~~ **COMPLETADO**

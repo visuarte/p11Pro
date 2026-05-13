@@ -74,6 +74,5 @@ export const electronBridge = {
   isElectron,
   ping,
   openFile,
-  log
+  log,
 };
-

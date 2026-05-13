@@ -9,4 +9,3 @@
 
 export * from './electronBridge';
 export { default as ElectronPingDemo } from './components/ElectronPingDemo';
-

@@ -10,10 +10,9 @@ export async function mountElectronPingDemo(target: HTMLElement): Promise<void> 
   const [{ createRoot }, React, { default: ElectronPingDemo }] = await Promise.all([
     import('react-dom/client'),
     import('react'),
-    import('./components/ElectronPingDemo')
+    import('./components/ElectronPingDemo'),
   ]);
 
   const root = createRoot(target);
   root.render(React.createElement(ElectronPingDemo));
 }
-

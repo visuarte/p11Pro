@@ -2,7 +2,10 @@ import { BrowserWindow } from 'electron';
 import path from 'path';
 
 export function createMainWindow(): BrowserWindow {
-  const isDev = process.env.NODE_ENV === 'development' || !!process.env.VITE_DEV_SERVER_URL || process.env.ELECTRON_START_URL;
+  const isDev =
+    process.env.NODE_ENV === 'development' ||
+    !!process.env.VITE_DEV_SERVER_URL ||
+    process.env.ELECTRON_START_URL;
 
   const win = new BrowserWindow({
     width: 1200,
@@ -12,12 +15,13 @@ export function createMainWindow(): BrowserWindow {
       preload: path.join(__dirname, '..', 'preload', 'index.js'),
       contextIsolation: true,
       sandbox: false,
-      nodeIntegration: false
-    }
+      nodeIntegration: false,
+    },
   });
 
   // Load dev server if available
-  const devUrl = process.env.VITE_DEV_SERVER_URL || process.env.ELECTRON_START_URL || 'http://localhost:5173';
+  const devUrl =
+    process.env.VITE_DEV_SERVER_URL || process.env.ELECTRON_START_URL || 'http://localhost:5173';
 
   if (isDev) {
     win.loadURL(devUrl).catch((err) => console.error('Failed to load dev URL', err));
@@ -37,4 +41,3 @@ export function createMainWindow(): BrowserWindow {
 
   return win;
 }
-

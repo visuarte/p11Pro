@@ -34,16 +34,19 @@ main/
 ## Responsabilidades
 
 ### 1. Window Management
+
 - Crear y gestionar BrowserWindow instances
 - Configurar propiedades de ventana
 - Implementar deep linking
 
 ### 2. IPC Communication
+
 - Registrar handlers para eventos desde renderer
 - Enviar eventos al renderer process
 - Validar requests IPC
 
 ### 3. Native Integration
+
 - File system access
 - Native dialogs
 - System notifications
@@ -73,4 +76,3 @@ Operating System
 
 **Estado:** 🚧 Pendiente implementación (Task 2.2)  
 **Última actualización:** 2026-05-13
-

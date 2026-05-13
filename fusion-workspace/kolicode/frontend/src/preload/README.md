@@ -32,16 +32,19 @@ preload/
 ## Responsabilidades
 
 ### 1. Context Bridge
+
 - Exponer APIs seguras con `contextBridge.exposeInMainWorld()`
 - Validar inputs desde renderer
 - Sanitizar outputs del main process
 
 ### 2. IPC Bridge
+
 - Envolver `ipcRenderer.invoke()` con type safety
 - Implementar retry logic
 - Error handling
 
 ### 3. Security
+
 - Content Security Policy enforcement
 - Input validation
 - XSS prevention
@@ -63,10 +66,10 @@ contextBridge.exposeInMainWorld('electron', {
     }
     return ipcRenderer.invoke(channel, ...args);
   },
-  
+
   // File operations
   openFile: () => ipcRenderer.invoke('dialog:openFile'),
-  saveFile: (data: any) => ipcRenderer.invoke('dialog:saveFile', data)
+  saveFile: (data: any) => ipcRenderer.invoke('dialog:saveFile', data),
 });
 ```
 
@@ -92,4 +95,3 @@ contextBridge.exposeInMainWorld('electron', {
 
 **Estado:** 🚧 Pendiente implementación (Task 2.2)  
 **Última actualización:** 2026-05-13
-

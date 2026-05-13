@@ -40,21 +40,25 @@ renderer/
 ## Responsabilidades
 
 ### 1. UI/UX
+
 - Renderizar interfaz de usuario
 - Manejar interacciones del usuario
 - Animaciones y transiciones
 
 ### 2. Canvas Editor
+
 - Editor de diseño visual
 - Herramientas de dibujo
 - Layers, transformaciones
 
 ### 3. State Management
+
 - Estado de la aplicación
 - Cache local
 - Sincronización con backend
 
 ### 4. Communication
+
 - IPC con main process
 - HTTP calls al Bridge
 - WebSocket para real-time updates
@@ -93,4 +97,3 @@ Bridge (API Gateway)
 
 **Estado:** 🔧 Parcialmente implementado  
 **Última actualización:** 2026-05-13
-

@@ -22,4 +22,3 @@ export function registerIpcHandlers(mainWindow?: BrowserWindow | null) {
 }
 
 export {};
-

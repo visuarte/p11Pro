@@ -33,7 +33,7 @@ export function ElectronPingDemo(): JSX.Element {
         borderRadius: '8px',
         fontFamily: 'system-ui, sans-serif',
         maxWidth: '500px',
-        margin: '1rem auto'
+        margin: '1rem auto',
       }}
     >
       <h3 style={{ marginTop: 0 }}>Electron IPC Demo</h3>
@@ -52,16 +52,12 @@ export function ElectronPingDemo(): JSX.Element {
           color: 'white',
           border: 'none',
           borderRadius: '4px',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
       >
         Send Ping
       </button>
-      {error && (
-        <pre style={{ color: 'red', marginTop: '1rem' }}>
-          Error: {error}
-        </pre>
-      )}
+      {error && <pre style={{ color: 'red', marginTop: '1rem' }}>Error: {error}</pre>}
       {response && (
         <pre
           style={{
@@ -69,7 +65,7 @@ export function ElectronPingDemo(): JSX.Element {
             padding: '0.75rem',
             borderRadius: '4px',
             marginTop: '1rem',
-            fontSize: '0.85rem'
+            fontSize: '0.85rem',
           }}
         >
           {JSON.stringify(response, null, 2)}
@@ -80,4 +76,3 @@ export function ElectronPingDemo(): JSX.Element {
 }
 
 export default ElectronPingDemo;
-

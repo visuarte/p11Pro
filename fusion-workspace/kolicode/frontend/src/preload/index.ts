@@ -10,8 +10,7 @@ contextBridge.exposeInMainWorld('electron', {
     const valid = ['app:log'];
     if (!valid.includes(channel)) throw new Error(`Invalid channel: ${channel}`);
     return ipcRenderer.send(channel, ...args);
-  }
+  },
 });
 
 export {};
-
