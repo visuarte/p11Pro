@@ -399,16 +399,73 @@
 
 ## Estimaciones de Tiempo
 
-| Fase | Tasks | Horas | Semanas (2 devs) |
-|------|-------|-------|------------------|
-| 1. Infraestructura | 1-20 | 80h | 2 semanas |
-| 2. Frontend | 21-60 | 160h | 4 semanas |
-| 3. Bridge | 61-100 | 120h | 3 semanas |
-| 4. Engine | 101-130 | 80h | 2 semanas |
-| 5. Features | 131-150 | 60h | 1.5 semanas |
-| 6. Testing | 151-156 | 40h | 1 semana |
-| **7. DevOps/QA** | **157-167** | **80h** | **2 semanas** |
-| **TOTAL** | **167** | **620h** | **15.5 semanas** |
+### Comparativa: Antes vs Después (v1.0 → v1.1)
+
+| Métrica | v1.0 (Original) | v1.1 (Actualizado) | Diferencia | % Cambio |
+|---------|-----------------|-------------------|-----------|----------|
+| **Total Tasks** | 156 | 167 | +11 | +7.1% |
+| **Total Horas** | 540h | 620h | +80h | +14.8% |
+| **Semanas (2 devs)** | 13.5 | 15.5 | +2 | +14.8% |
+| **Tareas Completadas** | ~10 | ~17 | +7 | +70% |
+| **% Completado** | ~6% | ~10% | +4pp | +67% |
+
+### Desglose por Fase: Estimaciones Detalladas
+
+| Fase | Tasks | Horas | Semanas | % Total | Estado |
+|------|-------|-------|---------|---------|--------|
+| 1. Infraestructura | 20 | 80h | 2.0w | 12.9% | 20% ✅ |
+| 2. Frontend | 40 | 160h | 4.0w | 25.8% | 0% ⏳ |
+| 3. Bridge | 40 | 120h | 3.0w | 19.4% | 0% ⏳ |
+| 4. Engine | 30 | 80h | 2.0w | 12.9% | 0% ⏳ |
+| 5. Features | 20 | 60h | 1.5w | 9.7% | 0% ⏳ |
+| 6. Testing | 6 | 40h | 1.0w | 6.5% | 0% ⏳ |
+| **7. DevOps/QA** | **11** | **80h** | **2.0w** | **12.9%** | **27% ✅** |
+| **TOTAL** | **167** | **620h** | **15.5w** | **100%** | **10% ✅** |
+
+### Impacto de Nueva Fase 7 (DevOps/QA)
+
+| Concepto | Impacto | Detalles |
+|----------|---------|----------|
+| **Nuevas Tasks** | +11 | Task 36-40: Dependency Mgmt, CI/CD, Build Utils, Docs, Release Strategy |
+| **Horas Agregadas** | +80h | ~7.3h por task (vs 3.5h promedio otras fases) |
+| **Porcentaje Total** | 12.9% | Equivalente a 2 semanas de trabajo (2 devs) |
+| **Completadas Ahora** | 27% | 3/11 tasks iniciadas (36.1, 36.2, 37.1, 37.2, 38.1, 39.1, 39.2, 40.1) |
+| **Criticidad** | ALTA | Bloqueante para calidad y merge de PRs (QA automation antes de main features) |
+
+### Timeline Realista (2 Desarrolladores)
+
+**Sprint Actual (Semana 1-2):**
+- Fase 1: Completar 1.3 (ESLint/Prettier/Husky) - 8h
+- Fase 1: Iniciar 2.1-2.5 (Arquitectura Base) - 16h
+- Fase 7: Continuar 37.3-37.6 (CI/CD advanced) - 20h
+- **Total**: ~44h (~5.5 días)
+
+**Sprint 2 (Semana 3-4):**
+- Fase 2: Task 5.3-5.5 (React Router, Zustand, Electron) - 32h
+- Fase 2: Task 6.1-6.3 (Design System Base) - 24h
+- Fase 7: Task 39.3-39.5 (Docs & Runbooks) - 16h
+- **Total**: ~72h (9 días)
+
+**Roadmap 4-6 Semanas (Sprint 3-6):**
+- Fase 2: Task 6-8 (Design System, Nav, State Mgmt) - 80h
+- Fase 3: Task 14-17 (API Gateway, WebSocket, gRPC) - 60h
+- Fase 7: Task 40.2-40.5 (Release Strategy) - 16h
+- **Total**: ~156h (19.5 días)
+
+**Roadmap 7-15 Semanas (Sprint 7-15):**
+- Fase 3: Task 18-24 (Orchestration, Analytics, Diagnostics) - 60h
+- Fase 4: Task 25-29 (Engine Services) - 80h
+- Fase 5: Task 30-34 (Quality, Libraries, Fusion) - 60h
+- Fase 6: Task 35 (Testing Strategy) - 40h
+- **Total**: ~240h (30 días)
+
+### Notas sobre Estimaciones
+
+1. **Fase 1 (20% completada):** Tiempo real empleado ~8h, estimado 16h más para completar (ESLint/Prettier/Husky)
+2. **Fase 7 (27% completada):** Faseactualmente activa; 3 sub-tasks completadas ya (CI, QA Automation, Build Utils)
+3. **Paralelización:** Fase 7 puede ejecutarse en paralelo con Fase 2, acelerando delivery de value
+4. **Buffer:** +20% en cada sprint para mitigación de riesgos, troubleshooting, PR reviews (~124h adicionales no estimados)
+5. **Dependencias:** Fase 1 debe completarse antes Fase 2-4; Tasks dentro cada fase pueden ser paralelas
 
 ---
 
