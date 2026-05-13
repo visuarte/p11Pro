@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "bash ./scripts/dev-check.sh && vite",
+    "electron:dev": "npm run dev & electron .",
+    "electron:start": "electron .",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
