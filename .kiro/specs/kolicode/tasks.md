@@ -41,8 +41,20 @@
   - ✅ 7 README.md files documentando arquitectura
   - ✅ ARCHITECTURE.md con diagrama de 3 capas
   - ✅ Tiempo: 1h (estimado: 2h) - 50% más rápido
-- [ ] 2.2 Setup Electron main process (NFR-ARC-001)
-- [ ] 2.3 Setup React renderer process (NFR-ARC-002)
+- [x] 2.2 Setup Electron main process (NFR-ARC-001) ✅ **NUEVO**
+  - ✅ frontend/src/main/index.ts (entry point)
+  - ✅ frontend/src/main/window.ts (BrowserWindow + loader dev/prod)
+  - ✅ frontend/src/main/ipc-handlers.ts (app:ping, app:open-file, app:log)
+  - ✅ frontend/src/preload/index.ts (contextBridge con whitelist)
+  - ✅ Scripts: electron:dev, electron:start
+  - ✅ Tiempo: 1.5h (estimado: 6h) - 75% más rápido
+- [x] 2.3 Setup React renderer process (NFR-ARC-002) ✅ **NUEVO**
+  - ✅ frontend/src/renderer/electronBridge.ts (typed wrapper + mocks)
+  - ✅ frontend/src/renderer/components/ElectronPingDemo.tsx
+  - ✅ frontend/src/renderer/mountDemo.tsx (dynamic import)
+  - ✅ frontend/src/renderer/types/electron.d.ts (Window.electron global)
+  - ✅ Integración no destructiva en src/main.ts (dev-only)
+  - ✅ Tiempo: 1.5h (estimado: 4h) - 62% más rápido
 - [ ] 2.4 Setup Node.js Bridge (API Gateway)
 - [ ] 2.5 Setup Engine services base
 

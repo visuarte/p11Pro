@@ -13,6 +13,14 @@ if (!root) {
 
 if (import.meta.env.MODE === 'development') {
   mountDebugPingPong();
+
+  // Optional Electron IPC demo (only mounts if a host node exists)
+  const demoHost = document.querySelector<HTMLElement>('#electron-demo');
+  if (demoHost) {
+    import('./renderer/mountDemo')
+      .then(({ mountElectronPingDemo }) => mountElectronPingDemo(demoHost))
+      .catch((err) => console.warn('[renderer] ElectronPingDemo mount failed', err));
+  }
 }
 
 createApp(root, iconSpriteUrl);
