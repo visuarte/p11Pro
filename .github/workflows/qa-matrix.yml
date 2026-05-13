@@ -1,0 +1,23 @@
+name: QA Matrix - Frontend Validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "chore/frontend/**"
+      - "chore/front/**"
+
+jobs:
+  qa-matrix:
+    name: QA Matrix - Build + Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: |
+          cd fusion-workspace/kolicode/frontend
+          npm ci || npm install
+          npm run build
+          [ -f dist/index.html ] || exit 1
