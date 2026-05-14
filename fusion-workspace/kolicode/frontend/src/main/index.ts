@@ -1,13 +1,12 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'path';
+import { app, BrowserWindow } from 'electron';
 import { createMainWindow } from './window.js';
 import { registerIpcHandlers } from './ipc-handlers.js';
 
 let mainWindow: BrowserWindow | null = null;
 
 function onReady() {
+  registerIpcHandlers();
   mainWindow = createMainWindow();
-  registerIpcHandlers(mainWindow);
 
   // Open DevTools in development
   if (process.env.NODE_ENV === 'development') {

@@ -1,5 +1,11 @@
 # Architecture Documentation - KoliCode
 
+## Related Documents
+
+- [Project Charter](PROJECT_CHARTER.md) - product goals, scope boundaries, success criteria and non-goals
+- [Integration Contracts](INTEGRATION_CONTRACTS.md) - module contracts, latency targets and compatibility matrices
+- [Architecture Diagrams](architecture/README.md) - visual component, sequence and state diagrams
+
 ## System Overview
 
 KoliCode is a desktop application that integrates four specialized components into a unified microservices architecture with a single React frontend.

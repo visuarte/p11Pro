@@ -18,21 +18,19 @@ Este directorio contiene la **aplicación React** que se ejecuta en el renderer 
 
 ---
 
-## Estructura Propuesta
+## Estructura
 
 ```
 renderer/
-├── components/      # React components
-│   ├── canvas/     # Canvas editor components
-│   ├── ui/         # UI components (buttons, inputs, etc.)
-│   └── layout/     # Layout components
-├── pages/          # Page-level components
-├── hooks/          # Custom React hooks
-├── store/          # State management (Zustand)
-├── api/            # API client (HTTP + WebSocket)
-├── styles/         # Global styles, themes
-├── utils/          # Utility functions
-└── App.tsx         # Root component
+├── App.tsx                 # Root React component
+├── RendererShellHost.tsx   # Host del shell actual dentro del árbol React
+├── components/
+│   ├── ElectronPingDemo.tsx
+│   └── RendererDiagnostics.tsx
+├── electronBridge.ts       # Wrapper tipado del preload bridge
+├── index.ts                # Re-export del bridge para imports estables
+└── types/
+    └── electron.d.ts       # Tipos globales del renderer
 ```
 
 ---
@@ -79,10 +77,11 @@ Bridge (API Gateway)
 
 ## Stack Actual
 
-- **React:** 18.x
+- **React:** 19.x
 - **TypeScript:** 5.6.3
-- **Vite:** 8.0.12
-- **Tailwind CSS:** Configurado
+- **Vite:** 5.4.21
+- **ReactDOM:** 19.x
+- **Zustand:** Configurado
 - **ESLint + Prettier:** Configurado
 
 ---
@@ -95,5 +94,13 @@ Bridge (API Gateway)
 
 ---
 
-**Estado:** 🔧 Parcialmente implementado  
-**Última actualización:** 2026-05-13
+## Estado actual
+
+- ✅ React renderer montado con `createRoot()` desde `src/main.ts`
+- ✅ Integración con Electron via preload bridge (`window.electron`, `window.api`, `window.ipcRenderer`)
+- ✅ Context isolation preservado; el renderer no usa APIs nativas directas
+- ✅ IPC base operativo para ping, logging, open file y settings
+- ✅ Estado local con Zustand conectado al handler `update-settings`
+
+**Estado:** ✅ Implementado (Task 2.3)  
+**Última actualización:** 2026-05-15

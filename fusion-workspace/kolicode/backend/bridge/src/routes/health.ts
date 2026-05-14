@@ -1,4 +1,7 @@
 import { Router, Request, Response } from 'express';
+import { getDiagnosticsStoreStatus } from '../diagnostics/store';
+import { checkPostgresHealth } from '../db/postgres';
+import { checkRedisHealth } from '../db/redis';
 import { logger } from '../utils/logger';
 
 const router = Router();
@@ -32,20 +35,31 @@ router.get('/', (req: Request, res: Response) => {
  * Readiness check endpoint
  * Indicates if service is ready to receive traffic
  */
-router.get('/ready', (req: Request, res: Response) => {
-  // Check critical services
-  const isReady = true; // Add actual health checks here
+router.get('/ready', async (req: Request, res: Response) => {
+  const [database, redis] = await Promise.all([
+    checkPostgresHealth(),
+    checkRedisHealth(),
+  ]);
+  const isReady = database.status === 'healthy' && redis.status === 'healthy';
 
   if (isReady) {
     res.status(200).json({
       ready: true,
       timestamp: new Date().toISOString(),
+      services: {
+        database,
+        redis,
+      },
     });
   } else {
     res.status(503).json({
       ready: false,
       timestamp: new Date().toISOString(),
       message: 'Service not ready',
+      services: {
+        database,
+        redis,
+      },
     });
   }
 });
@@ -66,12 +80,22 @@ router.get('/alive', (req: Request, res: Response) => {
  * Detailed health check endpoint
  * Returns comprehensive health information
  */
-router.get('/detailed', (req: Request, res: Response) => {
+router.get('/detailed', async (req: Request, res: Response) => {
   const memoryUsage = process.memoryUsage();
   const uptime = process.uptime();
+  const [database, redis, diagnostics] = await Promise.all([
+    checkPostgresHealth(),
+    checkRedisHealth(),
+    getDiagnosticsStoreStatus(),
+  ]);
 
   res.status(200).json({
-    status: 'healthy',
+    status:
+      database.status === 'healthy' &&
+      redis.status === 'healthy' &&
+      diagnostics.status === 'healthy'
+        ? 'healthy'
+        : 'degraded',
     timestamp: new Date().toISOString(),
     uptime,
     memory: memoryUsage,
@@ -82,14 +106,9 @@ router.get('/detailed', (req: Request, res: Response) => {
       versions: process.versions,
     },
     services: {
-      database: {
-        status: 'unknown', // To be implemented
-        latency: null,
-      },
-      redis: {
-        status: 'unknown', // To be implemented
-        latency: null,
-      },
+      database,
+      redis,
+      diagnostics,
       thunderkoli: {
         status: 'unknown', // To be implemented
         latency: null,
@@ -107,4 +126,3 @@ router.get('/detailed', (req: Request, res: Response) => {
 });
 
 export default router;
-

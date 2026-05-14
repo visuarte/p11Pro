@@ -1,0 +1,14 @@
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+pydantic==2.11.4
+numpy==2.2.5
+pillow==11.2.1
+opencv-python-headless==4.11.0.86
+colour-science==0.4.6
+
+# Optional heavy dependencies for later graphics/ML phases:
+# mediapipe
+# torch
+# tensorflow
+# blend2d
+# littlecms

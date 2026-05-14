@@ -1,6 +1,7 @@
 // stores/settingsStore.ts
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { electronBridge } from '../renderer/electronBridge';
 
 // Tipado de la configuración
 export interface SettingsConfig {
@@ -13,7 +14,7 @@ export interface SettingsConfig {
 interface SettingsState {
   config: SettingsConfig;
   isUpdating: boolean;
-  updateConfig: (updates: Partial<SettingsConfig>) => void;
+  updateConfig: (updates: Partial<SettingsConfig>) => Promise<void>;
 }
 
 // Estado inicial (puedes cargarlo desde backend o localStorage)
@@ -24,31 +25,40 @@ const initialConfig: SettingsConfig = {
   // ...otros valores por defecto
 };
 
+interface UpdateSettingsResponse {
+  success: boolean;
+  config?: SettingsConfig;
+  error?: string;
+}
+
 export const useSettingsStore = create<SettingsState>()(
   devtools((set, get) => ({
     config: initialConfig,
     isUpdating: false,
     updateConfig: async (updates: Partial<SettingsConfig>) => {
       const prevConfig = get().config;
-      // Optimista: actualiza UI inmediatamente
-      set({ config: { ...prevConfig, ...updates }, isUpdating: true });
+      const nextConfig = { ...prevConfig, ...updates };
+
+      set({ config: nextConfig, isUpdating: true });
+
+      if (!electronBridge.isElectron()) {
+        set({ isUpdating: false });
+        return;
+      }
+
       try {
-        // Simula envo al backend/IPC (reemplaza por tu lgica real)
-        const response: any = await window.ipcRenderer?.invoke?.('update-settings', {
-          ...prevConfig,
-          ...updates,
-        });
+        const response = await window.electron!.invoke<UpdateSettingsResponse>('update-settings', nextConfig);
+
         if (response && response.success) {
-          set({ isUpdating: false });
+          set({ config: response.config ?? nextConfig, isUpdating: false });
         } else {
-          // Rollback si el Core rechaza el cambio
           set({ config: prevConfig, isUpdating: false });
-          window.alert?.('El Core rechaz el cambio: ' + (response?.error || 'Error desconocido'));
+          window.alert?.('El Core rechazo el cambio: ' + (response?.error || 'Error desconocido'));
         }
-      } catch (err: any) {
-        // Rollback en error de comunicacin
+      } catch (err) {
         set({ config: prevConfig, isUpdating: false });
-        window.alert?.('Error de comunicacin con el Core: ' + err.message);
+        const message = err instanceof Error ? err.message : 'Error desconocido';
+        window.alert?.('Error de comunicacion con el Core: ' + message);
       }
     },
   }))

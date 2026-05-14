@@ -25,7 +25,7 @@ const executor = new ExecutorAgent();
 const engine = new ThunderEngine();
 
 const app = express();
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3001;
 
 // Configuración de la ruta de datos para permitir aislamiento en tests
 const DATA_PATH = process.env.DATA_PATH || path.join(__dirname, 'data.json');
@@ -646,7 +646,7 @@ app.get('/users/:id/qr', async (req, res) => {
         const token = crypto.createHmac('sha256', secret).update(dataToSign).digest('hex');
 
         // URL de la landing con Validadores
-        const landingUrl = `http://localhost:3500/card/${id}?t=${token}&e=${expiry}`;
+        const landingUrl = `http://localhost:${PORT}/card/${id}?t=${token}&e=${expiry}`;
         
         const qrImage = await qrcode.toDataURL(landingUrl, {
             color: { dark: '#4f46e5', light: '#ffffff' },

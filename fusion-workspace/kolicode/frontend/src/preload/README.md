@@ -93,5 +93,5 @@ contextBridge.exposeInMainWorld('electron', {
 
 ---
 
-**Estado:** 🚧 Pendiente implementación (Task 2.2)  
-**Última actualización:** 2026-05-13
+**Estado:** ✅ Implementado (Task 2.2)  
+**Última actualización:** 2026-05-14

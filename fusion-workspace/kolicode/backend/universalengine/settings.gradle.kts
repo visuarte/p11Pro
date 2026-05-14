@@ -1,1 +1,1 @@
-rootProject.name = "sisi-v1"
+rootProject.name = "kolicode-universalengine"

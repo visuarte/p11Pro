@@ -11,7 +11,11 @@
     "docker:ps": "docker-compose ps",
     "docker:clean": "docker-compose down -v && echo '✅ All volumes removed'",
     "db:psql": "docker-compose exec postgres psql -U kolicode -d kolicode",
-    "db:backup": "docker-compose exec postgres pg_dump -U kolicode kolicode > backups/kolicode_$(date +%Y%m%d_%H%M%S).sql",
+    "db:migrate:up": "bash scripts/db-migrate.sh up",
+    "db:migrate:down": "bash scripts/db-migrate.sh down",
+    "db:migrate:create": "bash scripts/db-migrate.sh create",
+    "db:backup": "bash scripts/backup-db.sh --once",
+    "db:backup:watch": "bash scripts/backup-db.sh",
     "redis:cli": "docker-compose exec redis redis-cli",
     "setup": "cp .env.example .env && echo '✅ .env created. Please review and update values.'",
     "dev:all": "npm run docker:up && cd frontend && npm run dev"
@@ -31,4 +35,3 @@
   "author": "KoliCode Team",
   "license": "PROPRIETARY"
 }
-

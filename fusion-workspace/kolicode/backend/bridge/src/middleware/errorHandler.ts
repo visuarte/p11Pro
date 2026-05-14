@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { recordDiagnosticInBackground } from '../diagnostics/store';
 import { logger } from '../utils/logger';
 
 export interface APIError extends Error {
@@ -55,6 +56,20 @@ export const errorHandler = (
   }
 
   // Send error response
+  recordDiagnosticInBackground({
+    type: 'bridge-error',
+    source: 'bridge.errorHandler',
+    level: statusCode >= 500 ? 'error' : 'warn',
+    message,
+    metadata: {
+      code,
+      statusCode,
+      path: req.path,
+      method: req.method,
+      details: err.details,
+    },
+  });
+
   res.status(statusCode).json({
     error: {
       message,
@@ -79,4 +94,3 @@ export const asyncHandler = (
     Promise.resolve(fn(req, res, next)).catch(next);
   };
 };
-

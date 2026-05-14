@@ -1,9 +1,10 @@
 {
-    "name": "illusion-reveal-backend",
+    "name": "@kolicode/thunderkoli",
     "version": "1.0.0",
-    "description": "API RESTful para el proyecto Illusion Reveal",
+    "description": "KoliCode ThunderKoli security, vault, audit and identity service",
     "main": "server.js",
     "scripts": {
+        "build": "node --check server.js && node --check src/server.js",
         "start": "node server.js",
         "dev": "node --watch server.js",
         "test": "jest --forceExit --detectOpenHandles",

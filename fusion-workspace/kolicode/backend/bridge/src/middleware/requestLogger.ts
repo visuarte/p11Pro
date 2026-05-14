@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { recordDiagnosticInBackground } from '../diagnostics/store';
 import { logger } from '../utils/logger';
 
 /**
@@ -40,8 +41,22 @@ export const requestLogger = (
       statusCode,
       duration: `${duration}ms`,
     });
+
+    if (statusCode >= 400) {
+      recordDiagnosticInBackground({
+        type: 'http-response',
+        source: 'bridge.requestLogger',
+        level: statusCode >= 500 ? 'error' : 'warn',
+        message: `HTTP ${statusCode} response for ${req.method} ${req.path}`,
+        metadata: {
+          method: req.method,
+          path: req.path,
+          statusCode,
+          durationMs: duration,
+        },
+      });
+    }
   });
 
   next();
 };
-

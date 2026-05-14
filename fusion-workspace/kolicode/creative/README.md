@@ -304,7 +304,6 @@ def test_rgb_to_cmyk():
 
 ---
 
-**Estado:** 🚧 Pendiente implementación (Task 27)  
+**Estado:** 🔧 Base service scaffold implementado; pipelines avanzados pendientes  
 **Prioridad:** ALTA  
-**Última actualización:** 2026-05-13
-
+**Última actualización:** 2026-05-15

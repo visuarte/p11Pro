@@ -84,9 +84,12 @@ npm run dev
 
 ## 📚 Documentación
 
+- [Project Charter](docs/PROJECT_CHARTER.md) - Objetivos, alcance, criterios de exito y no-goals del proyecto
 - [Arquitectura del Sistema](docs/ARCHITECTURE.md) - Diagrama de componentes, flujos de datos, seguridad
+- [Architecture Diagrams](docs/architecture/README.md) - Diagramas Mermaid de componentes, secuencias y estados
 - [Guía de Desarrollo](docs/DEVELOPMENT_GUIDE.md) - Metodología de debugging, estándares de código, testing
 - [API Documentation](docs/API.md) - Endpoints completos, ejemplos de requests/responses
+- [Integration Contracts](docs/INTEGRATION_CONTRACTS.md) - Contratos entre modulos, latencias y compatibilidad
 - [Changelog](CHANGELOG.md) - Historial de cambios y versiones
 - [Deployment Guide](docs/DEPLOYMENT.md) - Guía de despliegue
 - [ThunderKoli Docs](backend/thunderkoli/README.md) - Módulo de seguridad y auditoría

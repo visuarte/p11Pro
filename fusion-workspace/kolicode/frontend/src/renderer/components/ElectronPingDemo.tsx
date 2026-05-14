@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { type ReactElement, useEffect, useState } from 'react';
 import { electronBridge, type PingResponse } from '../electronBridge';
 
 /**
  * Demo component to verify Electron IPC communication.
  * Calls `app:ping` and renders the response.
  */
-export function ElectronPingDemo(): JSX.Element {
+export function ElectronPingDemo(): ReactElement {
   const [response, setResponse] = useState<PingResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [inElectron, setInElectron] = useState<boolean>(false);

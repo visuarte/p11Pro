@@ -22,6 +22,8 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+-- Base tables are managed by Bridge migrations (Task 3)
+
 -- Log successful initialization
 DO $$
 BEGIN
@@ -29,4 +31,3 @@ BEGIN
     RAISE NOTICE 'Extensions: uuid-ossp, pg_trgm';
     RAISE NOTICE 'Schema: kolicode';
 END $$;
-

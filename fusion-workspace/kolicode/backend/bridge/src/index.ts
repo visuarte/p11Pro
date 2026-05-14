@@ -5,6 +5,9 @@ import { createServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import helmet from 'helmet';
 import cors from 'cors';
+import { closePostgresPool } from './db/postgres';
+import { closeRedisClient } from './db/redis';
+import { initializeDiagnosticsStore } from './diagnostics/store';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
@@ -39,6 +42,7 @@ const io = new SocketIOServer(httpServer, {
 
 // Initialize Bridge State Machine
 const bridgeState = new BridgeState();
+void initializeDiagnosticsStore();
 
 // Security Middleware
 app.use(helmet());
@@ -102,6 +106,8 @@ const gracefulShutdown = async (signal: string) => {
 
   logger.info(`Received ${signal}, starting graceful shutdown...`);
 
+  await Promise.allSettled([closePostgresPool(), closeRedisClient()]);
+
   // Stop accepting new connections
   httpServer.close(() => {
     logger.info('HTTP server closed');
@@ -133,4 +139,3 @@ httpServer.listen(PORT, () => {
 });
 
 export { app, httpServer, io, bridgeState };
-

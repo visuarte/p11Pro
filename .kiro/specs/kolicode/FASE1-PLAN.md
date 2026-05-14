@@ -1,9 +1,9 @@
 # Fase 1: Infraestructura Base - Plan de Acción
 
-**Fecha:** 2026-05-13  
-**Estado:** 20% Completada (4/20 subtasks)  
+**Fecha:** 2026-05-15  
+**Estado:** 75% Completada (15/20 subtasks)  
 **Prioridad:** CRÍTICA - Bloqueante para Fase 2-6  
-**Tiempo Estimado Restante:** 72h (~9 días con 2 devs)
+**Tiempo Estimado Restante:** 32h (~4 días con 2 devs)
 
 ---
 
@@ -14,17 +14,17 @@
 | Métrica | Valor | Notas |
 |---------|-------|-------|
 | **Subtasks Totales** | 20 | Divididas en 4 grupos principales |
-| **Completadas** | 7 (35%) | ✅ 1.1, 1.2, 1.3, 1.4, 1.5, 2.1 |
+| **Completadas** | 15 (75%) | ✅ 1.1, 1.2, 1.3, 1.4, 1.5, 2.1, 2.2, 2.3, 2.4, 2.5, 3.1, 3.2, 3.3, 3.4, 3.5 |
 | **En Progreso** | 0 | Pendiente retomar |
-| **Bloqueadas** | 0 | Ninguna bloqueada actualmente |
-| **Tiempo Usado** | ~13h | Setup CI/CD, TypeScript, ESLint/Prettier, Docker, estructura base, arquitectura |
-| **Tiempo Restante** | ~67h | Arquitectura (Electron/Bridge), DB, Protocolos |
+| **Bloqueadas** | 0 | Sin bloqueos activos en Task 3 |
+| **Tiempo Usado** | ~50h | Setup CI/CD, TypeScript, ESLint/Prettier, Docker, arquitectura base, Electron, Bridge, engines y persistencia validada |
+| **Tiempo Restante** | ~30h | Protocolos y trabajo restante de backend |
 
 ---
 
 ## ✅ Tasks Completadas
 
-### Task 1: Setup del Proyecto Base (80% completado)
+### Task 1: Setup del Proyecto Base (100% completado)
 
 - [x] **1.1 Inicializar monorepo** ✅
   - Estructura creada en `fusion-workspace/`
@@ -60,35 +60,11 @@
 
 ## ⏳ Tasks Pendientes - CRÍTICAS
 
-### Task 1: Setup del Proyecto Base (20% pendiente)
-
-- [x] **1.4 Configurar Docker Compose** ✅ COMPLETADO
-  - **Tiempo Usado:** 2h (estimado: 12h)
-  - **Prioridad:** MEDIA (necesario para Task 3)
-  - **Status:**
-    ```
-    ✅ docker-compose.yml (PostgreSQL 16 + Redis 7)
-    ✅ .env.example con configuración completa
-    ✅ Health checks automáticos (10s interval)
-    ✅ Scripts: docker:up, docker:down, docker:restart, docker:logs
-    ✅ README_DOCKER.md con instrucciones completas
-    ```
-  - **Entregables Completados:**
-    - ✅ `docker-compose.yml` en raíz
-    - ✅ `.env.example` con todas las variables
-    - ✅ Scripts shell: `docker-up.sh`, `docker-down.sh`, `docker-restart.sh`, `docker-logs.sh`
-    - ✅ `scripts/init-db.sql` (extensiones uuid-ossp, pg_trgm)
-    - ✅ `package.json` con npm scripts
-    - ✅ `README_DOCKER.md` con troubleshooting
-    - ✅ `TASK_1.4_VERIFICATION.md` con detalles completos
-  - **Servicios Funcionando:**
-    - ✅ PostgreSQL 16: `postgresql://kolicode:kolicode_dev_pass@localhost:5432/kolicode`
-    - ✅ Redis 7: `redis://localhost:6379`
-  - **Bloqueante para:** Task 3 (Base de Datos) ✅ DESBLOQUEADO
+**Task 1 está cerrada al 100%.** Los pendientes críticos de Fase 1 comienzan en Task 2.
 
 ---
 
-### Task 2: Arquitectura de Tres Capas - Base (5% completado)
+### Task 2: Arquitectura de Tres Capas - Base (100% completado)
 
 **Estimado Total:** 24h  
 **Prioridad:** CRÍTICA (fundación del proyecto)
@@ -147,116 +123,139 @@
         └── proto/         # Protobuf definitions
     ```
 
-- [ ] **2.2 Setup Electron main process** 🔴
+- [x] **2.2 Setup Electron main process** ✅
   - **Estimado:** 6h
+  - **Tiempo usado:** ~6h
+  - **Completado:** 2026-05-14
   - **Dependencias:** electron ^41.2.2, electron-builder
-  - **Entregables:**
-    - `src/main/index.ts`: main process entry
-    - Window management
-    - IPC handlers base
-    - Dev tools integration
+  - **Entregables completados:**
+    - ✅ `frontend/package.json`: entrypoint Electron (`dist-electron/main/index.js`) y scripts `build:electron`, `electron:dev`, `electron:start`
+    - ✅ `frontend/scripts/build-electron.mjs`: build de `src/main` y `src/preload` con esbuild
+    - ✅ `frontend/src/main/index.ts`: bootstrap del main process y ciclo de vida de la app
+    - ✅ `frontend/src/main/window.ts`: BrowserWindow, preload seguro y carga dev/prod
+    - ✅ `frontend/src/main/ipc-handlers.ts`: handlers base (`app:ping`, `app:open-file`, `debug:ping-pong`, `update-settings`)
+    - ✅ `frontend/src/main/settings-store.ts`: persistencia tipada de settings con zod
+    - ✅ `frontend/src/preload/index.ts`: `contextBridge` expuesto como `window.electron`, `window.api` y `window.ipcRenderer`
+    - ✅ `frontend/dist-electron/`: artefactos compilados de main/preload
+    - ✅ Integración de DevTools en desarrollo
 
-- [ ] **2.3 Setup React renderer process** 🔴
+- [x] **2.3 Setup React renderer process** ✅
   - **Estimado:** 4h
-  - **Ya parcialmente hecho** (Vite + React existe)
-  - **Faltante:**
-    - Integration con Electron renderer
-    - IPC communication setup
-    - Context isolation config
+  - **Tiempo usado:** ~4h
+  - **Completado:** 2026-05-15
+  - **Entregables completados:**
+    - ✅ `frontend/src/main.ts`: montaje del renderer con `createRoot()`
+    - ✅ `frontend/src/renderer/App.tsx`: raíz React del renderer
+    - ✅ `frontend/src/renderer/RendererShellHost.tsx`: integración del shell actual dentro del árbol React
+    - ✅ `frontend/src/renderer/components/RendererDiagnostics.tsx`: runtime diagnostics + IPC-backed settings
+    - ✅ `frontend/src/renderer/electronBridge.ts`: bridge tipado para preload/context isolation
+    - ✅ `frontend/src/stores/settingsStore.ts`: estado Zustand conectado al main process vía IPC
+    - ✅ `frontend/src/renderer/README.md`: documentación alineada al estado real
 
-- [ ] **2.4 Setup Node.js Bridge (API Gateway)** 🔴
+- [x] **2.4 Setup Node.js Bridge (API Gateway)** ✅
   - **Estimado:** 8h
+  - **Tiempo usado:** ~8h
+  - **Completado:** 2026-05-15
   - **Stack:** Express.js, Socket.io, gRPC
-  - **Entregables:**
-    - Express server base (puerto 4000)
-    - Health check endpoint (`/health`)
-    - Logging middleware (winston/pino)
-    - Error handling middleware
+  - **Entregables completados:**
+    - ✅ `backend/bridge/src/index.ts`: bootstrap Express + HTTP server + Socket.io
+    - ✅ `backend/bridge/src/routes/health.ts`: `/health`, `/health/ready`, `/health/alive`, `/health/detailed`
+    - ✅ `backend/bridge/src/middleware/requestLogger.ts`: logging middleware con Winston
+    - ✅ `backend/bridge/src/middleware/errorHandler.ts`: error handling middleware y `AppError`
+    - ✅ `backend/bridge/src/middleware/rateLimiter.ts`: rate limiting sobre rutas API
+    - ✅ `backend/bridge/src/websocket/server.ts`: setup base de WebSocket para colaboración
+    - ✅ `backend/bridge/src/state/BridgeState.ts`: state machine base del gateway
+    - ✅ `backend/bridge/src/utils/logger.ts`: logger estructurado para consola y archivos
+    - ✅ `backend/bridge/package.json`: scripts `dev`, `build`, `start`, `typecheck`, `test`
+    - ✅ Validación local: build TypeScript correcto y endpoints `/health` + `/api/bridge/state` respondiendo
 
-- [ ] **2.5 Setup Engine services base** 🔴
+- [x] **2.5 Setup Engine services base** ✅
   - **Estimado:** 4h
+  - **Tiempo usado:** ~4h
+  - **Completado:** 2026-05-15
   - **Servicios:**
-    - ThunderKoli (Node.js, puerto 3001): package.json base
-    - UniversalEngine (Kotlin, puerto 8080): Gradle setup
-    - Design Studio (Python): requirements.txt
-  - **Entregables:**
-    - Estructura de directorios
-    - Package managers configurados
-    - Scripts de inicio básicos
+    - ThunderKoli (Node.js, puerto 3001): package.json base y README
+    - UniversalEngine (Kotlin, puerto 8080): Gradle setup operativo
+    - Design Studio (Python, puerto 8081): `requirements.txt` y `server.py`
+  - **Entregables completados:**
+    - ✅ `backend/thunderkoli/package.json`: scripts base incluyendo `build`, `dev`, `start`, `test`
+    - ✅ `backend/thunderkoli/server.js` y `backend/thunderkoli/src/server.js`: puerto por defecto alineado a `3001`
+    - ✅ `backend/thunderkoli/README.md`: documentación base del servicio
+    - ✅ `backend/universalengine/build.gradle.kts`: build base del servicio Kotlin
+    - ✅ `backend/universalengine/settings.gradle.kts`: nombre del proyecto alineado a KoliCode
+    - ✅ `backend/universalengine/gradle/wrapper/gradle-wrapper.jar`: wrapper regenerado y funcional
+    - ✅ `creative/requirements.txt`: dependencias base para Design Studio
+    - ✅ `creative/server.py`: scaffold base FastAPI con health endpoints y rutas placeholder
+    - ✅ Validación local: `npm run build` en ThunderKoli, `./gradlew tasks --all` en UniversalEngine y `python3 -m py_compile server.py` en Design Studio
 
 ---
 
-### Task 3: Base de Datos y Persistencia (0% completado)
+### Task 3: Base de Datos y Persistencia (100% completado)
 
 **Estimado Total:** 16h  
 **Prioridad:** ALTA (requerido para backend)  
 **Dependencia:** Task 1.4 (Docker Compose) debe completarse primero
 
-- [ ] **3.1 Configurar PostgreSQL schema inicial** 🟡
+- [x] **3.1 Configurar PostgreSQL schema inicial** ✅
   - **Estimado:** 4h
-  - **Schema inicial:**
-    - `users`: authentication, profiles
-    - `projects`: canvas projects
-    - `assets`: uploaded assets
-    - `audit_logs`: security audit trail
-  - **Acciones:**
-    ```sql
-    -- migrations/001_initial.sql
-    CREATE TABLE users (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      email VARCHAR(255) UNIQUE NOT NULL,
-      created_at TIMESTAMP DEFAULT NOW()
-    );
-    
-    CREATE TABLE projects (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      owner_id UUID REFERENCES users(id),
-      name VARCHAR(255) NOT NULL,
-      canvas_data JSONB,
-      created_at TIMESTAMP DEFAULT NOW()
-    );
-    ```
+  - **Tiempo usado:** ~4h
+  - **Entregables completados:**
+    - ✅ `backend/bridge/src/db/migrations/001_initial_schema.js`
+    - ✅ Schema `kolicode` con tablas `users`, `projects`, `assets`, `audit_logs`
+    - ✅ Índices base y triggers `updated_at`
+    - ✅ `scripts/init-db.sql` mantenido para extensiones y bootstrap base
+  - **Validación:** migración aplicada correctamente sobre PostgreSQL en Docker
 
-- [ ] **3.2 Setup Redis para caché y sesiones** 🟡
+- [x] **3.2 Setup Redis para caché y sesiones** ✅
   - **Estimado:** 2h
-  - **Uso:**
-    - Session storage
-    - JWT token blacklist
-    - Rate limiting counters
-    - WebSocket presence
-  - **Cliente:** ioredis
+  - **Tiempo usado:** ~2h
+  - **Uso base implementado:**
+    - Session/cache client reusable
+    - Health checks para readiness del Bridge
+    - Base para JWT blacklist, rate limiting y presence
+  - **Entregables completados:**
+    - ✅ `backend/bridge/src/db/redis.ts`
+    - ✅ `backend/bridge/src/routes/health.ts` con chequeo real de Redis
 
-- [ ] **3.3 Implementar migraciones automáticas** 🟡
+- [x] **3.3 Implementar migraciones automáticas** ✅
   - **Estimado:** 4h
-  - **Tool:** node-pg-migrate o Prisma
-  - **Scripts:**
-    - `npm run migrate:up`
-    - `npm run migrate:down`
-    - `npm run migrate:create <name>`
+  - **Tiempo usado:** ~4h
+  - **Tool:** `node-pg-migrate`
+  - **Scripts completados:**
+    - ✅ `backend/bridge/package.json`: `npm run migrate:up`
+    - ✅ `backend/bridge/package.json`: `npm run migrate:down`
+    - ✅ `backend/bridge/package.json`: `npm run migrate:create`
+    - ✅ `scripts/db-migrate.sh`
+    - ✅ `package.json`: `db:migrate:up`, `db:migrate:down`, `db:migrate:create`
 
-- [ ] **3.4 Setup @seald-io/nedb para diagnósticos** 🟢
+- [x] **3.4 Setup @seald-io/nedb para diagnósticos** ✅
   - **Estimado:** 3h
+  - **Tiempo usado:** ~3h
   - **Uso:** Diagnósticos locales (lite database)
-  - **Entregables:**
-    - DB instance en `~/.kolicode/diagnostics.db`
-    - Write operations sin bloquear main thread
+  - **Entregables completados:**
+    - ✅ `backend/bridge/src/diagnostics/store.ts`
+    - ✅ DB instance en `~/.kolicode/diagnostics.db`
+    - ✅ Writes en background desde `requestLogger` y `errorHandler`
+    - ✅ Estado visible en `/health/detailed`
 
-- [ ] **3.5 Configurar backup automático cada 10 minutos** 🟢
+- [x] **3.5 Configurar backup automático cada 10 minutos** ✅
   - **Estimado:** 3h
-  - **Estrategia:**
-    - PostgreSQL: pg_dump cada 10min
-    - Retention: last 24 backups (4 horas)
+  - **Estado:** Implementado y validado
+  - **Estrategia implementada:**
+    - PostgreSQL: `pg_dump` cada 10 minutos
+    - Retention: last 24 backups
     - Location: `backups/pg_<timestamp>.sql`
-  - **Script:**
-    ```bash
-    #!/bin/bash
-    # scripts/backup-db.sh
-    while true; do
-      pg_dump -h localhost -U kolicode kolicode > "backups/pg_$(date +%s).sql"
-      find backups/ -name "pg_*.sql" | sort -r | tail -n +25 | xargs rm -f
-      sleep 600  # 10 minutos
-    done
-    ```
+  - **Entregables implementados:**
+    - ✅ `scripts/backup-db.sh`
+    - ✅ `package.json`: `db:backup` y `db:backup:watch`
+    - ✅ `.env.example`: `BACKUP_DIR`, `BACKUP_INTERVAL_SECONDS`, `BACKUP_RETENTION_COUNT`
+    - ✅ Compatibilidad con Bash 3 de macOS sin `mapfile`
+    - ✅ Ajuste de host Postgres en `5433` para evitar colisión con un Postgres local en `5432`
+  - **Validación completada:**
+    - ✅ `npm run docker:up`
+    - ✅ `npm run db:migrate:up`
+    - ✅ `npm run db:backup`
+    - ✅ `/health/ready` y `/health/detailed` del Bridge con `database` y `redis` en estado `healthy`
 
 ---
 
@@ -347,7 +346,7 @@
 
 **Entregables Semana 1:**
 - ✅ Task 1 100% completada (ESLint + Docker)
-- ✅ Task 2: 60% completada (2.1-2.3, parcial 2.4)
+- ✅ Task 2: 100% completada (2.1-2.5)
 
 ---
 
@@ -461,4 +460,3 @@ npm run tasks:report
 **Autor:** Sistema automatizado  
 **Revisión requerida:** PM/Tech Lead antes Sprint 1.1  
 **Estado:** LISTO PARA EJECUCIÓN
-

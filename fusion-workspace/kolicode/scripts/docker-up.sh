@@ -6,6 +6,11 @@ set -e  # Exit on error
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+POSTGRES_HOST="${POSTGRES_HOST:-127.0.0.1}"
+POSTGRES_PORT="${POSTGRES_PORT:-5433}"
+POSTGRES_DB="${POSTGRES_DB:-kolicode}"
+POSTGRES_USER="${POSTGRES_USER:-kolicode}"
+POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-kolicode_dev_pass}"
 
 echo "=========================================="
 echo "🐳 Starting KoliCode Docker Services"
@@ -27,6 +32,16 @@ if [ ! -f "$PROJECT_ROOT/.env" ]; then
     echo ""
 fi
 
+if [ -f "$PROJECT_ROOT/.env" ]; then
+    # shellcheck disable=SC1091
+    source "$PROJECT_ROOT/.env"
+    POSTGRES_HOST="${POSTGRES_HOST:-127.0.0.1}"
+    POSTGRES_PORT="${POSTGRES_PORT:-5433}"
+    POSTGRES_DB="${POSTGRES_DB:-kolicode}"
+    POSTGRES_USER="${POSTGRES_USER:-kolicode}"
+    POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-kolicode_dev_pass}"
+fi
+
 # Navigate to project root
 cd "$PROJECT_ROOT"
 
@@ -40,7 +55,7 @@ sleep 5
 
 # Check PostgreSQL health
 echo "🔍 Checking PostgreSQL..."
-if docker-compose exec -T postgres pg_isready -U kolicode > /dev/null 2>&1; then
+if docker-compose exec -T postgres pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB" > /dev/null 2>&1; then
     echo "✅ PostgreSQL is ready"
 else
     echo "⚠️  PostgreSQL is starting... (may take a few more seconds)"
@@ -63,7 +78,7 @@ echo "📊 Service Status:"
 docker-compose ps
 echo ""
 echo "🔗 Connection Details:"
-echo "  PostgreSQL: postgresql://kolicode:kolicode_dev_pass@localhost:5432/kolicode"
+echo "  PostgreSQL: postgresql://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB"
 echo "  Redis:      redis://localhost:6379"
 echo ""
 echo "💡 Useful Commands:"
@@ -71,4 +86,3 @@ echo "  View logs:        docker-compose logs -f"
 echo "  Stop services:    npm run docker:down"
 echo "  Restart services: npm run docker:restart"
 echo ""
-
