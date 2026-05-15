@@ -103,6 +103,23 @@ scripts/levantar_hub.zsh
 - Carpeta legacy (si existe): `generados`
 - Contenido no estandar se mueve a: `proyectos_generados/_legacy_import`
 
+### Regla actual para no romper el motor
+
+- Los proyectos vivos del Hub siguen en `proyectos_generados/proyecto_<id>`.
+- **No mover** carpetas `proyecto_<id>` fuera de esa raíz mientras el runtime siga resolviendo rutas por convención fija.
+- Para bajar ruido sin romper compatibilidad, la limpieza segura se hace dentro de la propia carpeta:
+  - `proyectos_generados/_legacy_import/`
+  - `proyectos_generados/_archive/`
+  - `proyectos_generados/_candidates/`
+
+### Uso recomendado de subcarpetas internas
+
+- `_legacy_import/`: material importado o no normalizado
+- `_archive/`: copias o snapshots retirados del flujo activo
+- `_candidates/`: candidatos a plantilla o evaluación, sin sustituir la copia viva `proyecto_<id>`
+
+`proyecto_18` queda en evaluación como posible base reutilizable, pero su copia viva no debe moverse todavía si se quiere mantener compatibilidad con el Hub actual.
+
 ## Deprecacion de `ProjectApi.kt`
 
 - T0 (2026-04-06): anuncio formal
@@ -576,5 +593,4 @@ curl -s -X POST http://localhost:8081/api/v1/projects/init-static \
 - Plantilla reusable para lotes `v1.1`, `v1.2+`: `docs/issues/ue-v1.1/templates.md`
 - Incluye placeholders `{{VERSION}}`, `{{PHASE}}`, `{{GATE_SCRIPT}}`.
 - Estandar baseline: evidencia pinned como primer comentario (`Smoke output + fecha + commit SHA`).
-
 

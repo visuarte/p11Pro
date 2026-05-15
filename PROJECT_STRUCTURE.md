@@ -143,6 +143,8 @@ fusion-workspace/kolicode/
 
 ```text
 backend/universalengine/proyectos_generados/
+├── _archive/
+├── _candidates/
 ├── proyecto_1
 ├── proyecto_2
 ├── ...
@@ -155,11 +157,13 @@ backend/universalengine/proyectos_generados/
 - no es la fuente canónica del producto KoliCode
 - contiene proyectos generados/arrastrados del flujo previo de UniversalEngine
 - debe tratarse como **área de consolidación o archivo**, no como estructura principal de producto
+- mientras el runtime de UniversalEngine resuelva por `proyecto_<id>`, esas carpetas siguen siendo la ruta viva del Hub
 
 **Recomendación estructural**
-1. extraer una única plantilla canónica reutilizable
-2. dejar `proyectos_generados/` solo para instancias temporales o archivadas
-3. limpiar residuos legacy de forma no destructiva y documentada
+1. mantener `proyecto_<id>` en la raíz actual hasta desacoplar el runtime de esa convención
+2. usar `_archive/`, `_candidates/` y `_legacy_import/` para bajar ruido sin romper compatibilidad
+3. extraer una única plantilla canónica reutilizable cuando exista un registro de rutas o una convención nueva
+4. limpiar residuos legacy de forma no destructiva y documentada
 
 ---
 

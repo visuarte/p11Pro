@@ -112,6 +112,16 @@ Buenas prácticas y recomendaciones rápidas
 - Ejecutar `scripts/tests/smoke_checklist.sh` y `scripts/audit_dependencies.sh` antes de abrir PRs importantes.
 - Limpiar `._*` / residuos de macOS antes de builds Docker si se trabaja desde Finder o discos externos.
 
+## Nota sobre `proyecto_18`
+
+`proyecto_18` se conserva como referencia consultable dentro de `proyectos_generados/`, pero **no debe considerarse fuente canónica del producto KoliCode**.
+
+Si en el futuro se decide reutilizarlo como base o plantilla:
+
+1. evaluarlo primero fuera del flujo activo del Hub
+2. promover una copia a `_candidates/` o a una carpeta de plantilla dedicada
+3. no mover la copia viva `proyecto_18/` mientras el motor siga resolviendo por `proyecto_<id>`
+
 Soporte y siguientes pasos
 - Para el plan completo de despliegue ver `docs/plan_despliegue.md`.
 - Para requisitos funcionales ver `REQUIREMENTS.md`.

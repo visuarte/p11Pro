@@ -4,7 +4,9 @@
 
 Estandarizar el trabajo con proyectos editados en VSCode/IntelliJ (por ejemplo `proyecto_11`) sin perder visibilidad en el Hub, evitando roturas de arranque y reduciendo ruido por archivos no relevantes.
 
-Esta guia aplica a todos los proyectos en `proyectos_generados/proyecto_<id>`.
+Esta guia aplica a todos los proyectos vivos en `proyectos_generados/proyecto_<id>`.
+
+> Regla actual: mientras el motor siga resolviendo por ruta fija `proyecto_<id>`, no mover esas carpetas a otra raíz. Si hace falta limpiar ruido, usar `_archive/`, `_candidates/` y `_legacy_import/` dentro de `proyectos_generados/`.
 
 ## Alcance de las 3 aclaraciones
 
@@ -171,4 +173,3 @@ location.reload();
 - Usar Hub para visibilidad, trazabilidad y operaciones API.
 - Evitar sincronizar artefactos reconstruibles (`node_modules`, `venv`, binarios).
 - Escalar a `full preflight` cuando cambias runtime, contratos o scripts base.
-
