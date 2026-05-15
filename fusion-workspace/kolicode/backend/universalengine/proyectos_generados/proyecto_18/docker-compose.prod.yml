@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:15
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME:-ciberpunk}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - project18-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-ciberpunk}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:-postgres}
+      JDBC_DATABASE_URL: ${JDBC_DATABASE_URL:-jdbc:postgresql://db:5432/${DB_NAME:-ciberpunk}}
+      SKIP_DB_INIT: ${SKIP_DB_INIT:-0}
+      PORT: 8040
+      JAVA_OPTS: ${JAVA_OPTS:--Xms256m -Xmx512m}
+    depends_on:
+      - db
+    ports:
+      - "${BACKEND_PORT:-8040}:8040"
+    networks:
+      - project18-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:${BACKEND_PORT:-8040}}
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_PORT:-8081}:80"
+    volumes:
+      - nginx_cache:/var/cache/nginx
+    networks:
+      - project18-net
+
+volumes:
+  postgres_data:
+  nginx_cache:
+
+networks:
+  project18-net:
+    driver: bridge

@@ -1,0 +1,26 @@
+namespace: proyecto18
+
+resources:
+  - ../../base
+
+images:
+  - name: ghcr.io/example/proyecto18-backend
+    newTag: latest
+  - name: ghcr.io/example/proyecto18-frontend
+    newTag: latest
+
+patches:
+  - target:
+      kind: Deployment
+      name: proyecto18-backend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2
+  - target:
+      kind: Deployment
+      name: proyecto18-frontend
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 2

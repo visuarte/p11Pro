@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.Database
+import io.ktor.server.plugins.*
 
 @Serializable
 data class CreateChecklistResponse(val id: Int, val status: String = "created")
@@ -18,10 +18,17 @@ fun Route.checklistRoutes() {
     post("/api/v1/checklist") {
         val estado = call.receiveText()
         val id = transaction {
-            ChecklistEstado.insert {
+            ChecklistEstado.insertReturning(listOf(ChecklistEstado.id)) {
                 it[ChecklistEstado.estado] = estado
-            } get ChecklistEstado.id
+            }.singleOrNull()?.get(ChecklistEstado.id)
         }
+
+        if (id == null) {
+            call.respond(HttpStatusCode.InternalServerError, "No se pudo persistir checklist_estado")
+            return@post
+        }
+
+        AppMetrics.recordChecklistCreated()
         call.respond(HttpStatusCode.Created, CreateChecklistResponse(id = id))
     }
     get("/api/v1/checklist/{id}") {

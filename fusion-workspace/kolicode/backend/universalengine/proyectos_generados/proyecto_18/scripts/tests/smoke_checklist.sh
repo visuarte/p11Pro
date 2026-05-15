@@ -1,12 +1,26 @@
-#!/usr/bin/env zsh
-# Smoke test que levanta el stack con docker-compose y valida endpoints básicos
+#!/usr/bin/env bash
+# Smoke test que levanta el stack local del proyecto y valida endpoints básicos.
 set -euo pipefail
 
-REPO_ROOT=$(cd "$(dirname "$0")/../../.." && pwd)
+REPO_ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$REPO_ROOT"
 
+if docker compose version >/dev/null 2>&1; then
+  COMPOSE=(docker compose -f "$REPO_ROOT/docker-compose.yml")
+else
+  COMPOSE=(docker-compose -f "$REPO_ROOT/docker-compose.yml")
+fi
+
+cleanup() {
+  "${COMPOSE[@]}" down -v --remove-orphans >/dev/null 2>&1 || true
+}
+
+trap cleanup EXIT
+
+find "$REPO_ROOT" -name '._*' -delete
+
 echo "[smoke] Levantando servicios con docker-compose..."
-docker-compose up --build -d
+"${COMPOSE[@]}" up --build -d
 
 URL="http://localhost:8040"
 MAX_WAIT=60
@@ -18,7 +32,7 @@ until curl -fsS "$URL/health" >/dev/null 2>&1; do
   elapsed=$((elapsed + SLEEP))
   if [ $elapsed -ge $MAX_WAIT ]; then
     echo "[smoke][error] Timeout esperando al endpoint /health"
-    docker-compose logs --no-color backend | sed -n '1,200p'
+    "${COMPOSE[@]}" logs --no-color backend | sed -n '1,200p'
     exit 1
   fi
 done
@@ -48,9 +62,8 @@ echo "[smoke] Obteniendo checklist id=$ID"
 curl -fsS "$URL/api/v1/checklist/$ID" || { echo "[smoke][error] GET checklist/$ID falló"; exit 1; }
 
 echo "[smoke] Verificando que el registro existe en la DB (si existe el servicio 'db')"
-if docker-compose ps | grep -q "db"; then
-  docker-compose exec db psql -U postgres -d ciberpunk -c "SELECT count(*) FROM checklist_estado;" || true
+if "${COMPOSE[@]}" ps --services | grep -qx "db"; then
+  "${COMPOSE[@]}" exec -T db psql -U postgres -d ciberpunk -c "SELECT count(*) FROM checklist_estado;" || true
 fi
 
 echo "[smoke] Prueba completada con éxito. Para ver logs: docker-compose logs --no-color"
-

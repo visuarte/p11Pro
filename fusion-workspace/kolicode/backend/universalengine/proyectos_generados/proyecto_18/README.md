@@ -1,6 +1,6 @@
 # proyecto_18 — README oficial
 
-Última actualización: 2026-04-20
+Última actualización: 2026-05-15
 
 Resumen
 -------
@@ -10,7 +10,11 @@ Estructura relevante
 - `backend/` — Servidor Ktor, Exposed ORM, Gradle build.
 - `frontend/` — Vue 3 + Vite app.
 - `docker-compose.yml` — servicios para desarrollo (Postgres + opcionalmente backend/frontend).
+- `docker-compose.prod.yml` — esqueleto operativo para staging/producción.
 - `docs/plan_despliegue.md` — plan de despliegue detallado.
+- `docs/postman_collection.json` — colección importable para Postman.
+- `docs/dependency_audit.md` — procedimiento y salida de auditoría de dependencias.
+- `docs/load_test_report.md` — baseline de carga y objetivos de rendimiento.
 - `REQUIREMENTS.md` — requisitos funcionales y no funcionales derivados de la auditoría.
 
 Quickstart (desarrollo, macOS zsh)
@@ -24,7 +28,7 @@ cd /ruta/al/proyecto_18
 2) Levantar servicios (requiere Docker + Docker Compose):
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 3) Comprobar salud del backend:
@@ -61,9 +65,10 @@ npm run build  # build producción -> dist/
 
 Variables de entorno claves
 - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `JDBC_DATABASE_URL`
-- `SKIP_DB_INIT` — si =1 evita la creación de tablas en startup
+- `SKIP_DB_INIT` — si =1 evita ejecutar migraciones/arranque de BD
 - `PORT` — puerto del backend (por defecto 8040)
 - `USE_THREE_JS`, `ENABLE_TAILWIND_DIRECTIVES`
+- `KOTGUAICLI_PATH`, `KOTGUAICLI_AUTH_TOKEN`
 
 Uso de `.env`
 - Se incluye un archivo de ejemplo `.env.example` en la raíz. Copia este archivo a `.env` y ajusta valores antes de ejecutar localmente o en un host de staging.
@@ -72,10 +77,30 @@ Uso de `.env`
 Comprobación de secretos
 - Incluye un script de comprobación rápida `scripts/check_secrets.sh` que busca patrones comunes de credenciales en el repo. Ejecuta el script antes de crear PRs que añadan dependencias o config nueva.
 
+CI y calidad
+- `./github/workflows/ci.yml` valida backend, frontend y smoke.
+- `./github/workflows/security.yml` ejecuta auditoría de dependencias y Trivy.
+- `scripts/audit_dependencies.sh` genera reportes locales en `build/reports/dependency-audit/`.
+
+Observabilidad
+- El backend expone `/metrics` en formato Prometheus.
+- `backend/src/main/resources/logback.xml` emite logs estructurados JSON en stdout.
+- Hay tests de `kotguaicli` en `backend/src/test/kotlin/com/generated/ciberpunk/KotguaicliApiTest.kt`.
+
+Despliegue y empaquetado
+- `k8s/base/` contiene manifests base para backend, frontend e ingress.
+- `k8s/overlays/production/` contiene overlay Kustomize para producción.
+- `RELEASE.md` resume el checklist de salida.
+
+Limpieza de generados
+- `proyecto_18` es reutilizable como **template saneado**, pero no debe convivir con snapshots residuales dentro del mismo flujo operativo.
+- Recomendación: promover este proyecto a una plantilla canónica y dejar `proyectos_generados/` solo para instancias activas o archivadas.
+
 
 Endpoints principales
 - GET `/` — saludo simple
 - GET `/health` y `/api/health` — healthcheck
+- GET `/metrics` — métricas Prometheus
 - GET `/api/v1/webgl/config` — devuelve configuración para frontend
 - POST `/api/v1/checklist` — crea un estado (body como texto)
 - GET `/api/v1/checklist/{id}` — obtiene un estado
@@ -83,12 +108,12 @@ Endpoints principales
 
 Buenas prácticas y recomendaciones rápidas
 - No llevar credenciales en el repo: usar `.env` o secret manager.
-- Añadir migraciones (Flyway) en vez de depender de `SchemaUtils.create` para producción.
-- Añadir CI que ejecute pruebas smoke y construya/pushee imágenes.
+- Usar Flyway para migraciones antes de arrancar en staging/producción.
+- Ejecutar `scripts/tests/smoke_checklist.sh` y `scripts/audit_dependencies.sh` antes de abrir PRs importantes.
+- Limpiar `._*` / residuos de macOS antes de builds Docker si se trabaja desde Finder o discos externos.
 
 Soporte y siguientes pasos
 - Para el plan completo de despliegue ver `docs/plan_despliegue.md`.
 - Para requisitos funcionales ver `REQUIREMENTS.md`.
-
-Si quieres que genere el `docker-compose.prod.yml`, manifests de Kubernetes o un GitHub Actions CI automatizado, dime cuál priorizas: producción (Docker Compose), Kubernetes, o CI.
-
+- Para desplegar en producción básica usa `docker compose -f docker-compose.prod.yml --env-file .env up -d --build`.
+- Para Kubernetes usa `kustomize build k8s/overlays/production`.

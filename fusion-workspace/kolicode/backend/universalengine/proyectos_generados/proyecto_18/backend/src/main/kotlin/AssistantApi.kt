@@ -7,11 +7,11 @@ import io.ktor.server.response.*
 import io.ktor.http.*
 import kotlinx.serialization.Serializable
 
+@Serializable
+data class AssistantState(val state: String, val transcript: String? = null, val timestamp: Long)
+
 // Endpoint para recibir estado del asistente de voz
 fun Route.assistantRoutes() {
-    @Serializable
-    data class AssistantState(val state: String, val transcript: String? = null, val timestamp: Long)
-
     post("/api/v1/assistant/state") {
         try {
             val payload = call.receive<AssistantState>()
@@ -23,4 +23,3 @@ fun Route.assistantRoutes() {
         }
     }
 }
-

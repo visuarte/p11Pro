@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: proyecto18
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - proyecto18.local
+      secretName: proyecto18-tls
+  rules:
+    - host: proyecto18.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: proyecto18-backend
+                port:
+                  number: 8040
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: proyecto18-frontend
+                port:
+                  number: 80

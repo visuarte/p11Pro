@@ -1,6 +1,11 @@
 # TASKS — Backlog de trabajo para proyecto_18
 
 Creado: 2026-04-20
+Última sincronización: 2026-05-15
+
+Estado sincronizado con el repositorio:
+- **DONE**: T-002, T-003, T-004, T-005, T-006, T-101, T-102, T-103, T-104, T-105, T-201, T-202, T-203, T-204, T-A01, T-A02
+- **Pendiente de validación operativa**: T-001 (smoke final)
 
 Este documento reúne todas las tareas accionables derivadas de la auditoría y del material existente en el repo. Cada tarea tiene: ID, prioridad (P0/P1/P2), estimación en horas, pasos concretos, comandos útiles y criterios de aceptación.
 
@@ -21,7 +26,7 @@ T-001: Validación rápida (smoke) automática
    3. Registrar resultados y logs en un issue si falla.
  - Comandos útiles: ver script.
  - Criterio de aceptación: script termina sin errores en un entorno con Docker; si falla, identificar y documentar causa.
- - Estado: TODO
+ - Estado: IN PROGRESS (script reforzado; queda cerrar smoke final sobre entorno limpio)
 
 T-002: Añadir `.env.example` y documentar variables de entorno
  - Prioridad: P0
@@ -51,7 +56,7 @@ T-004: Añadir `RELEASE`/`docker-compose.prod.yml` esqueleto
    1. Añadir `docker-compose.prod.yml` en la raíz.
    2. Documentar comando de despliegue en `docs/plan_despliegue.md`.
  - Criterio de aceptación: archivo presente y comando probado en un host de staging.
- - Estado: TODO
+ - Estado: DONE (`docker-compose.prod.yml` y `RELEASE.md` añadidos)
 
 T-005: Introducir migraciones (Flyway) y primera migración para `checklist_estado`
  - Prioridad: P0
@@ -63,7 +68,7 @@ T-005: Introducir migraciones (Flyway) y primera migración para `checklist_esta
    3. Ajustar `Application.kt` para ejecutar Flyway migrate en startup (o documentar cómo ejecutarlo en CI) y eliminar `SchemaUtils.create` en favor de migraciones.
  - Comandos útiles: `./gradlew flywayMigrate` (según configuración).
  - Criterio de aceptación: la migración crea la tabla en una base nueva y `./gradlew run` aplica migraciones y el app funciona.
- - Estado: TODO
+ - Estado: DONE (Flyway integrado, migración `V1__create_checklist_estado.sql` y arranque por migraciones)
 
 T-006: Añadir GitHub Actions CI básico con build + smoke tests
  - Prioridad: P0
@@ -73,7 +78,7 @@ T-006: Añadir GitHub Actions CI básico con build + smoke tests
    1. Añadir workflow que use service container Postgres o docker-compose action.
    2. Ejecutar `./gradlew build` y luego `scripts/tests/smoke_checklist.sh`.
  - Criterio de aceptación: CI pasa en una PR y marca fallo si el smoke falla.
- - Estado: TODO
+ - Estado: DONE (`.github/workflows/ci.yml` añadido con backend, frontend y smoke)
 
 --------------------------------------------------------------------------------
 
@@ -82,21 +87,21 @@ P1 — Tareas importantes (segundo bloque)
 T-101: Crear `docs/plan_despliegue.md` (completado)
  - Prioridad: P1
  - Estimación: 1 h
- - Estado: DONE
+ - Estado: DONE (`docs/plan_despliegue.md` presente en la raíz del proyecto)
 
 T-102: Postman collection / OpenAPI minimal
  - Prioridad: P1
  - Estimación: 2 h
  - Descripción: Crear `docs/postman_collection.json` con ejemplos para `/api/v1/checklist`, `/api/v1/webgl/config` y `/api/v1/kotguaicli`.
  - Criterio de aceptación: collection importable en Postman y contiene ejemplos y headers de auth para kotguaicli.
- - Estado: TODO
+ - Estado: DONE (`docs/postman_collection.json` añadido)
 
 T-103: Integración de análisis de vulnerabilidades de dependencias
  - Prioridad: P1
  - Estimación: 2 h
  - Descripción: Ejecutar `npm audit` para frontend y revisar `./gradlew dependencyReport` para backend; documentar resultados y actualizar dependencias críticas.
  - Criterio de aceptación: reporte documentado y PRs propuestas para upgrades.
- - Estado: TODO
+ - Estado: DONE (`scripts/audit_dependencies.sh`, `docs/dependency_audit.md` y workflow `Security`)
 
 T-104: Añadir logging estructurado y métricas básicas
  - Prioridad: P1
@@ -106,14 +111,14 @@ T-104: Añadir logging estructurado y métricas básicas
    1. Seleccionar librería de logging (Logback ya presente; configurar json encoder) o mantener stdout structured logs.
    2. Exponer métricas en `/metrics` si se integra micrometer o similar.
  - Criterio de aceptación: logs legibles y un endpoint de métricas (puede ser placeholder).
- - Estado: TODO
+ - Estado: DONE (logs estructurados JSON + endpoint `/metrics`)
 
 T-105: Integración con kotguaicli — pruebas automatizadas
  - Prioridad: P1
  - Estimación: 3 h
  - Descripción: Añadir pruebas que validen los endpoints `/api/v1/kotguaicli` en entorno controlado (sin ejecutar gradle real de kotguaicli, usar path de prueba o mocking).
  - Criterio de aceptación: CI ejecuta llamadas de control y las respuestas son esperadas (401 cuando corresponde).
- - Estado: TODO
+ - Estado: DONE (`KotguaicliApiTest.kt` añadido para auth/generate/serve/stop)
 
 --------------------------------------------------------------------------------
 
@@ -124,26 +129,26 @@ T-201: Manifests Kubernetes básicos (Deployment/Service/Ingress)
  - Estimación: 6–10 h
  - Descripción: Generar `k8s/` con manifests y plantillas con variables (namespace, image tags, secrets).
  - Criterio de aceptación: manifests aplican en cluster de staging y servicios son accesibles mediante Ingress con TLS.
- - Estado: TODO
+ - Estado: DONE (`k8s/base/` con Deployment/Service/Ingress)
 
 T-202: Escaneo de imágenes (Trivy) y pipeline de seguridad
  - Prioridad: P2
  - Estimación: 2 h
  - Descripción: Añadir job de escaneo de imágenes en CI y documentar cómo ejecutar localmente `trivy image proyecto18-backend:latest`.
  - Criterio de aceptación: job en CI que falla en vulnerabilidades críticas.
- - Estado: TODO
+ - Estado: DONE (workflow `Security` con Trivy sobre backend/frontend)
 
 T-203: Pruebas de carga básicas (wrk/hey)
  - Prioridad: P2
  - Estimación: 4 h
  - Descripción: Definir objetivos de rendimiento y ejecutar pruebas de carga sobre `/health` y endpoints críticos.
  - Criterio de aceptación: reporte con latencias y throughput; objetivos definidos.
- - Estado: TODO
+ - Estado: DONE (`scripts/load/` + `docs/load_test_report.md`)
 
 T-204: Helm chart o Kustomize
  - Prioridad: P2
  - Estimación: 8–12 h
- - Estado: TODO
+ - Estado: DONE (Kustomize en `k8s/overlays/production/`)
 
 --------------------------------------------------------------------------------
 
@@ -158,7 +163,7 @@ T-A01: Crear issues/epics en el tracker
 T-A02: Actualizar `README.md` con referencia a `.env.example` y comandos de CI
  - Prioridad: P0
  - Estimación: 0.5 h
- - Estado: TODO
+ - Estado: DONE (`README.md` actualizado con `.env.example`, CI y despliegue)
 
 --------------------------------------------------------------------------------
 
@@ -173,4 +178,4 @@ Estimaciones totales aproximadas (P0+P1): 24–36 h
 
 Notas finales
 - Para cada tarea que quieras que ejecute automáticamente (crear archivos, PRs, workflows), indícame la tarea concreta o el rango (por ejemplo: implementar T-002, T-005 y T-006) y la crearé y probaré localmente donde sea posible.
-
+- Sincronizado con el estado actual del repo el 2026-05-15: quedan implementados los artefactos de plataforma, observabilidad y despliegue; el único cierre operativo pendiente es confirmar el smoke final en un árbol limpio.

@@ -1,0 +1,181 @@
+{
+  "info": {
+    "name": "proyecto_18 API",
+    "_postman_id": "a9ef9c6a-7dca-4f11-8be0-2dfc0f001801",
+    "description": "Coleccion base para health, checklist y kotguaicli en proyecto_18.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "WebGL config",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/webgl/config",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "webgl",
+            "config"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Create checklist",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "text/plain"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"source\":\"postman\",\"state\":\"created\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/checklist",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "checklist"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get checklist",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/checklist/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "checklist",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Kotguaicli generate docs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-KOTGUAICLI-AUTH",
+            "value": "{{kotguaicliAuthToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/kotguaicli/generate-docs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "kotguaicli",
+            "generate-docs"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Kotguaicli serve docs",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-KOTGUAICLI-AUTH",
+            "value": "{{kotguaicliAuthToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"port\":8090}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/kotguaicli/serve-docs",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "kotguaicli",
+            "serve-docs"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Kotguaicli list",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-KOTGUAICLI-AUTH",
+            "value": "{{kotguaicliAuthToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/kotguaicli/list",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "kotguaicli",
+            "list"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8040"
+    },
+    {
+      "key": "kotguaicliAuthToken",
+      "value": "replace-me"
+    }
+  ]
+}

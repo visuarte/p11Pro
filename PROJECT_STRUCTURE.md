@@ -1,365 +1,186 @@
----
-## 🛡️ Práctica Permanente: Auditoría y Limpieza Segura
+# PROJECT_STRUCTURE.md
 
-> **Regla de oro:** Toda limpieza, reorganización o eliminación de archivos/código debe seguir el protocolo de auditoría técnica senior para refactorización segura:
->
-> 1. Inventario completo de archivos (código, tests, config, scripts, assets, docs).
-> 2. Detección y clasificación de duplicados (idénticos, casi idénticos, código copiado, funciones/config/assets duplicados).
-> 3. Identificación de archivos potencialmente obsoletos o basura (sin uso, temporales, backups, legacy, no referenciados).
-> 4. Análisis de impacto: dependencias, imports, referencias, tests, CI, despliegue.
-> 5. Estrategias seguras: consolidar, deprecar, reorganizar sin romper imports ni contratos públicos. Prohibido borrar directamente.
-> 6. Reorganización no destructiva: mantener compatibilidad, usar aliases/reexports, documentar todo.
-> 7. Validación post-limpieza: tests, arranque, imports, warnings, comportamiento.
-> 8. Reporte técnico detallado: duplicados, candidatos, acciones, riesgos evitados, confirmación de no ruptura.
-> 9. Confirmación final: nunca romper funcionalidad, nunca eliminar archivos críticos, limpieza reversible y documentada.
->
-> **Prioridad:** Seguridad y reversibilidad sobre limpieza. Ante la duda, conservar y documentar.
+Mapa actualizado del repositorio raíz después del avance de la fusión inicial y del cierre de la **Fase 1: Infraestructura Base**.
+
+> Este archivo sustituye la visión inicial de la primera fusión.
+> El estado descrito aquí refleja el repo **tal como está hoy**, no el diseño original previo.
 
 ---
 
-# 📁 Estructura del Proyecto - KoliCode
+## 1. Vista general del repositorio
 
-**Fecha:** 2026-04-21  
-**Estado:** ✅ ORGANIZADO Y LIMPIO
-
----
-
-## 🎯 Estructura Raíz
-
-```
-p11pro/                                    ← Raíz del workspace
-│
-├── .kiro/                                 ← Configuración de Kiro
-│   └── specs/
-│       └── unified-design-studio/         ← Especificación del proyecto
-│           ├── .config.kiro               ← Config de spec
-│           └── requirements.md            ← Requerimientos completos
-│
-├── docs/                                  ← Documentación general
-│   └── fusion-process/                    ← Proceso de fusión
-│       ├── AGENTS.md                      ← Protocolo de fusión
-│       └── analisis_fusion_completa.md    ← Análisis técnico
-│
-├── fusion-workspace/                      ← Workspace de fusión
-│   │
-│   ├── unified-design-studio/             ← ✨ PROYECTO PRINCIPAL
-│   │   ├── backend/
-│   │   │   ├── thunderkoli/               ← Node.js + Express
-│   │   │   ├── universalengine/           ← Kotlin + Ktor
-│   │   │   └── gateway/                   ← API Gateway (por implementar)
-│   │   ├── frontend/                      ← React + TypeScript + Vite
-│   │   ├── creative/                      ← Processing sketches
-│   │   ├── python-worker/                 ← GPU workers (por implementar)
-│   │   ├── config/                        ← Configuración unificada
-│   │   ├── docs/                          ← Documentación del proyecto
-│   │   ├── docker-compose.yml             ← Orquestación
-│   │   ├── .gitignore                     ← Reglas Git
-│   │   └── README.md                      ← Documentación principal
-│   │
-│   ├── reports/                           ← Reportes de fusión
-│   │   ├── FUSION_REPORT.md               ← Análisis de proyectos
-│   │   ├── FUSION_LOG.md                  ← Log de ejecución
-│   │   ├── ASSET_INVENTORY.json           ← Mapeo de archivos
-│   │   └── INSTALLATION_COMPLETE.md       ← Guía de instalación
-│   │
-│   ├── backup-zips/                       ← Backups de proyectos originales
-│   │   ├── thunderkoli-v2.1.zip
-│   │   ├── universalengine-hub.zip
-│   │   └── p10pro-editor.zip
-│   │
-│   ├── scripts/                           ← Scripts de utilidad
-│   │
-│   ├── AGENTS.md                          ← Protocolo de fusión (referencia)
-│   ├── fusion-scripts.sh                  ← Script de fusión ejecutado
-│   └── cleanup-project.sh                 ← Script de limpieza ejecutado
-│
-└── PROJECT_STRUCTURE.md                   ← Este archivo
+```text
+p11pro/
+├── .github/                           # Workflows de CI/CD del repo
+├── .kiro/                             # Specs, planes y seguimiento operativo
+├── docs/                              # Documentación raíz / histórica
+├── fusion-workspace/                  # Workspace principal de consolidación
+│   └── kolicode/                      # Producto activo
+├── .ai/                               # Artefactos locales no funcionales del producto
+├── README.md                          # Resumen raíz del repo
+├── PROJECT_STRUCTURE.md               # Este archivo
+├── WORKFLOW_PLAN.md                   # Material previo de proceso
+└── WORKFLOW_COMPLETE.md               # Material previo de proceso
 ```
 
 ---
 
-## 🎯 Proyecto Principal: unified-design-studio/
+## 2. Workspace activo: `fusion-workspace/kolicode/`
 
-### Backend
-
-```
-backend/
-│
-├── thunderkoli/                           ✅ LISTO
-│   ├── src/
-│   │   ├── server.js                      # Servidor Express principal
-│   │   ├── agents/                        # Agentes IA (Transformers)
-│   │   ├── lib/                           # Librerías compartidas
-│   │   ├── config/                        # Configuraciones
-│   │   └── services/
-│   │       ├── vault/                     # Encriptación AES-256
-│   │       ├── auth/                      # Google + WhatsApp Auth
-│   │       └── audit/                     # Sistema de auditoría
-│   ├── data/                              # Datos persistentes
-│   ├── logs/                              # Logs de aplicación
-│   ├── tests/                             # Tests unitarios (Jest)
-│   ├── .wwebjs_auth/                      # Auth WhatsApp
-│   ├── .google_auth/                      # Auth Google
-│   ├── package.json                       # 660 paquetes instalados
-│   ├── Dockerfile                         # Containerización
-│   └── node_modules/                      # Dependencias instaladas
-│
-├── universalengine/                       ⏭️ REQUIERE GRADLE BUILD
-│   ├── src/                               # Código Kotlin/Ktor
-│   ├── config/                            # Configuraciones
-│   ├── scripts/                           # Scripts de automatización
-│   ├── proyectos_generados/               # Outputs de IA (20+ proyectos)
-│   ├── frontend-legacy/                   # Frontend Vue.js legacy
-│   ├── gradle/                            # Gradle wrapper
-│   ├── build.gradle.kts                   # Build Kotlin
-│   ├── settings.gradle.kts                # Settings Gradle
-│   ├── gradlew                            # Gradle wrapper Unix
-│   ├── gradlew.bat                        # Gradle wrapper Windows
-│   ├── .env                               # Variables de entorno
-│   └── .env.example                       # Template de configuración
-│
-└── gateway/                               ⏭️ POR IMPLEMENTAR
-    ├── src/
-    │   ├── routes/                        # Enrutamiento unificado
-    │   ├── proxy/                         # Proxy a microservicios
-    │   └── middleware/                    # CORS, Auth, Logging
-    ├── config/                            # Configuraciones
-    └── package.json                       # Por crear
-```
-
-### Frontend
-
-```
-frontend/                                  ✅ LISTO
-├── src/
-│   ├── main.ts                            # Entry point
-│   ├── app/                               # Lógica de aplicación
-│   ├── editor/                            # Canvas editor (P10pro)
-│   ├── assets/                            # Assets estáticos
-│   ├── shared/                            # Componentes compartidos
-│   └── styles/                            # Estilos CSS
-├── public/                                # Assets públicos
-├── index.html                             # HTML principal
-├── package.json                           # 11 paquetes instalados
-├── tsconfig.json                          # Config TypeScript
-├── vite.config.ts                         # Config Vite
-└── node_modules/                          # Dependencias instaladas
-```
-
-### Creative
-
-```
-creative/                                  ✅ LISTO
-└── processing/
-    ├── Sketch.pde                         # Sketch Processing
-    ├── README_PROCESSING.md               # Documentación
-    └── run-local.sh                       # Script de ejecución
-```
-
-### Python Workers
-
-```
-python-worker/                             ⏭️ POR IMPLEMENTAR
-├── ai_engine.py                           # Worker de IA (DeepSeek/GPT)
-├── pose_detector.py                       # MediaPipe landmarks
-├── color_processor.py                     # Little CMS wrapper
-├── vector_renderer.py                     # Blend2D/Skia wrapper
-└── requirements.txt                       # Dependencias Python
-```
-
-### Configuración
-
-```
-config/                                    ✅ LISTO
-└── project-context.json                   # Contexto de proyecto P10pro
-```
-
-### Documentación
-
-```
-docs/                                      ✅ LISTO
-├── universalengine/                       # Docs UniversalEngine
-├── p10pro/                                # Docs P10pro
-│   ├── index.html
-│   ├── error-codes.html
-│   ├── NOTES.md
-│   ├── README_CREATIVE.md
-│   └── RESOURCES.md
-└── architecture/                          # Docs de arquitectura (vacío)
-```
-
-### Infraestructura
-
-```
-.                                          ✅ LISTO
-├── docker-compose.yml                     # Orquestación completa
-├── .gitignore                             # Reglas Git unificadas
-└── README.md                              # Documentación principal
+```text
+fusion-workspace/kolicode/
+├── frontend/                          # Capa 1: Electron + React
+├── backend/
+│   ├── bridge/                        # Capa 2: API Gateway / orchestration
+│   ├── thunderkoli/                   # Capa 3: seguridad / vault / auditoría
+│   └── universalengine/               # Capa 3: IA / Kotlin / zona legacy
+├── creative/                          # Design Studio base (Python)
+├── shared/                            # Contratos y tipos compartidos
+├── scripts/                           # Docker, DB, backups y utilidades
+├── docs/                              # Docs específicas del producto
+├── docker-compose.yml                 # Infraestructura local
+├── package.json                       # Scripts raíz del workspace
+└── README.md                          # Guía principal de KoliCode
 ```
 
 ---
 
-## 💻 ESPECIFICACIONES DE HERRAMIENTAS (VERSIÓN JETBRAINS)
-- **IDE Principal:** JetBrains CLion (con plugin de Python instalado).
-- **Sistema de Construcción:** CMake (Obligatorio para gestionar dependencias de Qt y C++).
-- **Lenguajes:** C++ (Qt Framework) + Python 3.x.
-- **Librerías Open Source:** Little CMS (Color), Blend2D (Vectores), dlib/DeepFace (IA Pose).
-- **IA de Apoyo:** Plugin de GitHub Copilot para JetBrains o JetBrains AI Assistant.
-- **Target Hardware:** Optimización extrema para fluidez en equipos de gama baja (Gama "Visionado Limpio").
+## 3. Arquitectura funcional actual
 
-Archivo Base para CLion: CMakeLists.txt
+### Capa 1 — Frontend
 
-
-cmake_minimum_required(VERSION 3.16)
-# Recuerda: El proyecto NO tiene nombre.
-project(Proyecto_Sin_Nombre VERSION 0.1.0 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Configuraciones automáticas para Qt
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-set(CMAKE_AUTOUIC ON)
-
-# Buscar módulos de Qt (Asegúrate de tener Qt instalado en el sistema)
-find_package(Qt6 COMPONENTS Core Gui Widgets REQUIRED)
-
-# Definir el ejecutable apuntando a la estructura de Fase 1
-add_executable(${PROJECT_NAME} 
-    src/core/main.cpp
-    # Aquí se irán añadiendo los archivos de Little CMS y Blend2D
-)
-
-# Enlazar las librerías
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    Qt6::Core 
-    Qt6::Gui 
-    Qt6::Widgets
-)
-
----
-
-## 📊 Estadísticas del Proyecto
-
-| Métrica | Valor |
-|---------|-------|
-| **Archivos totales** | 11,215 |
-| **Directorios** | 2,140 |
-| **Tamaño en disco** | 2.0GB |
-| **Dependencias Node.js** | 671 paquetes |
-| **Proyectos fusionados** | 3 |
-| **Lenguajes** | JavaScript, TypeScript, Kotlin, Python |
-| **Frameworks** | Express, Ktor, React, Vite |
-
----
-
-## 🗑️ Archivos Eliminados (Limpieza)
-
-### Archivos de metadata macOS
-- Todos los archivos `._*` eliminados
-
-### Archivos duplicados en raíz
-- `AGENTS.md` (movido a docs/fusion-process/)
-- `analisis_fusion_completa.md` (movido a docs/fusion-process/)
-- `prepare-workspace.sh` (eliminado)
-- `QUICKSTART.md` (eliminado)
-- `README_DESCARGA.txt` (eliminado)
-
-### Carpeta files/ completa
-- Contenido duplicado eliminado
-- Documentación útil movida a `docs/fusion-process/`
-
-### Directorio temporal
-- `fusion-workspace/temp/` eliminado (archivos de extracción)
-
-### ZIP files originales
-- Movidos a `fusion-workspace/backup-zips/` para backup
-
-### Archivos de setup
-- `AGENT_REQUEST_TEMPLATE.md` (eliminado)
-- `README_SETUP.md` (eliminado)
-- `SETUP_CHECKLIST.md` (eliminado)
-- `PROGRESS_SUMMARY.txt` (eliminado)
-- `MERGED_STRUCTURE.txt` (eliminado)
-
----
-
-## 📚 Documentación Disponible
-
-### Especificación del Proyecto
-- `.kiro/specs/unified-design-studio/requirements.md` - Requerimientos completos
-
-### Proceso de Fusión
-- `docs/fusion-process/AGENTS.md` - Protocolo de fusión
-- `docs/fusion-process/analisis_fusion_completa.md` - Análisis técnico
-
-### Reportes de Fusión
-- `fusion-workspace/reports/FUSION_REPORT.md` - Análisis de proyectos
-- `fusion-workspace/reports/FUSION_LOG.md` - Log de ejecución
-- `fusion-workspace/reports/ASSET_INVENTORY.json` - Mapeo de archivos
-- `fusion-workspace/reports/INSTALLATION_COMPLETE.md` - Guía completa
-
-### Proyecto Principal
-- `fusion-workspace/unified-design-studio/README.md` - Documentación principal
-- `fusion-workspace/unified-design-studio/backend/thunderkoli/README.md` - Docs ThunderKoli
-- `fusion-workspace/unified-design-studio/backend/universalengine/README.md` - Docs UniversalEngine
-- `fusion-workspace/unified-design-studio/frontend/README.md` - Docs P10pro
-
----
-
-## 🚀 Comandos Rápidos
-
-### Navegar al proyecto principal
-```bash
-cd fusion-workspace/unified-design-studio
+```text
+frontend/
+├── src/main/                          # Electron main process
+├── src/preload/                       # Secure bridge / IPC exposure
+├── src/renderer/                      # React app
+├── src/stores/                        # Estado del renderer
+├── dist-electron/                     # Build de Electron
+└── package.json
 ```
 
-### Iniciar desarrollo
-```bash
-# Backend ThunderKoli
-cd fusion-workspace/unified-design-studio/backend/thunderkoli
-npm run dev
+**Estado actual**
+- Electron main/preload configurados
+- Renderer React operativo
+- IPC y settings store base implementados
 
-# Frontend
-cd fusion-workspace/unified-design-studio/frontend
-npm run dev
+### Capa 2 — Bridge
 
-# UniversalEngine
-cd fusion-workspace/unified-design-studio/backend/universalengine
-./gradlew run
+```text
+backend/bridge/
+├── src/routes/                        # Health, projects, render, diagnostics...
+├── src/middleware/                    # Logging, errors, rate limit
+├── src/websocket/                     # Auth, rooms, handlers, heartbeat
+├── src/grpc/                          # Loader, clients, server, generated types
+├── src/db/                            # PostgreSQL, Redis, migrations
+├── src/diagnostics/                   # Datastore / DiagnosticCapture mapping
+├── src/state/                         # Bridge state machine
+└── package.json
 ```
 
-### Ver reportes
-```bash
-# Reporte de fusión
-cat fusion-workspace/reports/FUSION_REPORT.md
+**Estado actual**
+- HTTP + readiness/liveness/detailed health
+- PostgreSQL y Redis conectados
+- base gRPC + Protobuf implementada
+- WebSocket con auth, presence y heartbeat
+- REST fallback para `projects/:id`, `render` y `diagnostics`
 
-# Log de ejecución
-cat fusion-workspace/reports/FUSION_LOG.md
+### Capa 3 — Engines
 
-# Guía de instalación
-cat fusion-workspace/reports/INSTALLATION_COMPLETE.md
+```text
+backend/thunderkoli/                   # Node.js
+backend/universalengine/               # Kotlin + Ktor
+creative/                              # Python / Design Studio base
 ```
+
+**Estado actual**
+- `thunderkoli/`: base de servicio alineada y documentada
+- `universalengine/`: build base operativo, pero con residuos legacy/generados aún por consolidar
+- `creative/`: scaffold Python con workers/color management base
 
 ---
 
-## ✅ Estado Actual
+## 4. Shared contracts
 
-**FASE 1 COMPLETADA:**
-- ✅ Fusión de proyectos
-- ✅ Instalación de dependencias
-- ✅ Limpieza y organización
-- ✅ Documentación completa
+```text
+shared/
+├── types/                             # Tipos TypeScript compartidos
+└── proto/
+    ├── common.proto
+    ├── bridge.proto
+    ├── engine.proto
+    ├── render.proto
+    └── diagnostic.proto
+```
 
-**SIGUIENTE FASE:**
-- Implementar API Gateway
-- Crear Python Workers
-- Migrar frontend a React
-- Configurar PostgreSQL
+**Estado actual**
+- contratos versionados para Bridge, engines, render y diagnósticos
+- generación de tipos gRPC conectada al Bridge
 
 ---
 
-**Generado por:** Kiro AI Agent  
-**Fecha:** 2026-04-21  
-**Última actualización:** Después de limpieza completa
+## 5. Infraestructura y persistencia
+
+```text
+fusion-workspace/kolicode/
+├── docker-compose.yml
+├── .env.example
+└── scripts/
+    ├── docker-up.sh
+    ├── db-migrate.sh
+    ├── backup-db.sh
+    └── ...
+```
+
+**Estado actual**
+- Docker Compose con PostgreSQL 16 + Redis 7
+- puerto PostgreSQL del stack local movido para evitar colisiones del host
+- migraciones y backup validados durante Fase 1
+
+---
+
+## 6. Zona a sanear: `backend/universalengine/proyectos_generados/`
+
+```text
+backend/universalengine/proyectos_generados/
+├── proyecto_1
+├── proyecto_2
+├── ...
+├── proyecto_18
+├── proyecto_19
+└── _legacy_import
+```
+
+**Interpretación actual**
+- no es la fuente canónica del producto KoliCode
+- contiene proyectos generados/arrastrados del flujo previo de UniversalEngine
+- debe tratarse como **área de consolidación o archivo**, no como estructura principal de producto
+
+**Recomendación estructural**
+1. extraer una única plantilla canónica reutilizable
+2. dejar `proyectos_generados/` solo para instancias temporales o archivadas
+3. limpiar residuos legacy de forma no destructiva y documentada
+
+---
+
+## 7. Estado documental correcto
+
+Los documentos que hoy deben considerarse fuente de verdad son:
+
+- `README.md` (raíz) — orientación del monorepo
+- `PROJECT_STRUCTURE.md` — mapa estructural actualizado
+- `.kiro/specs/kolicode/FASE1-PLAN.md` — estado de Fase 1
+- `fusion-workspace/kolicode/README.md` — guía principal del producto
+- `fusion-workspace/kolicode/ARCHITECTURE.md` — arquitectura funcional
+
+Los documentos heredados del primer momento de fusión deben leerse como **históricos**, no como descripción exacta del presente.
+
+---
+
+## 8. Resumen ejecutivo
+
+- El **producto activo** es `fusion-workspace/kolicode/`
+- La **infraestructura base de Fase 1** está completada
+- El **Bridge** ya es la pieza central de integración
+- `UniversalEngine` sigue siendo el principal punto de consolidación/limpieza pendiente
+- La documentación raíz queda ahora alineada para seguir implementando features sin arrastrar la visión antigua de la primera fusión

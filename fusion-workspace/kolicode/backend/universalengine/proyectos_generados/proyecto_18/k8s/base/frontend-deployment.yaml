@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proyecto18-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proyecto18-frontend
+  template:
+    metadata:
+      labels:
+        app: proyecto18-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ghcr.io/example/proyecto18-frontend:latest
+          ports:
+            - containerPort: 80

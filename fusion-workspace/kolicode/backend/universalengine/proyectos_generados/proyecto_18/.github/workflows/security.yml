@@ -1,0 +1,67 @@
+name: Security
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  dependency-audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_18/frontend/package-lock.json
+      - name: Audit dependencies
+        run: |
+          chmod +x backend/gradlew
+          chmod +x scripts/audit_dependencies.sh
+          cd frontend && npm ci --no-fund && cd ..
+          ./scripts/audit_dependencies.sh
+      - name: Upload dependency reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-audit
+          path: fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_18/build/reports/dependency-audit
+
+  trivy-images:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fusion-workspace/kolicode/backend/universalengine/proyectos_generados/proyecto_18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build backend image
+        run: docker build -t proyecto18-backend:latest ./backend
+      - name: Build frontend image
+        run: docker build -t proyecto18-frontend:latest ./frontend
+      - name: Trivy backend image
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: proyecto18-backend:latest
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+      - name: Trivy frontend image
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: proyecto18-frontend:latest
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
