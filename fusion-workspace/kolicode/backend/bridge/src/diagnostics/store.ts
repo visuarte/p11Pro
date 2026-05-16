@@ -2,14 +2,19 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import Datastore from '@seald-io/nedb';
+import type { RequestMetadata } from '../grpc/generated/kolicode/common/v1/RequestMetadata';
+import type { DiagnosticCapture } from '../grpc/generated/kolicode/diagnostic/v1/DiagnosticCapture';
 import { logger } from '../utils/logger';
+
+type DiagnosticLevel = 'info' | 'warn' | 'error';
 
 export interface DiagnosticEntry {
   type: string;
   source: string;
-  level: 'info' | 'warn' | 'error';
+  level: DiagnosticLevel;
   message: string;
   metadata?: Record<string, unknown>;
+  capture?: DiagnosticCapture;
   createdAt: string;
 }
 
@@ -47,6 +52,7 @@ export async function initializeDiagnosticsStore(): Promise<Datastore<Diagnostic
 
       await store.ensureIndexAsync({ fieldName: 'type' });
       await store.ensureIndexAsync({ fieldName: 'source' });
+      await store.ensureIndexAsync({ fieldName: 'level' });
       await store.ensureIndexAsync({ fieldName: 'createdAt' });
 
       diagnosticsStore = store;
@@ -62,12 +68,100 @@ export async function initializeDiagnosticsStore(): Promise<Datastore<Diagnostic
   return diagnosticsStoreReady;
 }
 
+function stringifyMetadata(
+  metadata?: Record<string, unknown>
+): Record<string, string> {
+  if (!metadata) {
+    return {};
+  }
+
+  return Object.fromEntries(
+    Object.entries(metadata)
+      .filter(([, value]) => value !== undefined)
+      .map(([key, value]) => [
+        key,
+        typeof value === 'string' ? value : JSON.stringify(value),
+      ])
+  );
+}
+
+function buildRequestMetadata(
+  metadataLabels: Record<string, string>
+): RequestMetadata {
+  const { requestId, sessionId, userId, traceId, ...labels } = metadataLabels;
+
+  return {
+    requestId: requestId ?? '',
+    sessionId: sessionId ?? '',
+    userId: userId ?? '',
+    traceId: traceId ?? '',
+    labels,
+  };
+}
+
+function resolveDiagnosticLayer(source: string): DiagnosticCapture['layer'] {
+  if (source.startsWith('frontend.')) {
+    return 'DIAGNOSTIC_LAYER_FRONTEND';
+  }
+
+  if (source.startsWith('engine.') || source.includes('thunderkoli') || source.includes('universalengine') || source.includes('designstudio')) {
+    return 'DIAGNOSTIC_LAYER_ENGINE';
+  }
+
+  return 'DIAGNOSTIC_LAYER_BRIDGE';
+}
+
+function resolveDiagnosticSeverity(level: DiagnosticLevel): DiagnosticCapture['severity'] {
+  switch (level) {
+    case 'info':
+      return 'DIAGNOSTIC_SEVERITY_INFO';
+    case 'warn':
+      return 'DIAGNOSTIC_SEVERITY_WARN';
+    case 'error':
+      return 'DIAGNOSTIC_SEVERITY_ERROR';
+    default:
+      return 'DIAGNOSTIC_SEVERITY_UNSPECIFIED';
+  }
+}
+
+export function buildDiagnosticCapture(
+  entry: Omit<DiagnosticEntry, 'createdAt' | 'capture'>,
+  createdAt: string
+): DiagnosticCapture {
+  const labels = stringifyMetadata(entry.metadata);
+  const payload = Buffer.from(
+    JSON.stringify({
+      type: entry.type,
+      source: entry.source,
+      level: entry.level,
+      message: entry.message,
+      metadata: entry.metadata ?? {},
+    }),
+    'utf8'
+  );
+
+  return {
+    metadata: buildRequestMetadata(labels),
+    layer: resolveDiagnosticLayer(entry.source),
+    timestampMs: String(Date.parse(createdAt)),
+    labels,
+    payload,
+    source: entry.source,
+    type: entry.type,
+    severity: resolveDiagnosticSeverity(entry.level),
+    message: entry.message,
+  };
+}
+
 export async function recordDiagnostic(entry: Omit<DiagnosticEntry, 'createdAt'>): Promise<void> {
   const store = await initializeDiagnosticsStore();
+  const createdAt = new Date().toISOString();
+  const capture = entry.capture ?? buildDiagnosticCapture(entry, createdAt);
 
   await store.insertAsync({
     ...entry,
-    createdAt: new Date().toISOString(),
+    capture,
+    createdAt,
   });
 }
 

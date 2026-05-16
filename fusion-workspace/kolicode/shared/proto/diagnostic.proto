@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package kolicode.diagnostic.v1;
+
+import "common.proto";
+
+enum DiagnosticLayer {
+  DIAGNOSTIC_LAYER_UNSPECIFIED = 0;
+  DIAGNOSTIC_LAYER_FRONTEND = 1;
+  DIAGNOSTIC_LAYER_BRIDGE = 2;
+  DIAGNOSTIC_LAYER_ENGINE = 3;
+}
+
+enum DiagnosticSeverity {
+  DIAGNOSTIC_SEVERITY_UNSPECIFIED = 0;
+  DIAGNOSTIC_SEVERITY_INFO = 1;
+  DIAGNOSTIC_SEVERITY_WARN = 2;
+  DIAGNOSTIC_SEVERITY_ERROR = 3;
+}
+
+message DiagnosticCapture {
+  kolicode.common.v1.RequestMetadata metadata = 1;
+  DiagnosticLayer layer = 2;
+  int64 timestamp_ms = 3;
+  map<string, string> labels = 4;
+  bytes payload = 5;
+  string source = 6;
+  string type = 7;
+  DiagnosticSeverity severity = 8;
+  string message = 9;
+}
+
+message DiagnosticCaptureAck {
+  bool accepted = 1;
+  string diagnostic_id = 2;
+  int64 recorded_at_ms = 3;
+}
+
+service DiagnosticService {
+  rpc CaptureDiagnostic(DiagnosticCapture) returns (DiagnosticCaptureAck);
+}

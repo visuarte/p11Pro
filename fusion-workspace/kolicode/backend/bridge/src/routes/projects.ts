@@ -1,7 +1,22 @@
 import { Router, Request, Response } from 'express';
+import type { QueryResultRow } from 'pg';
+import { queryPostgres } from '../db/postgres';
+import { AppError, asyncHandler } from '../middleware/errorHandler';
 import { logger } from '../utils/logger';
 
 const router = Router();
+
+interface ProjectRow extends QueryResultRow {
+  id: string;
+  owner_id: string | null;
+  name: string;
+  description: string | null;
+  project_type: string;
+  canvas_data: Record<string, unknown>;
+  metadata: Record<string, unknown>;
+  created_at: Date | string;
+  updated_at: Date | string;
+}
 
 /**
  * GET /api/projects
@@ -85,8 +100,7 @@ router.post('/', (req: Request, res: Response) => {
  * GET /api/projects/:id
  * Get a specific project
  */
-router.get('/:id', (req: Request, res: Response) => {
-  try {
+router.get('/:id', asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
 
     logger.debug({
@@ -94,24 +108,52 @@ router.get('/:id', (req: Request, res: Response) => {
       projectId: id,
     });
 
-    // TODO: Implement actual project fetching
+    const result = await queryPostgres<ProjectRow>(
+      `
+        SELECT
+          id,
+          owner_id,
+          name,
+          description,
+          project_type,
+          canvas_data,
+          metadata,
+          created_at,
+          updated_at
+        FROM kolicode.projects
+        WHERE id = $1
+        LIMIT 1
+      `,
+      [id]
+    );
+
+    const project = result.rows[0];
+
+    if (!project) {
+      throw new AppError('Project not found', 404, 'PROJECT_NOT_FOUND');
+    }
+
     res.status(200).json({
-      message: 'Project fetch endpoint - implementation pending',
-      projectId: id,
-    });
-  } catch (error) {
-    logger.error({
-      message: 'Failed to fetch project',
-      error: error instanceof Error ? error.message : error,
-    });
-    res.status(500).json({
-      error: {
-        message: 'Failed to fetch project',
-        code: 'FETCH_PROJECT_ERROR',
+      project: {
+        id: project.id,
+        ownerId: project.owner_id,
+        name: project.name,
+        description: project.description,
+        type: project.project_type,
+        canvasData: project.canvas_data,
+        metadata: project.metadata,
+        createdAt:
+          project.created_at instanceof Date
+            ? project.created_at.toISOString()
+            : String(project.created_at),
+        updatedAt:
+          project.updated_at instanceof Date
+            ? project.updated_at.toISOString()
+            : String(project.updated_at),
       },
+      fallbackMode: 'rest',
     });
-  }
-});
+}));
 
 /**
  * PUT /api/projects/:id
@@ -180,4 +222,3 @@ router.delete('/:id', (req: Request, res: Response) => {
 });
 
 export default router;
-

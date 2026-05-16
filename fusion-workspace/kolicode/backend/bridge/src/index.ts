@@ -8,6 +8,11 @@ import cors from 'cors';
 import { closePostgresPool } from './db/postgres';
 import { closeRedisClient } from './db/redis';
 import { initializeDiagnosticsStore } from './diagnostics/store';
+import { closeGrpcClients, createEngineGrpcClients } from './grpc/clients';
+import {
+  createBridgeGrpcServer,
+  type BridgeGrpcServerHandle,
+} from './grpc/server';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { requestLogger } from './middleware/requestLogger';
@@ -16,6 +21,8 @@ import healthRoutes from './routes/health';
 import authRoutes from './routes/auth';
 import projectsRoutes from './routes/projects';
 import assetsRoutes from './routes/assets';
+import renderRoutes from './routes/render';
+import diagnosticsRoutes from './routes/diagnostics';
 import { setupWebSocket } from './websocket/server';
 import { BridgeState } from './state/BridgeState';
 
@@ -43,6 +50,8 @@ const io = new SocketIOServer(httpServer, {
 // Initialize Bridge State Machine
 const bridgeState = new BridgeState();
 void initializeDiagnosticsStore();
+const grpcClients = createEngineGrpcClients();
+let grpcServerHandle: BridgeGrpcServerHandle | null = null;
 
 // Security Middleware
 app.use(helmet());
@@ -70,6 +79,8 @@ app.use('/health', healthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectsRoutes);
 app.use('/api/assets', assetsRoutes);
+app.use('/api/render', renderRoutes);
+app.use('/api/diagnostics', diagnosticsRoutes);
 
 // Bridge State Endpoint
 app.get('/api/bridge/state', (req, res) => {
@@ -106,7 +117,12 @@ const gracefulShutdown = async (signal: string) => {
 
   logger.info(`Received ${signal}, starting graceful shutdown...`);
 
-  await Promise.allSettled([closePostgresPool(), closeRedisClient()]);
+  await Promise.allSettled([
+    closePostgresPool(),
+    closeRedisClient(),
+    closeGrpcClients(grpcClients),
+    grpcServerHandle?.tryShutdown() ?? Promise.resolve(),
+  ]);
 
   // Stop accepting new connections
   httpServer.close(() => {
@@ -130,12 +146,30 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // Start server
-httpServer.listen(PORT, () => {
-  logger.info(
-    `🚀 Bridge API Gateway started on port ${PORT} (${NODE_ENV} mode)`
-  );
-  logger.info(`📡 WebSocket server active on /socket.io`);
-  logger.info(`🔗 Allowed CORS origins: ${ALLOWED_ORIGINS.join(', ')}`);
+const startServers = async () => {
+  if (process.env.GRPC_BRIDGE_ENABLED !== 'false') {
+    grpcServerHandle = await createBridgeGrpcServer(bridgeState);
+  }
+
+  httpServer.listen(PORT, () => {
+    logger.info(
+      `🚀 Bridge API Gateway started on port ${PORT} (${NODE_ENV} mode)`
+    );
+    logger.info(`📡 WebSocket server active on /socket.io`);
+    logger.info(`🔗 Allowed CORS origins: ${ALLOWED_ORIGINS.join(', ')}`);
+
+    if (grpcServerHandle) {
+      logger.info(`🛰️ Bridge gRPC server active on port ${grpcServerHandle.port}`);
+    }
+  });
+};
+
+void startServers().catch((error) => {
+  logger.error({
+    message: 'Failed to start Bridge services',
+    error: error instanceof Error ? error.message : String(error),
+  });
+  process.exit(1);
 });
 
-export { app, httpServer, io, bridgeState };
+export { app, httpServer, io, bridgeState, grpcClients };

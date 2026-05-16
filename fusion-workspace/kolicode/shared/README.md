@@ -101,32 +101,27 @@ export interface Layer {
 
 ## Protocol Buffers
 
+### Contratos implementados en `shared/proto/`
+
+- `common.proto` - metadatos compartidos, health checks y enums base
+- `bridge.proto` - control plane del Bridge (`CheckHealth`, `GetBridgeState`)
+- `engine.proto` - contratos base Bridge ↔ ThunderKoli / UniversalEngine / Design Studio
+- `render.proto` - `RenderRequest`, `RenderOptions` y `RenderResponse` para Design Studio
+- `diagnostic.proto` - `DiagnosticCapture`, severidad/capa y `DiagnosticService`
+
 ### Ejemplo: Bridge Service
 
 ```protobuf
 // shared/proto/bridge.proto
 syntax = "proto3";
 
-package bridge;
+package kolicode.bridge.v1;
 
-// Health check service
-service Health {
-  rpc Check(HealthCheckRequest) returns (HealthCheckResponse);
-}
+import "common.proto";
 
-message HealthCheckRequest {
-  string service = 1;
-}
-
-message HealthCheckResponse {
-  enum Status {
-    UNKNOWN = 0;
-    HEALTHY = 1;
-    UNHEALTHY = 2;
-  }
-  Status status = 1;
-  string message = 2;
-  int64 timestamp = 3;
+service BridgeControlService {
+  rpc CheckHealth(kolicode.common.v1.HealthCheckRequest) returns (kolicode.common.v1.HealthCheckResponse);
+  rpc GetBridgeState(GetBridgeStateRequest) returns (GetBridgeStateResponse);
 }
 ```
 
@@ -136,16 +131,17 @@ message HealthCheckResponse {
 // shared/proto/render.proto
 syntax = "proto3";
 
-package render;
+package kolicode.render.v1;
 
 service RenderService {
   rpc RenderAsset(RenderRequest) returns (RenderResponse);
 }
 
 message RenderRequest {
-  string project_id = 1;
-  bytes canvas_data = 2;
-  RenderOptions options = 3;
+  kolicode.common.v1.RequestMetadata metadata = 1;
+  string project_id = 2;
+  bytes canvas_data = 3;
+  RenderOptions options = 4;
 }
 
 message RenderOptions {
@@ -160,6 +156,8 @@ message RenderResponse {
   bytes data = 2;
   int64 size_bytes = 3;
   string checksum = 4;
+  string format = 5;
+  int64 generated_at_ms = 6;
 }
 ```
 
@@ -169,21 +167,25 @@ message RenderResponse {
 // shared/proto/diagnostic.proto
 syntax = "proto3";
 
-package diagnostic;
+package kolicode.diagnostic.v1;
 
 message DiagnosticCapture {
-  string session_id = 1;
-  Layer layer = 2;
+ kolicode.common.v1.RequestMetadata metadata = 1;
+ DiagnosticLayer layer = 2;
   int64 timestamp_ms = 3;
-  map<string, string> metadata = 4;
+ map<string, string> labels = 4;
   bytes payload = 5;
+ string source = 6;
+ string type = 7;
+ DiagnosticSeverity severity = 8;
+ string message = 9;
 }
 
-enum Layer {
-  UNKNOWN = 0;
-  FRONTEND = 1;
-  BRIDGE = 2;
-  ENGINE = 3;
+enum DiagnosticLayer {
+ DIAGNOSTIC_LAYER_UNSPECIFIED = 0;
+ DIAGNOSTIC_LAYER_FRONTEND = 1;
+ DIAGNOSTIC_LAYER_BRIDGE = 2;
+ DIAGNOSTIC_LAYER_ENGINE = 3;
 }
 ```
 
@@ -194,15 +196,8 @@ enum Layer {
 ### TypeScript desde Protobuf
 
 ```bash
-# Install protoc y plugins
-npm install -g protoc-gen-ts
-
-# Generate TypeScript from .proto files
-protoc \
-  --plugin=protoc-gen-ts=./node_modules/.bin/protoc-gen-ts \
-  --ts_out=src/generated \
-  --proto_path=shared/proto \
-  shared/proto/*.proto
+# Desde backend/bridge
+npm run grpc:generate
 ```
 
 ### Uso en Node.js
@@ -269,6 +264,5 @@ package bridge.v1;  // Version 1
 
 ---
 
-**Estado:** 🚧 Pendiente implementación (Task 4)  
-**Última actualización:** 2026-05-13
-
+**Estado:** ✅ Contratos Protobuf base implementados (Tasks 4.1, 4.3, 4.4)  
+**Última actualización:** 2026-05-15

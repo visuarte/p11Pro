@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package kolicode.render.v1;
+
+import "common.proto";
+
+service RenderService {
+  rpc RenderAsset(RenderRequest) returns (RenderResponse);
+}
+
+message RenderRequest {
+  kolicode.common.v1.RequestMetadata metadata = 1;
+  string project_id = 2;
+  bytes canvas_data = 3;
+  RenderOptions options = 4;
+}
+
+message RenderOptions {
+  int32 width = 1;
+  int32 height = 2;
+  string format = 3;
+  int32 quality = 4;
+  bool include_alpha = 5;
+  string color_profile = 6;
+}
+
+message RenderResponse {
+  string asset_id = 1;
+  bytes data = 2;
+  int64 size_bytes = 3;
+  string checksum = 4;
+  string format = 5;
+  int64 generated_at_ms = 6;
+}

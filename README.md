@@ -52,6 +52,8 @@ fusion-workspace/kolicode/
 ## Documentación importante
 
 - `PROJECT_STRUCTURE.md` — mapa del repo raíz actualizado
+- `docs/05_auditoria_tecnica_kolicode.md` — auditoría técnica ejecutiva + backlog recomendado
+- `docs/06_checkpoint_consolidacion_kolicode.md` — checkpoint robusto + estimación + faltas y mejoras
 - `.kiro/specs/kolicode/FASE1-PLAN.md` — estado consolidado de Fase 1
 - `fusion-workspace/kolicode/README.md` — guía principal del producto
 - `fusion-workspace/kolicode/ARCHITECTURE.md` — arquitectura de tres capas

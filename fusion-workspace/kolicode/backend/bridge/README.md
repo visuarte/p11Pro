@@ -79,7 +79,7 @@ bridge/
 - ✅ Enrutar a servicios apropiados
 
 ### 2. Protocol Translation
-- 🚧 JSON (HTTP) ↔ Protobuf (gRPC) - pendiente
+- ✅ JSON (HTTP) ↔ Protobuf (gRPC) base contract + runtime loader
 - ✅ WebSocket messages framework listo
 - 🚧 REST fallback cuando gRPC no disponible
 
@@ -109,8 +109,8 @@ bridge/
 
 ### Communication
 - **Socket.io:** WebSocket server (v4.7.2)
-- **@grpc/grpc-js:** gRPC client (ready)
-- **@grpc/proto-loader:** Protobuf support (ready)
+- **@grpc/grpc-js:** gRPC clients + Bridge control-plane server
+- **@grpc/proto-loader:** Runtime Protobuf loading + typed definitions
 
 ### Security
 - **Helmet:** Security headers
@@ -151,7 +151,7 @@ POST /api/auth/logout     ✅ Logout endpoint
 ```
 GET    /api/projects      🚧 List projects (framework ready)
 POST   /api/projects      🚧 Create project (framework ready)
-GET    /api/projects/:id  🚧 Get project (framework ready)
+GET    /api/projects/:id  ✅ REST fallback backed by PostgreSQL
 PUT    /api/projects/:id  🚧 Update project (framework ready)
 DELETE /api/projects/:id  🚧 Delete project (framework ready)
 ```
@@ -162,6 +162,12 @@ POST /api/assets/process      🚧 Process asset (framework ready)
 GET  /api/assets/:id/status   🚧 Get processing status (framework ready)
 GET  /api/assets/:id/download 🚧 Download asset (framework ready)
 DELETE /api/assets/:id        🚧 Delete asset (framework ready)
+```
+
+### REST Fallback Endpoints
+```
+POST /api/render         ✅ Render fallback backed by PostgreSQL asset records
+POST /api/diagnostics    ✅ Diagnostics fallback backed by NeDB + DiagnosticCapture
 ```
 
 ---
@@ -182,6 +188,8 @@ DELETE /api/assets/:id        🚧 Delete asset (framework ready)
 'canvas:undo'        // Trigger undo action
 'canvas:redo'        // Trigger redo action
 'cursor:move'        // Share cursor position for awareness
+'bridge:ping'        // Application-level ping/pong
+'client:heartbeat'   // Heartbeat acknowledgement for long-lived sessions
 ```
 
 ### Server → Client
@@ -198,34 +206,44 @@ DELETE /api/assets/:id        🚧 Delete asset (framework ready)
 
 // Server messages
 'server:welcome'     // Welcome message on connect
+'server:heartbeat'   // Periodic heartbeat with bridge state
+'bridge:pong'        // Ping response with server timestamp
+'project:presence'   // Active room connection count
 ```
 
 ---
 
-## gRPC Services (Ready for Implementation)
+## gRPC Services (Base Implemented)
 
 ### ThunderKoli (Security Service)
 ```protobuf
-service ThunderKoli {
-  rpc Authenticate(AuthRequest) returns (AuthResponse);
-  rpc ValidateToken(TokenRequest) returns (TokenResponse);
-  rpc Encrypt(EncryptRequest) returns (EncryptResponse);
+service ThunderKoliService {
+  rpc CheckHealth(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc ExecuteOperation(EngineRequest) returns (EngineResponse);
 }
 ```
 
 ### UniversalEngine (AI Service)
 ```protobuf
-service UniversalEngine {
-  rpc ProcessPrompt(PromptRequest) returns (PromptResponse);
-  rpc GenerateCode(CodeRequest) returns (CodeResponse);
+service UniversalEngineService {
+  rpc CheckHealth(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc ExecuteOperation(EngineRequest) returns (EngineResponse);
 }
 ```
 
 ### Design Studio (Graphics Service)
 ```protobuf
-service DesignStudio {
-  rpc RenderAsset(RenderRequest) returns (RenderResponse);
-  rpc ConvertColor(ColorRequest) returns (ColorResponse);
+service DesignStudioService {
+  rpc CheckHealth(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc ExecuteOperation(EngineRequest) returns (EngineResponse);
+}
+```
+
+### Bridge (Control Plane)
+```protobuf
+service BridgeControlService {
+  rpc CheckHealth(HealthCheckRequest) returns (HealthCheckResponse);
+  rpc GetBridgeState(GetBridgeStateRequest) returns (GetBridgeStateResponse);
 }
 ```
 
@@ -264,13 +282,18 @@ PORT=4000
 NODE_ENV=development
 
 # Database
-DATABASE_URL=postgresql://kolicode:kolicode_secure_pass_2026@localhost:5432/kolicode
+DATABASE_URL=postgresql://kolicode:kolicode_dev_pass@127.0.0.1:5433/kolicode
 REDIS_URL=redis://localhost:6379
 
-# gRPC Services URLs
-THUNDERKOLI_URL=localhost:3001
-UNIVERSALENGINE_URL=localhost:8080
-DESIGN_STUDIO_URL=localhost:8081
+# HTTP/gRPC Services URLs
+THUNDERKOLI_URL=http://localhost:3001
+UNIVERSALENGINE_URL=http://localhost:8080
+DESIGN_STUDIO_URL=http://localhost:8081
+THUNDERKOLI_GRPC_TARGET=127.0.0.1:50061
+UNIVERSALENGINE_GRPC_TARGET=127.0.0.1:50062
+DESIGN_STUDIO_GRPC_TARGET=127.0.0.1:50063
+GRPC_BRIDGE_ENABLED=true
+GRPC_BRIDGE_PORT=50051
 
 # Security
 JWT_SECRET=your-super-secret-jwt-key-change-in-production
@@ -317,6 +340,9 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Regenerate gRPC types only
+npm run grpc:generate
 
 # Start production server
 npm start
@@ -407,22 +433,20 @@ socket.emit('project:join', { projectId: 'proj-123' }, (res) => {
 
 ---
 
-## Próximos Pasos (Task 2.5 y 3)
+## Próximos Pasos (Task 4)
 
-1. **Task 2.5:** Setup Engine services base
-   - ThunderKoli (Node.js security service)
-   - UniversalEngine (Kotlin AI service)
-   - Design Studio (Python graphics service)
+1. **Task 4.2:** Endurecer WebSocket para producción
+   - Middleware de autenticación real
+   - Gestión de rooms y presencia
 
-2. **Task 3:** Base de Datos y Persistencia
-   - PostgreSQL schema inicial
-   - Redis para caché
-   - Migraciones automáticas
+2. **Task 4.3 / 4.4:** Esquemas Protobuf específicos
+   - RenderRequest / RenderResponse
+   - DiagnosticCapture
 
-3. **Task 4:** Protocolos de Comunicación
-   - gRPC clients en Bridge
-   - Protocol Buffers para servicios
-   - WebSocket production ready
+3. **Task 4.5:** Fallback REST endpoints
+   - `/api/render`
+   - `/api/projects/:id`
+   - `/api/diagnostics`
 
 ---
 
@@ -441,5 +465,5 @@ socket.emit('project:join', { projectId: 'proj-123' }, (res) => {
 **Estimado:** 8 horas  
 **Tiempo Real:** ~2.5 horas (75% más rápido)  
 **Prioridad:** CRÍTICA ✓  
-**Última actualización:** 2026-05-13  
-**Próxima tarea:** 2.5 - Setup Engine services base
+**Última actualización:** 2026-05-15  
+**Próxima tarea:** 4.2 - Setup WebSocket server

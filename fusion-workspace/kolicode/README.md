@@ -87,6 +87,7 @@ npm run dev
 - [Project Charter](docs/PROJECT_CHARTER.md) - Objetivos, alcance, criterios de exito y no-goals del proyecto
 - [Arquitectura del Sistema](docs/ARCHITECTURE.md) - Diagrama de componentes, flujos de datos, seguridad
 - [Architecture Diagrams](docs/architecture/README.md) - Diagramas Mermaid de componentes, secuencias y estados
+- [Shared Contracts](shared/README.md) - TypeScript compartido y contratos Protobuf/gRPC
 - [Guía de Desarrollo](docs/DEVELOPMENT_GUIDE.md) - Metodología de debugging, estándares de código, testing
 - [API Documentation](docs/API.md) - Endpoints completos, ejemplos de requests/responses
 - [Integration Contracts](docs/INTEGRATION_CONTRACTS.md) - Contratos entre modulos, latencias y compatibilidad

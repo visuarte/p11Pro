@@ -1,6 +1,12 @@
 import { Socket, Server as SocketIOServer } from 'socket.io';
 import { logger } from '../../utils/logger';
 import { BridgeState } from '../../state/BridgeState';
+import { safeAck } from '../ack';
+import {
+  emitProjectPresence,
+  joinProjectRoom,
+  leaveProjectRoom,
+} from '../rooms';
 
 /**
  * Project-related WebSocket event handlers
@@ -24,11 +30,10 @@ export const setupProjectHandlers = (
           message: 'Project join: missing projectId',
           socketId: socket.id,
         });
-        return callback?.({ error: 'projectId is required' });
+        return safeAck(callback, { error: 'projectId is required' });
       }
 
-      const roomName = `project:${projectId}`;
-      socket.join(roomName);
+      const roomName = joinProjectRoom(socket, projectId);
 
       logger.info({
         message: 'Client joined project room',
@@ -41,11 +46,14 @@ export const setupProjectHandlers = (
       socket.to(roomName).emit('project:user-joined', {
         socketId: socket.id,
         projectId,
+        userId: socket.data.session?.user.userId,
         timestamp: new Date().toISOString(),
       });
 
+      emitProjectPresence(io, projectId);
+
       // Send confirmation to requester
-      callback?.({
+      safeAck(callback, {
         success: true,
         projectId,
         room: roomName,
@@ -56,7 +64,7 @@ export const setupProjectHandlers = (
         socketId: socket.id,
         error: error instanceof Error ? error.message : error,
       });
-      callback?.({
+      safeAck(callback, {
         error: 'Failed to join project room',
       });
     }
@@ -68,9 +76,7 @@ export const setupProjectHandlers = (
   socket.on('project:leave', (data: { projectId: string }, callback) => {
     try {
       const { projectId } = data;
-      const roomName = `project:${projectId}`;
-
-      socket.leave(roomName);
+      const roomName = leaveProjectRoom(socket, projectId);
 
       logger.info({
         message: 'Client left project room',
@@ -82,17 +88,20 @@ export const setupProjectHandlers = (
       socket.to(roomName).emit('project:user-left', {
         socketId: socket.id,
         projectId,
+        userId: socket.data.session?.user.userId,
         timestamp: new Date().toISOString(),
       });
 
-      callback?.({ success: true, projectId });
+      emitProjectPresence(io, projectId);
+
+      safeAck(callback, { success: true, projectId });
     } catch (error) {
       logger.error({
         message: 'Error leaving project room',
         socketId: socket.id,
         error: error instanceof Error ? error.message : error,
       });
-      callback?.({
+      safeAck(callback, {
         error: 'Failed to leave project room',
       });
     }
@@ -109,12 +118,12 @@ export const setupProjectHandlers = (
         const { projectId, updates } = data;
 
         if (!projectId || !updates) {
-          return callback?.({
+          return safeAck(callback, {
             error: 'projectId and updates are required',
           });
         }
 
-        const roomName = `project:${projectId}`;
+        const roomName = joinProjectRoom(socket, projectId);
 
         logger.debug({
           message: 'Project update received',
@@ -128,17 +137,18 @@ export const setupProjectHandlers = (
           projectId,
           updates,
           updatedBy: socket.id,
+          userId: socket.data.session?.user.userId,
           timestamp: new Date().toISOString(),
         });
 
-        callback?.({ success: true });
+        safeAck(callback, { success: true });
       } catch (error) {
         logger.error({
           message: 'Error updating project',
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to update project',
         });
       }
@@ -159,7 +169,7 @@ export const setupProjectHandlers = (
       });
 
       // TODO: Fetch actual project status from database
-      callback?.({
+      safeAck(callback, {
         success: true,
         projectId,
         status: 'ACTIVE',
@@ -171,7 +181,7 @@ export const setupProjectHandlers = (
         socketId: socket.id,
         error: error instanceof Error ? error.message : error,
       });
-      callback?.({
+      safeAck(callback, {
         error: 'Failed to fetch project status',
       });
     }
@@ -179,4 +189,3 @@ export const setupProjectHandlers = (
 };
 
 export default setupProjectHandlers;
-

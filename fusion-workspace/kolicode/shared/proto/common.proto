@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package kolicode.common.v1;
+
+message Empty {}
+
+message RequestMetadata {
+  string request_id = 1;
+  string session_id = 2;
+  string user_id = 3;
+  string trace_id = 4;
+  map<string, string> labels = 5;
+}
+
+enum HealthStatus {
+  HEALTH_STATUS_UNSPECIFIED = 0;
+  HEALTH_STATUS_HEALTHY = 1;
+  HEALTH_STATUS_DEGRADED = 2;
+  HEALTH_STATUS_UNHEALTHY = 3;
+}
+
+message HealthCheckRequest {
+  string service = 1;
+}
+
+message HealthCheckResponse {
+  HealthStatus status = 1;
+  string service = 2;
+  string message = 3;
+  int64 timestamp_ms = 4;
+  map<string, string> details = 5;
+}

@@ -1,6 +1,8 @@
 import { Socket, Server as SocketIOServer } from 'socket.io';
 import { logger } from '../../utils/logger';
 import { BridgeState } from '../../state/BridgeState';
+import { safeAck } from '../ack';
+import { buildProjectRoom, isSocketInProjectRoom } from '../rooms';
 
 /**
  * Canvas-related WebSocket event handlers
@@ -29,12 +31,18 @@ export const setupCanvasHandlers = (
         const { projectId, changes, version } = data;
 
         if (!projectId || !changes) {
-          return callback?.({
+          return safeAck(callback, {
             error: 'projectId and changes are required',
           });
         }
 
-        const roomName = `project:${projectId}`;
+        if (!isSocketInProjectRoom(socket, projectId)) {
+          return safeAck(callback, {
+            error: 'Join the project room before sending canvas updates',
+          });
+        }
+
+        const roomName = buildProjectRoom(projectId);
 
         logger.debug({
           message: 'Canvas update received',
@@ -49,11 +57,12 @@ export const setupCanvasHandlers = (
           changes,
           version,
           updatedBy: socket.id,
+          userId: socket.data.session?.user.userId,
           timestamp: new Date().toISOString(),
         });
 
         // Send acknowledgment to sender
-        callback?.({
+        safeAck(callback, {
           success: true,
           version,
           appliedAt: new Date().toISOString(),
@@ -64,7 +73,7 @@ export const setupCanvasHandlers = (
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to process canvas update',
         });
       }
@@ -82,29 +91,36 @@ export const setupCanvasHandlers = (
         const { projectId, position } = data;
 
         if (!projectId || !position) {
-          return callback?.({
+          return safeAck(callback, {
             error: 'projectId and position are required',
           });
         }
 
-        const roomName = `project:${projectId}`;
+        if (!isSocketInProjectRoom(socket, projectId)) {
+          return safeAck(callback, {
+            error: 'Join the project room before sharing cursor movement',
+          });
+        }
+
+        const roomName = buildProjectRoom(projectId);
 
         // Broadcast cursor position to others
         socket.to(roomName).emit('cursor:moved', {
           socketId: socket.id,
           projectId,
           position,
+          userId: socket.data.session?.user.userId,
           timestamp: new Date().toISOString(),
         });
 
-        callback?.({ success: true });
+        safeAck(callback, { success: true });
       } catch (error) {
         logger.error({
           message: 'Error processing cursor move',
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to process cursor move',
         });
       }
@@ -122,7 +138,7 @@ export const setupCanvasHandlers = (
         const { projectId } = data;
 
         if (!projectId) {
-          return callback?.({
+          return safeAck(callback, {
             error: 'projectId is required',
           });
         }
@@ -133,8 +149,14 @@ export const setupCanvasHandlers = (
           projectId,
         });
 
+        if (!isSocketInProjectRoom(socket, projectId)) {
+          return safeAck(callback, {
+            error: 'Join the project room before requesting canvas sync',
+          });
+        }
+
         // TODO: Fetch actual canvas state from database
-        callback?.({
+        safeAck(callback, {
           success: true,
           projectId,
           state: {
@@ -150,7 +172,7 @@ export const setupCanvasHandlers = (
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to sync canvas',
         });
       }
@@ -166,7 +188,17 @@ export const setupCanvasHandlers = (
       try {
         const { projectId } = data;
 
-        const roomName = `project:${projectId}`;
+        if (!projectId) {
+          return safeAck(callback, { error: 'projectId is required' });
+        }
+
+        if (!isSocketInProjectRoom(socket, projectId)) {
+          return safeAck(callback, {
+            error: 'Join the project room before sending undo actions',
+          });
+        }
+
+        const roomName = buildProjectRoom(projectId);
 
         logger.debug({
           message: 'Undo action',
@@ -179,17 +211,18 @@ export const setupCanvasHandlers = (
           projectId,
           action: 'undo',
           initiatedBy: socket.id,
+          userId: socket.data.session?.user.userId,
           timestamp: new Date().toISOString(),
         });
 
-        callback?.({ success: true });
+        safeAck(callback, { success: true });
       } catch (error) {
         logger.error({
           message: 'Error processing undo',
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to process undo',
         });
       }
@@ -205,7 +238,17 @@ export const setupCanvasHandlers = (
       try {
         const { projectId } = data;
 
-        const roomName = `project:${projectId}`;
+        if (!projectId) {
+          return safeAck(callback, { error: 'projectId is required' });
+        }
+
+        if (!isSocketInProjectRoom(socket, projectId)) {
+          return safeAck(callback, {
+            error: 'Join the project room before sending redo actions',
+          });
+        }
+
+        const roomName = buildProjectRoom(projectId);
 
         logger.debug({
           message: 'Redo action',
@@ -218,17 +261,18 @@ export const setupCanvasHandlers = (
           projectId,
           action: 'redo',
           initiatedBy: socket.id,
+          userId: socket.data.session?.user.userId,
           timestamp: new Date().toISOString(),
         });
 
-        callback?.({ success: true });
+        safeAck(callback, { success: true });
       } catch (error) {
         logger.error({
           message: 'Error processing redo',
           socketId: socket.id,
           error: error instanceof Error ? error.message : error,
         });
-        callback?.({
+        safeAck(callback, {
           error: 'Failed to process redo',
         });
       }
@@ -237,4 +281,3 @@ export const setupCanvasHandlers = (
 };
 
 export default setupCanvasHandlers;
-
