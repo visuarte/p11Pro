@@ -1,31 +1,20 @@
+var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
+  get: (a, b) => (typeof require !== "undefined" ? require : a)[b]
+}) : x)(function(x) {
+  if (typeof require !== "undefined") return require.apply(this, arguments);
+  throw Error('Dynamic require of "' + x + '" is not supported');
+});
+
 // src/preload/index.ts
-import { contextBridge, ipcRenderer } from "electron";
-var invokeChannels = ["app:ping", "app:open-file", "debug:ping-pong", "update-settings"];
-var sendChannels = ["app:log"];
-var onChannels = [];
-var electronBridge = {
-  invoke: (channel, ...args) => {
-    if (!invokeChannels.includes(channel)) {
-      throw new Error(`Invalid channel: ${channel}`);
-    }
-    return ipcRenderer.invoke(channel, ...args);
+var { contextBridge, ipcRenderer } = __require("electron");
+contextBridge.exposeInMainWorld("koliAPI", {
+  getBridgeStatus: () => ipcRenderer.invoke("bridge:status"),
+  listProjects: () => ipcRenderer.invoke("projects:list"),
+  onProjectUpdate: (callback) => {
+    ipcRenderer.on("project-updated", callback);
   },
-  send: (channel, ...args) => {
-    if (!sendChannels.includes(channel)) {
-      throw new Error(`Invalid channel: ${channel}`);
-    }
-    return ipcRenderer.send(channel, ...args);
-  },
-  on: (channel, callback) => {
-    if (!onChannels.includes(channel)) {
-      throw new Error(`Invalid channel: ${channel}`);
-    }
-    const listener = (_event, ...args) => callback(...args);
-    ipcRenderer.on(channel, listener);
-    return () => ipcRenderer.removeListener(channel, listener);
-  }
-};
-contextBridge.exposeInMainWorld("electron", electronBridge);
-contextBridge.exposeInMainWorld("api", electronBridge);
-contextBridge.exposeInMainWorld("ipcRenderer", electronBridge);
+  createProject: (project) => ipcRenderer.invoke("create:project", project),
+  deleteProject: (projectId) => ipcRenderer.invoke("delete:project", projectId),
+  executeProject: (projectId) => ipcRenderer.invoke("execute:project", projectId)
+});
 //# sourceMappingURL=index.js.map

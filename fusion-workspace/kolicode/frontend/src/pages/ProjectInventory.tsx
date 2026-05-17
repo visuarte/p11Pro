@@ -1,12 +1,62 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useProjectStore } from '../store/useProjectStore';
 
 export function ProjectInventory() {
-  const { projects, isLoading, fetchProjects, updateProjectStatus } = useProjectStore();
+  const { projects, isLoading, fetchProjects, updateProjectStatus, addProject, deleteProject, executeProject } = useProjectStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  const handleAddProject = async () => {
+    const alias = window.prompt('Enter project alias:');
+    if (!alias) return;
+    const path = window.prompt('Enter project path (optional):') || `/tmp/${alias}`;
+    try {
+      await addProject({
+        alias,
+        status: 'active',
+        path,
+      });
+    } catch (error) {
+      console.error('Failed to add project:', error);
+      alert('Failed to add project. See console for details.');
+    }
+  };
+
+  const handleDeleteProject = async (id: string) => {
+    if (window.confirm(`Are you sure you want to delete project ${id}?`)) {
+      try {
+        await deleteProject(id);
+        // Optionally, show a success message
+      } catch (error) {
+        console.error('Failed to delete project:', error);
+        alert('Failed to delete project. See console for details.');
+      }
+    }
+  };
+
+  const handleExecuteProject = async (id: string) => {
+    if (window.confirm(`Are you sure you want to execute project ${id}?`)) {
+      try {
+        const result = await executeProject(id);
+        if (result.success) {
+          alert(`Project executed successfully. PID: ${result.pid ?? 'N/A'}`);
+        } else {
+          alert('Project execution failed.');
+        }
+      } catch (error) {
+        console.error('Failed to execute project:', error);
+        alert('Failed to execute project. See console for details.');
+      }
+    }
+  };
+
+  const handleEditProject = (id: string) => {
+    navigate(`/editor/${id}`);
+  };
 
   if (isLoading) {
     return <p className="text-center py-8">Loading projects...</p>;
@@ -17,10 +67,7 @@ export function ProjectInventory() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-slate-900">Project Inventory</h2>
         <button
-          onClick={() => {
-            // Placeholder for adding a new project
-            alert('Add project functionality not implemented yet');
-          }}
+          onClick={handleAddProject}
           className="btn btn-primary"
         >
           Add Project
@@ -56,26 +103,26 @@ export function ProjectInventory() {
                   </select>
                 </td>
                 <td className="p-4 text-sm space-x-2">
-                  <button
-                    onClick={() => {
-                      // Placeholder for managing project
-                      alert(`Manage project ${project.alias}`);
-                    }}
-                    className="btn btn-outline btn-sm"
-                  >
-                    Manage
-                  </button>
-                  <button
-                    onClick={() => {
-                      // Navigate to editor for this project
-                      // We'll use navigate from react-router-dom, but we don't have it here.
-                      // For now, we'll just alert.
-                      alert(`Navigate to editor for ${project.alias}`);
-                    }}
-                    className="btn btn-outline btn-sm"
-                  >
-                    Editor
-                  </button>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleExecuteProject(project.id)}
+                      className="btn btn-outline btn-sm"
+                    >
+                      Run
+                    </button>
+                    <button
+                      onClick={() => handleEditProject(project.id)}
+                      className="btn btn-outline btn-sm"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteProject(project.id)}
+                      className="btn btn-outline btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

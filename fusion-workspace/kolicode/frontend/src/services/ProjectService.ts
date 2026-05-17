@@ -20,6 +20,25 @@ export const ProjectService = {
     }
   },
 
+  async createProject(project: Omit<Project, 'id'>): Promise<Project> {
+    try {
+      const createdProject = await window.koliAPI.createProject(project);
+      return createdProject;
+    } catch (error) {
+      console.error("Error creating project via IPC:", error);
+      throw error;
+    }
+  },
+
+  async deleteProject(id: string): Promise<void> {
+    try {
+      await window.koliAPI.deleteProject(id);
+    } catch (error) {
+      console.error("Error deleting project via IPC:", error);
+      throw error;
+    }
+  },
+
   async executeProject(id: string): Promise<{ success: boolean; pid?: number }> {
     return await window.koliAPI.executeProject(id);
   }

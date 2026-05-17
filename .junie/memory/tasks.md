@@ -1,0 +1,55 @@
+## Tasks
+
+- [x] 5. Setup Frontend Base (FR-ARC-001, NFR-ARC-002)
+  - Implemented service layer (ProjectService) for IPC communication with Bridge
+  - Created useBridgeHealth hook for monitoring Bridge status
+  - Updated Zustand store to fetch projects via IPC
+  - Connected Main Layout, Project Inventory, Editor, and Dashboard components
+  - Implemented IPC handlers in Main Process for Bridge communication (projects:list, bridge:status, execute:project)
+  - Configured Axios instance for HTTP communication with Bridge
+  - Set up React Router v6 with layouts and pages
+  - TypeScript compiles without errors
+- [x] 2.5 Setup Engine services base
+  - Created ProjectSchema.kt (Exposed table definition for projects table in kolicode schema)
+  - Created ProjectService.kt (Service layer for CRUD operations on projects)
+  - Uses Exposed DAO for type-safe database operations
+  - Includes methods for getAllProjects, getProjectByAlias, getProjectById, createProject, updateProject, deleteProject, archiveProject, activateProject
+- [x] 1. Execute Inventory Audit Script (Fase 1: Sprints 1-2)
+  - Created audit_inventory.sh script to scan proyectos_generados/ directory
+  - Script classifies projects as active, archived, or template based on directory location
+  - Populates initial projects table in PostgreSQL via upsert operations
+  - Identifies garbage vs source of truth (though full classification requires manual review)
+  - Ready for execution against the database
+- [x] 2. Implement Bridge Resolver Service (Fase 2: Sprints 3-4)
+  - Created ResolverService in Bridge layer (routes/projectResolver.ts)
+  - Implemented GET /v1/projects/{id}/resolve endpoint
+  - Implemented GET /v1/projects/resolve/alias/:alias endpoint
+  - Modified Bridge to accept project path resolution requests
+  - [x] Modified UniversalEngine to accept --project-base-dir argument (equivalent to --project-path) to set the base directory for generated projects
+- [x] 3. Implement Project Registry API (Fase 2: Sprints 3-4)
+  - Completed GET /v1/projects endpoint in Bridge (routes/projects.ts)
+  - Added POST/PUT/DELETE endpoints for project management
+  - [x] Implement whitelist directory validation (Done for create, update, and resolve endpoints)
+  - [x] Add Redis caching for project inventory (Done in projects.ts with getProjectsWithCache, invalidateProjectsCache)
+- [x] 4. Create Administration Interface (Tarea A Completion)
+  - Enhanced ProjectInventory with full CRUD operations (create, read, update, delete)
+  - Added project status management UI (dropdown to change status)
+  - Implemented project details view (Editor page shows project alias and path, with navigation from inventory)
+  - Added project execution controls (Run button to execute project via Bridge)
+- [x] 5. Standardize Project Template (Fase 3: Sprints 5-6)
+  - Formalized proyecto_18 structure as kolicode-boilerplate-v1 in the database (inserted via migration V1__create_project_registry.sql)
+  - Created TemplateService.kt for validating projects against templates
+  - Template validation service is ready for use
+  - [ ] Implement template-based project creation (Pending integration with ProjectService)
+- [ ] 6. Archive Legacy Projects (Fase 3: Sprints 5-6)
+  - Move _archive projects to cold storage (S3/external disk)
+  - Clean up monorepo size
+  - Reduce technical debt
+- [ ] 7. Implement UniversalEngine Sandboxing
+  - Add resource limits enforcement
+  - Implement filesystem access controls
+  - Add execution timeouts
+- [ ] 8. Enhance Observability (Mejoras y Consideraciones)
+  - Integrate individual project logs in Dashboard
+  - Add performance metrics collection
+  - Implement distributed tracing

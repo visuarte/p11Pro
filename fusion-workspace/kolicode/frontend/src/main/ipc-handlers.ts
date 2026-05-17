@@ -46,6 +46,36 @@ export async function listProjects() {
 }
 
 /**
+ * Create a project via the Bridge
+ * @param project - The project object to create
+ * @returns Promise with the created project object
+ */
+export async function createProject(project: any) {
+  try {
+    const response = await bridgeAxios.post('/v1/projects', project);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error creating project via Bridge:', error);
+    throw new Error(`Failed to create project: ${error.message}`);
+  }
+}
+
+/**
+ * Delete a project via the Bridge
+ * @param projectId - The ID of the project to delete
+ * @returns Promise with deletion result
+ */
+export async function deleteProject(projectId: string) {
+  try {
+    const response = await bridgeAxios.delete(`/v1/projects/${projectId}`);
+    return response.data;
+  } catch (error: any) {
+    console.error(`Error deleting project ${projectId}:`, error);
+    throw new Error(`Failed to delete project: ${error.message}`);
+  }
+}
+
+/**
  * Execute a project via the Bridge
  * @param projectId - The ID of the project to execute
  * @returns Promise with execution result
@@ -99,6 +129,14 @@ export function registerIpcHandlers() {
 
   ipcMain.handle('projects:list', async () => {
     return await listProjects();
+  });
+
+  ipcMain.handle('create:project', async (_event, project: any) => {
+    return await createProject(project);
+  });
+
+  ipcMain.handle('delete:project', async (_event, projectId: string) => {
+    return await deleteProject(projectId);
   });
 
   ipcMain.handle('execute:project', async (_event, projectId: string) => {

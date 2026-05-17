@@ -4,7 +4,8 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from '../../src/routes';
 import { applyTheme, resolveInitialTheme } from '../../src/app/theme';
 import { configureMotorIcon } from '../../src/shared/motor-icon';
-import iconSpriteUrl from '../../assets/icons/icons.svg?url';
+import { ErrorBoundary } from '../../src/components/ErrorBoundary';
+import iconSpriteUrl from '../assets/icons/icons.svg?url';
 
 export function RendererShellHost(): ReactElement {
   const hostRef = useRef<HTMLDivElement | null>(null);
@@ -17,9 +18,15 @@ export function RendererShellHost(): ReactElement {
     // Apply theme
     applyTheme(resolveInitialTheme());
 
-    // Create React root and render our router
+    // Create React root and render our router inside an ErrorBoundary
     const root = createRoot(hostRef.current);
-    root.render(<RouterProvider router={router} />);
+    root.render(
+      <ErrorBoundary fallback={<div className="p-6 text-center text-slate-500">
+        Ha ocurrido un error en la aplicación. Por favor, recarga la página.
+      </div>}>
+        <RouterProvider router={router} />
+      </ErrorBoundary>
+    );
 
     return () => {
       root.unmount();

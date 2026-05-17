@@ -13,6 +13,9 @@ interface ProjectState {
   isLoading: boolean;
   fetchProjects: () => Promise<void>;
   updateProjectStatus: (id: string, status: Project['status']) => void;
+  addProject: (project: Omit<Project, 'id'>) => Promise<void>;
+  deleteProject: (id: string) => Promise<void>;
+  executeProject: (id: string) => Promise<{ success: boolean; pid?: number }>;
 }
 
 export const useProjectStore = create<ProjectState>((set) => ({
@@ -26,10 +29,40 @@ export const useProjectStore = create<ProjectState>((set) => ({
     } catch (error) {
       set({ isLoading: false });
       console.error('Failed to fetch projects:', error);
-      // In a real app, we might want to set an error state or show a notification
     }
   },
   updateProjectStatus: (id: string, status: Project['status']) => set((state) => ({
     projects: state.projects.map(p => p.id === id ? { ...p, status } : p)
   })),
+  addProject: async (project) => {
+    try {
+      const newProject = await ProjectService.createProject(project);
+      set((state) => ({
+        projects: [...state.projects, newProject],
+      }));
+    } catch (error) {
+      console.error('Failed to add project:', error);
+      throw error;
+    }
+  },
+  deleteProject: async (id) => {
+    try {
+      await ProjectService.deleteProject(id);
+      set((state) => ({
+        projects: state.projects.filter(p => p.id !== id),
+      }));
+    } catch (error) {
+      console.error('Failed to delete project:', error);
+      throw error;
+    }
+  },
+  executeProject: async (id) => {
+    try {
+      const result = await ProjectService.executeProject(id);
+      return result;
+    } catch (error) {
+      console.error('Failed to execute project:', error);
+      throw error;
+    }
+  },
 }));
