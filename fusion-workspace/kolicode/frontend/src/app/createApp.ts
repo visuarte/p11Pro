@@ -4,7 +4,7 @@ import { projectContext } from '../shared/project-context';
 
 const THEME_KEY = 'p10pro-theme';
 
-function resolveInitialTheme(): 'light' | 'dark' {
+export function resolveInitialTheme(): 'light' | 'dark' {
   const saved = window.localStorage.getItem(THEME_KEY);
 
   if (saved === 'light' || saved === 'dark') {
@@ -14,7 +14,7 @@ function resolveInitialTheme(): 'light' | 'dark' {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
-function applyTheme(mode: 'light' | 'dark'): void {
+export function applyTheme(mode: 'light' | 'dark'): void {
   document.documentElement.setAttribute('data-theme', mode);
   window.localStorage.setItem(THEME_KEY, mode);
 }
