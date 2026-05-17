@@ -76,11 +76,11 @@
    - [ ] 3.5 Configurar backup automático cada 10 minutos
 
 ### 4. Protocolos de Comunicación
-- [x] 4.1 Setup gRPC + Protocol Buffers (Bridge ↔ Engine)
-- [x] 4.2 Setup WebSocket server (Bridge ↔ Frontend)
-- [x] 4.3 Definir schemas Protobuf para RenderRequest
-- [x] 4.4 Definir schemas Protobuf para DiagnosticCapture
-- [x] 4.5 Implementar fallback REST endpoints
+   - [x] 4.1 Setup gRPC + Protocol Buffers (Bridge ↔ Engine)
+   - [x] 4.2 Setup WebSocket server (Bridge ↔ Frontend)
+   - [x] 4.3 Definir schemas Protobuf para RenderRequest
+   - [x] 4.4 Definir schemas Protobuf para DiagnosticCapture
+   - [x] 4.5 Implementar fallback REST endpoints
 
 ---
 
