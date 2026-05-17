@@ -92,9 +92,9 @@
   - ✅ package.json con React 18, TypeScript
   - ✅ npm run build funciona (Vite v8.0.12)
 - [x] 5.2 Setup Tailwind CSS + PostCSS (inferred: build funciona)
-- [ ] 5.3 Configurar React Router v6+ (FR-UI-001)
-- [ ] 5.4 Setup Zustand/Redux store (FR-STATE-001)
-- [ ] 5.5 Configurar Electron renderer integration
+- [x] 5.3 Configurar React Router v6+ (FR-UI-001)
+- [x] 5.4 Setup Zustand/Redux store (FR-STATE-001)
+- [x] 5.5 Configurar Electron renderer integration
 
 ### 6. Design System (FR-DS-001, FR-DS-002, FR-DS-003)
 - [ ] 6.1 Crear Button component con variants
