@@ -66,14 +66,14 @@
   - ✅ Configuration: .env.example, .gitignore, tsconfig.json
   - ✅ Documentation: README.md completamente actualizado
   - ✅ Tiempo: ~2.5h (estimado: 8h) - 75% más rápido
-- [ ] 2.5 Setup Engine services base
+- [x] 2.5 Setup Engine services base
 
 ### 3. Base de Datos y Persistencia
-- [ ] 3.1 Configurar PostgreSQL schema inicial
-- [ ] 3.2 Setup Redis para caché y sesiones
-- [ ] 3.3 Implementar migraciones automáticas
-- [ ] 3.4 Setup @seald-io/nedb para diagnósticos (FR-DIAG-004)
-- [ ] 3.5 Configurar backup automático cada 10 minutos
+   - [x] 3.1 Configurar PostgreSQL schema inicial
+   - [x] 3.2 Setup Redis para caché y sesiones
+   - [x] 3.3 Implementar migraciones automáticas
+   - [x] 3.4 Setup @seald-io/nedb para diagnósticos (FR-DIAG-004)
+   - [ ] 3.5 Configurar backup automático cada 10 minutos
 
 ### 4. Protocolos de Comunicación
 - [ ] 4.1 Setup gRPC + Protocol Buffers (Bridge ↔ Engine)
